@@ -1,0 +1,655 @@
+/************************************************
+Css Table Of Content
+-----------------------
+01. Resset Css
+02. Typogrpahy
+    2.1 Font Typography
+    2.2 Color Typography
+    2.3 Hedding Tag Typography
+03. Scroll Top CSS
+04. Global Style
+*************************************************/
+
+
+/*--------------01. Start Resset Css------------------*/
+@import url('https://fonts.googleapis.com/css?family=Arimo:400,700|Roboto:300,300i,400,500,700,900');
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    padding: 0px;
+    font-size: 18px;
+    margin: 0px auto;
+    font-family: 'Arimo', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figur,
+a {
+    margin: 0px;
+    font-weight: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    -webkit-font-variant-ligatures: common-ligatures;
+    font-variant-ligatures: common-ligatures;
+    font-family: 'Roboto', sans-serif;
+}
+
+P,
+.p {
+    font-size: 15px;
+    line-height: 22px;
+    color: #333;
+    font-family: 'Arimo', sans-serif;
+}
+
+.clear {
+    clear: both;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+a:hover,
+a:focus,
+input:focus,
+button:focus,
+a:active {
+    text-decoration: none;
+    outline: none;
+    outline-offset: 0px;
+}
+
+
+/*------------0.1 End Resset Css----------------------*/
+
+
+/*--------------------02. Typography------------------*/
+
+
+/*------------2.1 font weight Typogrpahy------------*/
+
+.fw_300 {
+    font-weight: 300;
+}
+
+.fw_400 {
+    font-weight: 400;
+}
+
+.fw_500 {
+    font-weight: 500;
+}
+
+.fw_600 {
+    font-weight: 600;
+}
+
+.fw_700 {
+    font-weight: 700;
+}
+
+.fw_900 {
+    font-weight: 900;
+}
+
+
+/*------------2.2 color Typogrpahy----------*/
+
+.color_fc {
+    color: #fcfcfc;
+}
+.color_d52 {
+    color: #d5275a;
+}
+
+.color_77 {
+    color: #777777;
+}
+
+.color_33 {
+    color: #333333;
+}
+
+.color_ff {
+    color: #ffffff;
+}
+
+
+/*-----------2.3 hedding tag Typogrpahy------------*/
+
+h1,
+.h1 {
+    font-size: 60px;
+    line-height: 70px;
+}
+
+h2,
+.h2 {
+    font-size: 40px;
+    line-height: 50px;
+}
+
+h3,
+.h3 {
+    font-size: 30px;
+    line-height: 44px;
+}
+
+h4,
+.h4 {
+    font-size: 25px;
+    line-height: 38px;
+}
+
+h5,
+.h5 {
+    font-size: 20px;
+    line-height: 26px;
+}
+
+h6,
+.h6 {
+    font-size: 18px;
+    line-height: 30px;
+}
+
+
+/*-------------03. scroll top css-----------*/
+
+.scroll_top {
+    background: #D5275A none repeat scroll 0 0;
+    border-radius: 3px;
+    bottom: 50px;
+    cursor: pointer;
+    height: 40px;
+    position: fixed;
+    right: 30px;
+    text-align: center;
+    width: 40px;
+    z-index: 999;
+}
+
+.scroll_top:hover {
+    background: #6F0081;
+}
+
+.not_visible {
+    visibility: hidden;
+    display: none;
+}
+
+.scroll_top i {
+    color: #fff;
+    font-size: 24px;
+    line-height: 38px;
+}
+
+
+/*-------------04. Global style---------------*/
+
+.section_padding {
+    padding: 100px 0px;
+}
+
+.pos_relative {
+    position: relative;
+}
+
+.d_block {
+    display: block;
+}
+
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.copyright_txt a {
+    color: #d5275a;
+}
+.copyright_txt a:hover {
+    text-decoration: underline;
+}
+
+/*--------left align-------*/
+
+.f_leftCenter {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.f_leftBottom {
+    display: flex;
+    align-items: flex-start;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+}
+
+
+/*-------center align-------*/
+
+.f_centerTop {
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+}
+
+.f_centerCenter {
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    justify-content: center;
+}
+
+.f_centerBottom {
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+}
+
+
+/*----right align--------*/
+
+.f_rightTop {
+    display: flex;
+    align-items: right;
+    flex-flow: column nowrap;
+    justify-content: right;
+}
+
+.f_rightCenter {
+    display: flex;
+    align-items: right;
+    flex-flow: column nowrap;
+    justify-content: center;
+}
+
+.f_rightBottom {
+    display: flex;
+    align-items: right;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+}
+
+.f_rw_sBetween {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.f_center_sBetween {
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.section_tbl {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.section_tbl_cell {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.radius_3 {
+    border-radius: 3px;
+}
+
+.radius_5 {
+    border-radius: 5px;
+}
+
+.radius_10 {
+    border-radius: 10px;
+}
+
+.radius_50 {
+    border-radius: 50px;
+}
+
+.radius_100p {
+    border-radius: 100%;
+}
+
+a,
+i,
+img,
+header,
+button,
+input,
+select,
+textarea,
+#goDown,
+.demo_section .single_demo span.templete_title {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+
+/* --------04. End GLOBAL style css ------**/
+
+
+/*----------banner section style----------*/
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    z-index: 1
+}
+.banner_preview {
+    background: url(images/slider-img9.jpg) no-repeat center center / cover;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner_content {
+    height: 450px;
+    width: 100%;
+    z-index: 3;
+    text-align: center;
+    position: relative;
+}
+
+.banner_preview .overlay {
+    background: rgba(34, 34, 34, 0.5);
+    z-index: 2;
+}
+
+.banner_preview .banner_content h1 {
+    padding-bottom: 10px;
+}
+
+.banner_preview .banner_content #goDown {
+    background: #fff;
+    color: #d5275a;
+    border-radius: 50px;
+    display: inline-block;
+    font-size: 17px;
+    margin-top: 30px;
+    padding: 10px 35px;
+    cursor: pointer;
+}
+.banner_preview .banner_content #goDown:hover {
+    background: #d5275a;
+    color: #fff;
+}
+
+
+
+/*----------page pre preloader------------*/
+#preloader {
+    width: 100%;
+    height: 100vh;
+    background-color: #f7f7f7;
+    position: fixed;
+    z-index: 999;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+.loader {
+    width: 414px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-weight: 600;
+    color: #f43534;
+    letter-spacing: 1px;
+    font-size: 24px;
+    position: relative;
+}
+.loader:before, 
+.loader:after {
+    content: "";
+    display: block;
+    width: 15px;
+    height: 3px;
+    background: #f43534;
+    position: absolute;
+}
+.loader:before {
+    top: 0;
+    animation: preloader 1.5s ease-in-out infinite alternate;
+}
+.loader:after {
+    bottom: 0;
+    animation: preloader 1.5s ease-in-out infinite alternate-reverse;
+}
+.loader span {
+    display: inline;
+    letter-spacing: -2px;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes preloader {
+    0% {
+        left: 0px;
+        width: 15px;
+    }
+    50% {
+        width: 120px;
+    }
+    100% {
+        left: 394px;
+        width: 15px;
+    }
+}
+
+@keyframes preloader {
+    0% {
+        left: 0px;
+        width: 15px;
+    }
+    50% {
+        width: 120px;
+    }
+    100% {
+        left: 394px;
+        width: 15px;
+    }
+}
+
+.loader .dot-one {
+    animation-name: flashOne;
+}
+.loader .dot-two {
+    animation-name: flashTwo;
+}
+.loader .dot-three {
+    animation-name: flashThree;
+}
+
+@keyframes flashOne {
+    0% { opacity: 0 }
+    25% { opacity: 1 }
+    50% { opacity: 1 }
+    100% { opacity: 1 }
+}
+@keyframes flashTwo {
+    0% { opacity: 0 }
+    25% { opacity: 0 }
+    50% { opacity: 1 }
+    100% { opacity: 1 }
+}
+@keyframes flashThree {
+    0% { opacity: 0 }
+    50% { opacity: 0 }
+    75% { opacity: 1 }
+    100% { opacity: 1 }
+}
+
+/*------------demo section------------*/
+
+.demo_section {
+    padding: 100px 0;
+}
+.demo_section .demo_wrapper {
+  margin-left: -30px;
+}
+
+.demo_section .single_demo a {
+    display: block;
+    border-radius: 5px;
+}
+
+.demo_section .single_demo {
+    float: left;
+    margin-bottom: 40px;
+    margin-left: 30px;
+    width: 22.2%;
+    position: relative;
+}
+.demo_section .single_demo.new-item:before {
+    content: "new";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    background: #d42155;
+    color: #fff;
+    line-height: normal;
+    font-size: 14px;
+    text-transform: capitalize;
+    padding: 5px 12px;
+    border-radius: 3px;
+}
+
+.demo_section .single_demo a img {
+    border-radius: 5px;
+    box-shadow: 0 2px 13px rgba(0, 0, 0, 0.3);
+    height: auto;
+    width: 100%;
+}
+
+.demo_section .single_demo span.templete_title {
+    display: block;
+    font-weight: 700;
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+.demo_section .single_demo:hover span {
+    color: #d5275a;
+}
+
+
+/*----------demo puls hover---------*/
+
+@-webkit-keyframes hvr_pulse {
+    25% {
+        -webkit-transform: scale(1.02);
+        -o-transform: scale(1.02);
+        transform: scale(1.02);
+    }
+    75% {
+        -webkit-transform: scale(1);
+        -o-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes hvr_pulse {
+    25% {
+        -webkit-transform: scale(1.02);
+        -o-transform: scale(1.02);
+        transform: scale(1.02);
+    }
+    75% {
+        -webkit-transform: scale(1);
+        -o-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+.demo_section .single_demo a img {
+    -webkit-transform: perspective(1px) translateZ(0);
+    -moz-transform: perspective(1px) translateZ(0);
+    -o-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+}
+
+.demo_section .single_demo:hover img {
+    -webkit-animation: hvr_pulse 0.5s linear;
+    -moz-animation: hvr_pulse 0.5s linear;
+    -o-animation: hvr_pulse 0.5s linear;
+    animation: hvr_pulse 0.5s linear;
+}
+
+
+/*------------footer style-------------*/
+
+footer {
+    background: #222 none repeat scroll 0 0;
+    padding: 30px 0;
+}
+
+footer ul {
+    text-align: center;
+}
+
+footer ul li {
+    display: inline-block;
+    list-style: outside none none;
+}
+
+footer ul li a {
+    border: 1px solid #fff;
+    color: #fff;
+    display: inline-block;
+    height: 30px;
+    margin: 4px;
+    padding: 2px;
+    text-align: center;
+    width: 30px;
+}
+
+footer ul li a:focus,
+footer ul li a:hover{
+    border-color: #fff;
+    color: #D5275A;
+    background: #fff;
+}

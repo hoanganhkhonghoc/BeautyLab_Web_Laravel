@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Quyen_Han;
+use App\Models\staffAuth;
+use Illuminate\Support\Facades\Session;
+
+class LoginAuthController extends Controller
+{
+    public function showViewLogin(){
+        return view("/site/Login/login");
+    }
+
+    public function login(Request $request){
+        // khi đăng nhập tài khoản cũng có nghĩa là tài khoản chưa đăng nhập 
+        // nếu đang từ home hay 1 trang bất kì nào khác mà quay về login có nghĩa tài khoản đã bị đăng xuất
+        // check đăng xuất ở đây
+        Auth::guard("admin")->logout();
+        Auth::guard("staff")->logout();
+        Auth::guard("client")->logout();
+
+        // xử lý login lấy dữ liệu tài khoản Request 
+        // validate dữ liệu
+        $email = $request->email;
+        $password = $request->password;
+
+        // check quyền
+        if(Auth::guard("admin")->attempt(["email" => $email, "password" => $password])){
+            // đăng nhập thành công trong bảng admin thì return view home bên admin
+            return redirect()->route("homeAdmin");
+        }
+        if(Auth::guard("staff")->attempt(["email" => $email, "password" => $password])){
+            // đăng nhập thành công trong bảng staff thì return view home bên admin và kiểm tra quyền
+            $quyenhan = Quyen_Han::where("staff_id", Auth::guard('staff')->user()->id)->first();
+            // Tránh trường hợp người dùng đang ở bên trong thì Session vẫn tồn tại nên khi đăng nhập lại cho unset SS
+            if(Session::has("QuyenHan")){
+                Session::forget("QuyenHan");
+            }
+            // Kiểm tra bảng quyenhan có bản ghi trả về không
+            if($quyenhan){
+                Session::put("QuyenHan", $quyenhan);
+            }
+            return redirect()->route("homeAdmin");
+        }
+        if(Auth::guard("client")->attempt(["email" => $email, "password" => $password])){
+            // đăng nhập thành công trong bảng site thì return view home bên site
+            return redirect()->route(("homeSite"));
+        }
+
+        // đăng nhập thất bại khi tìm kiếm cả 3 bảng trên đều không có dữ liệu phù hợp thì trả về view login
+        return redirect()->route("showViewLogin");
+    }
+
+    public function logout(){
+        Auth::guard("admin")->logout();
+        Auth::guard("staff")->logout();
+        Auth::guard("client")->logout();
+        return redirect()->route(("homeSite"));
+    }
+}
