@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quyen_Han;
-use App\Models\staffAuth;
 use Illuminate\Support\Facades\Session;
 
 class LoginAuthController extends Controller

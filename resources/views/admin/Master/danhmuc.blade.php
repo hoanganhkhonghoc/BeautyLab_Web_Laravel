@@ -96,18 +96,18 @@
                                     <a href="javascript:void(0);"><i data-feather="smartphone"></i><span>Quản lý</span><span class="menu-arrow"></span></a>
                                     <ul>
                                         
-                                        @if(Session::get("QuyenHan")->ql_binhluan == 1 || Auth::guard("admin")->check())
+                                        @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_binhluan == 1)
                                             <li><a href="index.php?c=comment&a=index">Bình luận</a></li>
                                         @endif
                                         
-                                        @if(Session::get("QuyenHan")->ql_lichdattruoc == 1 || Auth::guard("admin")->check())
+                                        @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_lichdattruoc == 1)
                                             <li><a href="index.php?c=appointment&a=index&month=<?php 
                                                                                             // $date = getdate();
                                                                                             // echo $date['mon']; 
                                                                                             ?>">Lịch đặt trước</a></li>
                                         @endif
 
-                                        @if(Session::get("QuyenHan")->ql_tuyendung == 1 || Auth::guard("admin")->check())
+                                        @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_tuyendung == 1)
                                             <li><a href="index.php?c=staff&a=newStaff">Tuyển dụng</a></li>
                                         @endif
                                     </ul>
@@ -115,19 +115,19 @@
                             </ul>
                         </li>
 
-                        @if(Session::get("QuyenHan")->ql_sanpham == 1 || Auth::guard("admin")->check())
+                        @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_sanpham == 1)
                             <li class="submenu-open">
-                                <h6 class="submenu-hdr">Quản lý sản phẩm</h6>
+                                <h6 class="submenu-hdr"><a href="/admin/product/list">Quản lý sản phẩm</a></h6>
                                 <ul>
                                     <li><a href="/admin/product/list"><i data-feather="box"></i><span>Sản phẩm</span></a></li>
                                     <li><a href="index.php?c=product&a=add"><i data-feather="plus-square"></i><span>Thêm sản phẩm</span></a></li>
-                                    <li><a href="index.php?c=category&a="><i data-feather="codepen"></i><span>Danh mục</span></a></li>
-                                    <li><a href="index.php?c=category&a=add"><i data-feather="speaker"></i><span>Thêm danh mục</span></a></li>
+                                    <li><a href="/admin/category/list"><i data-feather="codepen"></i><span>Danh mục</span></a></li>
+                                    <li><a href="/admin/category/addView"><i data-feather="speaker"></i><span>Thêm danh mục</span></a></li>
                                 </ul>
                             </li>
                         @endif
 
-                        @if(Session::get("QuyenHan")->ql_donhang == 1 || Auth::guard("admin")->check())
+                        @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_donhang == 1)
                             <li class="submenu-open">
                                 <h6 class="submenu-hdr">Quản lý đơn hàng</h6>
                                 <ul>
@@ -152,13 +152,13 @@
                                     <li><a href="index.php?c=staff&a=index"><i data-feather="users"></i><span>Nhân viên</span></a></li>
                                     <li><a href="index.php?c=quyen&a=index"><i data-feather="users"></i><span>Quyền hạn của nhân viên</span></a></li>
                                 @endif
-                                @if(Session::get("QuyenHan")->ql_khachhang == 1 || Auth::guard("admin")->check())
+                                @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_khachhang == 1)
                                     <li><a href="index.php?c=client&a=index"><i data-feather="users"></i><span>Khách hàng</span></a></li>
                                 @endif
                             </ul>
                         </li>
 
-                        @if(Session::get("QuyenHan")->ql_baiviet == 1 || Auth::guard("admin")->check())
+                        @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_baiviet == 1)
                             <li class="submenu-open">
                                 <h6 class="submenu-hdr">Quản lý bài viết</h6>
                                 <ul>

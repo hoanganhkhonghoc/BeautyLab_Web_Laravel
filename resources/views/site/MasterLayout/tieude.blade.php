@@ -127,19 +127,21 @@
                         <span>/</span>
                         <a href="tel:0869737005"><i class="fa fa-phone color-d5"></i>0869737005</a>
                         <span>/</span>
-                        <a href="<?php 
-                                    // if (!isset($_SESSION['account']['level'])) {
-                                    //     echo 'index.php?c=index&a=login';
-                                    // } else {
-                                    //     echo 'index.php?c=index&a=logout';
-                                    // } 
-                                    ?>">
+                        <a href="
+                                <?php 
+                                if(Auth::guard("client")->check()){
+                                    echo "/logout";
+                                }else{
+                                    echo "/login/showView";
+                                } 
+                                ?>
+                                "
                             <i class="fa color-d5"><ion-icon name="person-circle-outline"></ion-icon></i><?php
-                                                                                                            // if (!isset($_SESSION['account']['level'])) {
-                                                                                                            //     echo 'Đăng nhập';
-                                                                                                            // } else {
-                                                                                                            //     echo 'Đăng xuất';
-                                                                                                            // }
+                                                                                                            if (Auth::guard("client")->check()) {
+                                                                                                                echo ' Đăng xuất';
+                                                                                                            } else {
+                                                                                                                echo ' Đăng nhập';
+                                                                                                            }
                                                                                                             ?></a>
                     </div>
                 </div>
