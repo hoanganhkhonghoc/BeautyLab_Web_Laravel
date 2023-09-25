@@ -23,13 +23,13 @@
         <div class="header">
 
             <div class="header-left active">
-                <a href="index.php" class="logo logo-normal">
+                <a href="/admin/home/index" class="logo logo-normal">
                     <img src="{{asset('site/HTML/images/widget-logo.png')}}" alt>
                 </a>
-                <a href="index.php" class="logo logo-white">
+                <a href="/admin/home/index" class="logo logo-white">
                     <img src="{{asset('site/HTML/images/widget-logo.png')}}" alt>
                 </a>
-                <a href="index.php" class="logo-small">
+                <a href="/admin/home/index" class="logo-small">
                     <img src="{{asset('site/images/fabicon.png')}}" alt>
                 </a>
                 <a id="toggle_btn" href="javascript:void(0);">
@@ -90,7 +90,7 @@
                             <h6 class="submenu-hdr">Trang chủ</h6>
                             <ul>
                                 <li class="active">
-                                    <a href="index.php?c=index&a=index"><i data-feather="grid"></i><span>Dashboard</span></a>
+                                    <a href="/admin/home/index"><i data-feather="grid"></i><span>Dashboard</span></a>
                                 </li>
                                 <li class="submenu">
                                     <a href="javascript:void(0);"><i data-feather="smartphone"></i><span>Quản lý</span><span class="menu-arrow"></span></a>
@@ -117,10 +117,10 @@
 
                         @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_sanpham == 1)
                             <li class="submenu-open">
-                                <h6 class="submenu-hdr"><a href="/admin/product/list">Quản lý sản phẩm</a></h6>
+                                <h6 class="submenu-hdr">Quản lý sản phẩm</h6>
                                 <ul>
                                     <li><a href="/admin/product/list"><i data-feather="box"></i><span>Sản phẩm</span></a></li>
-                                    <li><a href="index.php?c=product&a=add"><i data-feather="plus-square"></i><span>Thêm sản phẩm</span></a></li>
+                                    <li><a href="/admin/product/addView"><i data-feather="plus-square"></i><span>Thêm sản phẩm</span></a></li>
                                     <li><a href="/admin/category/list"><i data-feather="codepen"></i><span>Danh mục</span></a></li>
                                     <li><a href="/admin/category/addView"><i data-feather="speaker"></i><span>Thêm danh mục</span></a></li>
                                 </ul>

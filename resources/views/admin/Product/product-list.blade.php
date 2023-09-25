@@ -8,7 +8,7 @@
                 <h6>Cơ sở <?php //echo $data['product']['name']; ?></h6>
             </div>
             <div class="page-btn">
-                <a href="index.php?c=product&a=add" class="btn btn-added"><img src="{{asset('admin/icon/plus.svg')}}" alt="img" class="me-1">Thêm mới sản phẩm</a>
+                <a href="/admin/product/addView" class="btn btn-added"><img src="{{asset('admin/icon/plus.svg')}}" alt="img" class="me-1">Thêm mới sản phẩm</a>
             </div>
         </div>
 
@@ -30,37 +30,33 @@
                                 <th>ID sản phẩm</th>
                                 <th>Tên sản phẩm</th>
                                 <th>Danh mục</th>
-                                <?php //if ($_SESSION['account']['level'] == 1) { ?>
+                                @if(Auth::guard("admin")->check())
                                     <th>ID người chỉnh gần nhất</th>
-                                <?php //} ?>
-                                <?php //if ($_SESSION['account']['level'] == 1) { ?>
                                     <th>Cơ sở</th>
-                                <?php //} ?>
+                                @endif
                                 <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php //foreach ($data['product'] as $pro) { ?>
+                            @foreach ($data as $product)
                                 <tr>
-                                    <td><?php //echo $pro['id']; ?></td>
-                                    <td><?php //echo $pro['namePro']; ?></td>
-                                    <td><?php //echo $pro['nameCate']; ?></td>
-                                    <?php //if ($_SESSION['account']['level'] == 1) { ?>
-                                        <td><?php //echo $pro['staff_id']; ?></td>
-                                    <?php //} ?>
-                                    <?php //if ($_SESSION['account']['level'] == 1) { ?>
-                                        <td><?php //echo $pro['name']; ?></td>
-                                    <?php //} ?>
+                                    <td>{{$product['id']}}</td>
+                                    <td>{{$product['namePro']}}</td>
+                                    <td>{{$product['nameCate']}}</td>
+                                    @if(Auth::guard("admin")->check())
+                                        <td>{{$product['email']}}</td>
+                                        <td>{{$product['name']}}</td>
+                                    @endif
                                     <td>
-                                        <a class="me-3" href="index.php?c=product_detail&a=index&id=<?php //echo $pro['id']; ?>">
+                                        <a class="me-3" href="/admin/product-detail/list/{{$product['id']}}">
                                             <img src="{{asset('admin/icon/eye.svg')}}" alt="img">
                                         </a>
-                                        <a class="me-3" href="index.php?c=product&a=edit&id=<?php //echo $pro['id']; ?>">
+                                        <a class="me-3" href="/admin/product/editView/{{$product['id']}}">
                                             <img src="{{asset('admin/icon/edit.svg')}}" alt="img">
                                         </a>
                                     </td>
                                 </tr>
-                            <?php //} ?>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

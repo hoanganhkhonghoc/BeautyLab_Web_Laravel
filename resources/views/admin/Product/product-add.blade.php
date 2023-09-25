@@ -1,3 +1,5 @@
+@include('admin/Master/tieude')
+@include('admin/Master/danhmuc')
 <div class="page-wrapper">
     <div class="content">
         <div class="page-header">
@@ -10,20 +12,21 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <form action="index.php?c=product&a=xl_add" method="POST">
+                    <form action="/admin/product/xl_add" method="POST">
+                        @csrf
                         <div class="col-lg-3 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Tên sản phẩm</label>
-                                <input type="text" name="name" required>
+                                <input type="text" name="namePro" required>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Danh mục</label>
-                                <select class="select" name="cate">
-                                    <?php foreach ($data['category'] as $cate) { ?>
-                                        <option value="<?php echo $cate['id']; ?>"><?php echo $cate['nameCate']; ?></option>
-                                    <?php } ?>
+                                <select class="select" name="cat_id">
+                                    @foreach($data as $category)
+                                        <option value="{{$category['id']}}">{{$category['nameCate']}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -38,7 +41,7 @@
                         </div>
                         <div class="col-lg-12">
                             <button class="btn btn-submit me-2" name="submit">Thêm</button>
-                            <a href="index.php?c=product&a=add" class="btn btn-cancel">Huỷ</a>
+                            <a href="/admin/product/addView" class="btn btn-cancel">Huỷ</a>
                         </div>
                     </form>
                 </div>
@@ -47,3 +50,4 @@
 
     </div>
 </div>
+@include('admin/Master/thongtin')
