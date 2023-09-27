@@ -26,10 +26,11 @@ class LoginAuthController extends Controller
         // validate dữ liệu
         $email = $request->email;
         $password = $request->password;
-
         // check quyền
         if(Auth::guard("admin")->attempt(["email" => $email, "password" => $password])){
             // đăng nhập thành công trong bảng admin thì return view home bên admin
+            notyf()->addSuccess("Đăng nhập thành công! Chào bạn " . Auth::guard("admin")->user()->name . "!!");
+            // flash()->addSuccess("Đăng nhập thành công! Chào bạn " . Auth::guard("admin")->user()->name . "!!");
             return redirect()->route("homeAdmin");
         }
         if(Auth::guard("staff")->attempt(["email" => $email, "password" => $password])){
@@ -43,14 +44,17 @@ class LoginAuthController extends Controller
             if($quyenhan){
                 Session::put("QuyenHan", $quyenhan);
             }
+            notyf()->addSuccess("Đăng nhập thành công! Chào bạn " . Auth::guard("staff")->user()->name . "!!");
             return redirect()->route("homeAdmin");
         }
         if(Auth::guard("client")->attempt(["email" => $email, "password" => $password])){
             // đăng nhập thành công trong bảng site thì return view home bên site
+            notyf()->addSuccess("Đăng nhập thành công! Chào bạn " . Auth::guard("client")->user()->name . "!!");
             return redirect()->route(("homeSite"));
         }
 
         // đăng nhập thất bại khi tìm kiếm cả 3 bảng trên đều không có dữ liệu phù hợp thì trả về view login
+        notyf()->addError("Đăng nhập thất bại !!! Kiểm tra tên email và mật khẩu !! ");
         return redirect()->route("showViewLogin");
     }
 

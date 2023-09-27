@@ -21,9 +21,14 @@ class AdminProductController extends Controller
                                       ->get();
         }
         if(Auth::guard("staff")->check()){
+            $idCoSo = Auth::guard("staff")->user()->facilities_id;
+            
             $data["product"] = Product::join("category","category.id","=","product.cat_id")
+            ->join("staff","product.staff_id","=","staff.id")
+            ->join("facilities","facilities.id", "=", "facilities_id")
             ->select("product.*","category.nameCate")
             ->where("product.isDeleted","!=",0)
+            ->where("staff.facilities_id", "=", $idCoSo)
             ->get();
         }
         return view("admin/Product/product-list", ["data" => $data["product"]]);
@@ -57,11 +62,13 @@ class AdminProductController extends Controller
         $checkNameProduct = Product::where("namePro",$product->namePro)->count();
 
         if($checkNameProduct != 0){
+            notyf()->addError("Thêm sản phẩm thất bại!!");
             return redirect()->route("addProduct");
         }
 
         $product->save();
 
+        notyf()->addSuccess("Thêm sản phẩm thành công");
         return redirect()->route("listProduct");
     }
 
@@ -81,6 +88,7 @@ class AdminProductController extends Controller
         $nameProTrim = trim($request->namePro);
         $checkNameProduct = Product::where("namePro",$nameProTrim)->count();
         if($checkNameProduct > 1){
+            notyf()->addError("Sửa sản phẩm thất bại!!");
             return redirect("/admin/product/editView/" . $id);
         }else if($checkNameProduct == 1){
             $product->update([
@@ -99,6 +107,7 @@ class AdminProductController extends Controller
             ]);
         }
         $product->save();
+        notyf()->addSuccess("Sửa sản phẩm thành công");
         return redirect()->route("listProduct");
     }
 }

@@ -1,3 +1,5 @@
+@include('admin/Master/tieude')
+@include('admin/Master/danhmuc')
 <div class="page-wrapper">
     <div class="content">
         <div class="page-header">
@@ -13,10 +15,11 @@
                     <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Tên sản phẩm (Không cần thay đổi)</label>
-                            <input type="text" value="<?php echo $data['product']['namePro']; ?>">
+                            <input type="text" value="{{$data["namePro"]->namePro}}">
                         </div>
                     </div>
-                    <form action="index.php?c=product_detail&a=xl_add&id=<?php echo $_GET['id']; ?>" method="POST" enctype="multipart/form-data">
+                    <form action="/admin/product_detail/xl_add/{{$data['id']}}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="col-lg-3 col-sm-6 col-12 khung2">
                             <div class="form-group chon288x40">
                                 <label>Màu sản phẩm</label>
@@ -67,7 +70,7 @@
                                 <div class="image-upload">
                                     <input type="file" required accept="image/*" name="imgPro">
                                     <div class="image-uploads">
-                                        <img src="public/admin/icon/upload.svg" alt="img">
+                                        <img src="{{asset("admin/icon/upload.svg")}}" alt="img">
                                         <h4>Chọn đúng hình ảnh</h4>
                                     </div>
                                 </div>
@@ -75,7 +78,7 @@
                         </div>
                         <div class="col-lg-12">
                             <button type="submit" name="submit" class="btn btn-submit me-2">Thêm</button>
-                            <a href="index.php?c=product_detail&a=index&id=<?php echo $data['product']['id']; ?>" class="btn btn-cancel">Huỷ</a>
+                            <a href="/admin/product_detail/list/{{$data['id']}}" class="btn btn-cancel">Huỷ</a>
                         </div>
                     </form>
                 </div>
@@ -85,3 +88,4 @@
     </div>
 </div>
 </div>
+@include('admin/Master/thongtin')

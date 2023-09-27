@@ -43,7 +43,7 @@ class AdminCategoryController extends Controller
         $category->updated_at = Carbon::now();
         $category->isDeleted = 1;
         $category->save();
-
+        notyf()->addSuccess("Thêm danh mục thành công");
         return redirect()->route('listCategory');
     }
 
@@ -54,7 +54,7 @@ class AdminCategoryController extends Controller
             'isDeleted' => 0,
         ]);
         $category->save();
-
+        notyf()->addSuccess("Xoá danh mục thành công");
         return redirect()->route('listCategory');
     }
 
@@ -83,7 +83,7 @@ class AdminCategoryController extends Controller
             "updated_at" => Carbon::now(),
         ]);
         $category->save();
-
+        notyf()->addSuccess("Sửa danh mục thành công");
         return redirect()->route('listCategory');
     }
 }

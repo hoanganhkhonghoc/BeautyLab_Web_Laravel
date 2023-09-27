@@ -48,7 +48,7 @@
                                         <td>{{$product['name']}}</td>
                                     @endif
                                     <td>
-                                        <a class="me-3" href="/admin/product-detail/list/{{$product['id']}}">
+                                        <a class="me-3" href="/admin/product_detail/list/{{$product['id']}}">
                                             <img src="{{asset('admin/icon/eye.svg')}}" alt="img">
                                         </a>
                                         <a class="me-3" href="/admin/product/editView/{{$product['id']}}">
