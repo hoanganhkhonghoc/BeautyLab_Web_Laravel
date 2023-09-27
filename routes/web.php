@@ -30,6 +30,7 @@ Nhóm Route bên phía Admin
 Route::prefix("/")->group(__DIR__ . "/admin/Admin.php");
 Route::prefix("/")->group(__DIR__ . "/admin/Product.php");
 Route::prefix("/")->group(__DIR__ . "/admin/Category.php");
+Route::prefix("/")->group(__DIR__ . "/admin/Facilities.php");
 /*
 Nhóm Route bên phía Site
 */

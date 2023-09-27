@@ -49,7 +49,7 @@
                                     <td>{{number_format($product['price'])}}</td>
                                     <td>{{number_format($product['quanity'])}}</td>
                                     <td>
-                                        <a class="me-3" href="#">
+                                        <a class="me-3" href="/admin/product_detail/show/{{$product['id']}}">
                                             <img src="{{asset("admin/icon/eye.svg")}}" alt="img">
                                         </a>
                                         <a class="me-3" href="/admin/product_detail/editView/{{$product['id']}}">

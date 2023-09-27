@@ -148,7 +148,7 @@
                             <h6 class="submenu-hdr">Quản lý chung</h6>
                             <ul>
                                 @if(Auth::guard("admin")->check())
-                                    <li><a href="index.php?c=facilities&a=index"><i data-feather="user"></i><span>Cơ sở</span></a></li>
+                                    <li><a href="/admin/facilities/list"><i data-feather="user"></i><span>Cơ sở</span></a></li>
                                     <li><a href="index.php?c=staff&a=index"><i data-feather="users"></i><span>Nhân viên</span></a></li>
                                     <li><a href="index.php?c=quyen&a=index"><i data-feather="users"></i><span>Quyền hạn của nhân viên</span></a></li>
                                 @endif

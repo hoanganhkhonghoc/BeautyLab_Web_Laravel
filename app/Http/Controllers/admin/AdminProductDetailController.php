@@ -90,4 +90,14 @@ class AdminProductDetailController extends Controller
         notyf()->addSuccess("Sửa sản phẩm thành công");
         return redirect("/admin/product_detail/editView/". $id);
     }
+
+    public function show($id){
+        $data["product"] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
+                                        ->join("category", "category.id", "=", "product.cat_id")
+                                        ->select("product.namePro", "product_detail.*", "category.nameCate")
+                                        ->where("product_detail.id", $id)
+                                        ->first();
+                                        // dd($data);
+        return view("admin/Product_detail/product_detail-show", ["data" => $data]);
+    }
 }
