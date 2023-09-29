@@ -31,6 +31,8 @@ Route::prefix("/")->group(__DIR__ . "/admin/Admin.php");
 Route::prefix("/")->group(__DIR__ . "/admin/Product.php");
 Route::prefix("/")->group(__DIR__ . "/admin/Category.php");
 Route::prefix("/")->group(__DIR__ . "/admin/Facilities.php");
+Route::prefix("/")->group(__DIR__ . "/admin/Staff.php");
+Route::prefix("/")->group(__DIR__ . "/admin/Client.php");
 /*
 Nhóm Route bên phía Site
 */

@@ -4,6 +4,8 @@ namespace App\Http\Middleware\admin;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckQuyenTaiKhoan
@@ -15,6 +17,15 @@ class CheckQuyenTaiKhoan
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        if(Auth::guard("admin")->check()){
+            return $next($request);
+        }else if(Auth::guard("staff")->check()){
+            if(Session::has("QuyenHan")){
+                if(Session::get("QuyenHan")->ql_khachhang == 1){
+                    return $next($request);
+                }
+            }
+        }
+        abort(403, "Bạn không có quyền vào đây");
     }
 }

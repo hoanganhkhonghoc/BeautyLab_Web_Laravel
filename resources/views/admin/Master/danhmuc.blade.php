@@ -149,11 +149,11 @@
                             <ul>
                                 @if(Auth::guard("admin")->check())
                                     <li><a href="/admin/facilities/list"><i data-feather="user"></i><span>Cơ sở</span></a></li>
-                                    <li><a href="index.php?c=staff&a=index"><i data-feather="users"></i><span>Nhân viên</span></a></li>
-                                    <li><a href="index.php?c=quyen&a=index"><i data-feather="users"></i><span>Quyền hạn của nhân viên</span></a></li>
+                                    <li><a href="/admin/staff/list"><i data-feather="users"></i><span>Nhân viên</span></a></li>
+                                    <li><a href="/admin/quyen/list"><i data-feather="users"></i><span>Quyền hạn của nhân viên</span></a></li>
                                 @endif
                                 @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_khachhang == 1)
-                                    <li><a href="index.php?c=client&a=index"><i data-feather="users"></i><span>Khách hàng</span></a></li>
+                                    <li><a href="/admin/client/list"><i data-feather="users"></i><span>Khách hàng</span></a></li>
                                 @endif
                             </ul>
                         </li>
