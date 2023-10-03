@@ -1,3 +1,4 @@
+@include('site/MasterLayout/tieude')
 <!-- ======================================= 
         ==Start banner section== 
     =======================================-->
@@ -11,8 +12,8 @@
                     <p class="color-ff">Chào mừng đến với Beautylab nơi thiên đường của sắc đẹp</p>
                 </div>
                 <ol class="breadcrumb">
-                    <li><a href="index.php?c=index&a=index">Trang chủ</a></li>
-                    <li class="active"><a href="index.php?c=product&a=showAll" style="color:white">Cửa hàng ( sản phẩm )</a></li>
+                    <li><a href="/">Trang chủ</a></li>
+                    <li class="active"><a href="/site/product/list" style="color:white">Cửa hàng ( sản phẩm )</a></li>
                     <li class="active">Chi tiết sản phẩm</li>
                 </ol>
             </div>
@@ -38,7 +39,7 @@
                     <div class="product-preview-area">
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="pro-item1" role="tabpanel">
-                                <img src="public/uploads/<?php echo $data['product'][0]['img']; ?>" alt="product-img" class="img-fluid">
+                                <img src="{{asset("img/". $data['product']->img)}}" alt="product-img" class="img-fluid">
                             </div>
                             <div class="tab-pane fade" id="pro-item2" role="tabpanel">
                                 <!-- <img src="" alt="product-img" class="img-fluid"> -->
@@ -73,7 +74,7 @@
 
                     <!--product details content-->
                     <div class="product-details-content">
-                        <h6 class="procuct-title color-d5 fw-700 text-uppercase pb-15"><?php echo $data['product'][0]['namePro']; ?></h6>
+                        <h6 class="procuct-title color-d5 fw-700 text-uppercase pb-15">{{$data['product']->namePro}}</h6>
                         <ul class="rating">
                             <li><i class="fa fa-star"></i></li>
                             <li><i class="fa fa-star"></i></li>
@@ -81,15 +82,15 @@
                             <li><i class="fa fa-star"></i></li>
                             <li><i class="fa fa-star-o"></i></li>
                         </ul>
-                        <h4 class="price fw-700 color-72 pt-20 pb-10"><?php echo number_format($data['product'][0]['price']) . 'VNĐ'; ?></h4>
-                        <p class="details-txt color-51"><?php echo 'Sản phẩm còn ' . number_format($data['product'][0]['quanity']) . ' sp'; ?></p>
+                        <h4 class="price fw-700 color-72 pt-20 pb-10">{{number_format($data['product']->price) . "VNĐ"}}</h4>
+                        <p class="details-txt color-51">{{'Sản phẩm còn ' . number_format($data['product']->quanity) . ' sp'}}</p>
                         <ul class="add-cart-area pb-35">
                             <li class="qty">
-                                <form action="<?php if (isset($_SESSION['account']['id'])) {
-                                                    echo 'index.php?c=card&a=add&id=' . $data['product'][0]['id'];
-                                                } else {
-                                                    echo 'index.php?c=index&a=login';
-                                                } ?>" method="post">
+                                <form action="<?php //if (isset($_SESSION['account']['id'])) {
+                                                //     echo 'index.php?c=card&a=add&id=' . $data['product'][0]['id'];
+                                                // } else {
+                                                //     echo 'index.php?c=index&a=login';
+                                                //} ?>" method="post">
                                     <span class="text-uppercase color-51 fw-500 roboto mr-10">Số lượng :</span>
                                     <span class="decrese"><i class="fa fa-angle-left"></i></span>
                                     <input type="text" name="qty" id="number" value="1" min="1" readonly>
@@ -100,18 +101,18 @@
                             </li>
                             </form>
                             <li>
-                                <a href="<?php if (isset($_SESSION['account']['id'])) {
-                                                if ($_SESSION['account']['level'] < 3) {
-                                                    die('Tài khoản của bạn k được phép vào đây !!');
-                                                } else {
-                                                    echo 'index.php?c=product&a=add_likeIndetail&id=' . $data['product'][0]['id'];
-                                                }
-                                            } else {
-                                                echo 'index.php?c=index&a=login';
-                                            } ?>" class="favourit"><i class="fa fa-heart<?php if ($data['like'] == 1) {
-                                                                                        } else {
-                                                                                            echo '-o';
-                                                                                        } ?>"></i></a>
+                                <a href="<?php //if (isset($_SESSION['account']['id'])) {
+                                            //     if ($_SESSION['account']['level'] < 3) {
+                                            //         die('Tài khoản của bạn k được phép vào đây !!');
+                                            //     } else {
+                                            //         echo 'index.php?c=product&a=add_likeIndetail&id=' . $data['product'][0]['id'];
+                                            //     }
+                                            // } else {
+                                            //     echo 'index.php?c=index&a=login';
+                                            // } ?>" class="favourit"><i class="fa fa-heart<?php // if ($data['like'] == 1) {
+                                            //                                             } else {
+                                            //                                                 echo '-o';
+                                                                                        //} ?>"></i></a>
                             </li>
                         </ul>
 
@@ -119,17 +120,17 @@
                             <table>
                                 <tr class="category">
                                     <td>Danh mục: </td>
-                                    <td><a href="index.php?c=product&a=list_cate&id=<?php echo $data['product'][0]['cat_id'] ?>"><?php echo $data['product'][0]['nameCate']; ?></a></td>
+                                    <td><a href="/site/category/list/{{$data['product']->cateID}}">{{$data['product']->nameCate}}</a></td>
                                 </tr>
                                 <tr class="tags">
                                     <td>Từ khoá :</td>
-                                    <td><a href="index.php?c=product&a=list_cate&id=<?php echo $data['product'][0]['cat_id'] ?>"><?php echo $data['product'][0]['nameCate']; ?></a>,
-                                        <a href="index.php?c=product&a=detail&id=<?php echo $data['product'][0]['id']; ?>"><?php echo $data['product'][0]['namePro']; ?></a>
+                                    <td><a href="/site/category/list/{{$data['product']->cateID}}">{{$data['product']->nameCate}}</a>,
+                                        <a href="/site/product/show/{{$data['product']->id}}">{{$data['product']->namePro}}</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>ID:</td>
-                                    <td><?php echo $data['product'][0]['id']; ?></td>
+                                    <td>{{$data['product']->id}}</td>
                                 </tr>
                             </table>
                         </div>
@@ -154,28 +155,28 @@
                     <nav>
                         <div class="nav nav-tabs" role="tablist">
                             <a class="active" data-toggle="tab" href="#desription" role="tab" aria-selected="true">Mô tả sản phẩm</a>
-                            <a data-toggle="tab" href="#review" role="tab" aria-selected="false">Bình luận <span><?php echo '(' . $data['totalComment'] . ')'; ?></span></a>
+                            <a data-toggle="tab" href="#review" role="tab" aria-selected="false">Bình luận <span><?php //echo '(' . $data['totalComment'] . ')'; ?></span></a>
                         </div>
                     </nav>
 
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="desription" role="tabpanel">
                             <h6 class="fw-700 color-d5 text-uppercase">Mô tả chi tiết sản phẩm</h6>
-                            <p><?php echo  $data['product'][0]['detail']; ?></p>
+                            <p>{{$data['product']->detail}}</p>
                         </div>
 
                         <div class="tab-pane fade" id="review" role="tabpanel">
                             <div class="review">
-                                <?php foreach ($data['comment'] as $comment) { ?>
+                                <?php //foreach ($data['comment'] as $comment) { ?>
                                     <div class="single-review pos-relative">
                                         <img src="public/uploads/no-img.png" alt="reviewar img" class="author-img">
                                         <ul class="author-name display-inline ptb-5">
-                                            <li class="name"><?php echo $comment['name']; ?></li>
-                                            <li class="date"><?php echo $comment['date']; ?></li>
+                                            <li class="name"><?php //echo $comment['name']; ?></li>
+                                            <li class="date"><?php //echo $comment['date']; ?></li>
                                         </ul>
-                                        <p class="comment"><?php echo $comment['content']; ?></p>
+                                        <p class="comment"><?php //echo $comment['content']; ?></p>
                                     </div>
-                                <?php } ?>
+                                <?php //} ?>
                                 <!--/single review-->
 
                                 <div class="review-form pt-20">
@@ -187,14 +188,14 @@
                                          <i class="fa fa-star-o"></i>
                                          <i class="fa fa-star-o"></i>
                                      </p> -->
-                                    <?php if (isset($_SESSION['account']['id']) && $_SESSION['account']['level'] > 2) { ?>
-                                        <form action="index.php?c=comment&a=index&id=<?php echo $_GET['id']; ?>" method="post">
+                                    @if(Auth::guard("client")->check())
+                                        <form action="index.php?c=comment&a=index&id=<?php //echo $_GET['id']; ?>" method="post">
                                             <div class="form-group">
                                                 <textarea name="msg"></textarea>
                                             </div>
                                             <button type="submit" name="submit">Gửi bình luận</button>
                                         </form>
-                                    <?php  } ?>
+                                    @endif
                                 </div>
                             </div>
 
@@ -207,49 +208,49 @@
                 <h6 class="related-product-title text-uppercase color-d5 fw-500">Có thể bạn quan tâm các sản phẩm này</h6>
                 <div class="product-gallery-wrapper clearfix" id="product-gallery-v2">
                     <!-- product-1 -->
-                    <?php foreach ($data['product3'] as $pro3) { ?>
+                    @foreach($data["product3"] as $pro3)
                         <div class="single-product text-center pos-relative">
                             <div class="product-img pos-relative">
-                                <img src="public/uploads/<?php echo $pro3['img']; ?>" alt="product" class="img-fluid">
+                                <img src="{{asset('img/'.$pro3['img'])}}" alt="product" class="img-fluid">
                                 <div class="product-hover">
                                     <ul>
                                         <li><a href="#" title="Add to Cart"><i class="fa fa-cart-plus"></i></a></li>
-                                        <li><a href="index.php?c=product&a=detail&id=<?php echo $pro3['id']; ?>" class="color-ff text-capitalize roboto" data-gall="gallery1" title="Xem chi tiết">Xem chi tiết</a></li>
-                                        <li><a href="<?php if (isset($_SESSION['account']['id'])) {
-                                                            if ($_SESSION['account']['level'] < 3) {
-                                                                die('Tài khoản của bạn k được phép vào đây !!');
-                                                            } else {
-                                                                echo 'index.php?c=product&a=add_like&id=' . $pro3['id'];
-                                                            }
-                                                        } else {
-                                                            echo 'index.php?c=index&a=login';
-                                                        } ?>" title="Yêu thích sản phẩm"><i class="fa fa-heart<?php if (isset($_SESSION['account']['id'])) {
-                                                                                                                    $i = 0;
-                                                                                                                    foreach ($data['likePro'] as $lp) {
-                                                                                                                        if ($pro3['id'] == $lp['product_detail_id']) {
-                                                                                                                            $i = 1;
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                    switch ($i) {
-                                                                                                                        case 1:
-                                                                                                                            break;
-                                                                                                                        case 0:
-                                                                                                                            echo '-o';
-                                                                                                                            break;
-                                                                                                                    }
-                                                                                                                } else {
-                                                                                                                    echo '-o';
-                                                                                                                } ?>"></i></a></li>
+                                        <li><a href="/site/product/show/{{$pro3['id']}}" class="color-ff text-capitalize roboto" data-gall="gallery1" title="Xem chi tiết">Xem chi tiết</a></li>
+                                        <li><a href="<?php //if (isset($_SESSION['account']['id'])) {
+                                                            // if ($_SESSION['account']['level'] < 3) {
+                                                            //     die('Tài khoản của bạn k được phép vào đây !!');
+                                                            // } else {
+                                                            //     echo 'index.php?c=product&a=add_like&id=' . $pro3['id'];
+                                                            // }
+                                                        // } else {
+                                                        //     echo 'index.php?c=index&a=login';
+                                                        //} ?>" title="Yêu thích sản phẩm"><i class="fa fa-heart<?php //if (isset($_SESSION['account']['id'])) {
+                                                                                                                //     $i = 0;
+                                                                                                                //     foreach ($data['likePro'] as $lp) {
+                                                                                                                //         if ($pro3['id'] == $lp['product_detail_id']) {
+                                                                                                                //             $i = 1;
+                                                                                                                //         }
+                                                                                                                //     }
+                                                                                                                //     switch ($i) {
+                                                                                                                //         case 1:
+                                                                                                                //             break;
+                                                                                                                //         case 0:
+                                                                                                                //             echo '-o';
+                                                                                                                //             break;
+                                                                                                                //     }
+                                                                                                                // } else {
+                                                                                                                //     echo '-o';
+                                                                                                                //} ?>"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="product-price">
-                                <h6 class="color-72 fw-500"><?php echo number_format($pro3['price']) . ' VNĐ'; ?></h6>
+                                <h6 class="color-72 fw-500">{{number_format($pro3['price']) . "VNĐ"}}</h6>
                                 <div class="product-divider"></div>
-                                <a href="index.php?c=product&a=detail&id=<?php echo $pro3['id']; ?>" class="roboto fw-500"><?php echo $pro3['namePro']; ?></a>
+                                <a href="/site/product/show/{{$pro3['id']}}" class="roboto fw-500">{{$pro3['namePro']}}</a>
                             </div>
                         </div>
-                    <?php } ?>
+                    @endforeach
 
                 </div>
             </div>
@@ -261,10 +262,10 @@
                         <h6 class="text-uppercase fw-700 color-ff">Danh mục</h6>
                         <div class="panel-group" id="accordion">
                             <div class="accordion" id="product-categorie">
-                                <?php foreach ($data['category'] as $cate) { ?>
+                                @foreach($data['category'] as $cate)
                                     <div class="card">
                                         <div class="card-header">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#cat1" aria-expanded="false" aria-controls="cat1" onclick="location.href='index.php?c=product&a=list_cate&id=<?php echo $cate['id']; ?>'"><?php echo $cate['nameCate']; ?></button>
+                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#cat1" aria-expanded="false" aria-controls="cat1" onclick="location.href='/site/catgory/list/{{$cate['id']}}">{{$cate['nameCate']}}</button>
                                         </div>
 
                                         <div id="cat1" class="collapse" data-parent="#product-categorie">
@@ -272,7 +273,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                <?php } ?>
+                                @endforeach
 
                             </div>
                             <!--/panel-->
@@ -292,7 +293,7 @@
                     <!--/price filter-->
 
                     <div class="single-block special-offer pos-relative">
-                        <img src="public/site/images/offer.jpg" alt="offer product" class="img-fluid">
+                        <img src="{{asset('site/images/offer.jpg')}}" alt="offer product" class="img-fluid">
                         <div class="offer-text text-center">
                             <p>Quảng cáo<span class="fw-700 roboto text-uppercase">Một chút ưu đãi</span>Dành cho bạn</p>
                             <a href="#" title="Shop Now">Mua ngay</a>
@@ -319,3 +320,4 @@
 <!-- ======================================= 
         ==End Product gallery section== 
     =======================================-->
+    @include("site/MasterLayout/thongtin")

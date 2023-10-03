@@ -154,7 +154,7 @@
             <div class="row">
                 <div class="col-12">
                     <div id="menuzord" class="menuzord">
-                        <a href="index.php?c=index&a=" class="menuzord-brand custom-logo"><img id="logo" src="{{asset('site/HTML/images/logo.png')}}" alt="logo"></a>
+                        <a href="/" class="menuzord-brand custom-logo"><img id="logo" src="{{asset('site/HTML/images/logo.png')}}" alt="logo"></a>
                         <ul class="menuzord-menu menuzord-right">
                             <!-- <li><a href="#" title="Service">Service</a>
                                 <ul class="dropdown triangle">
@@ -164,7 +164,7 @@
                             </li> -->
                             <li><a href="#" title="Pages">Tuỳ chọn</a>
                                 <ul class="dropdown triangle">
-                                    <li><a href="index.php">Giới thiệu</a></li>
+                                    <li><a href="/">Giới thiệu</a></li>
                                     <li><a href="<?php 
                                                     // if (isset($_SESSION['account']['id'])) {
                                                     //     echo 'index.php?c=product&a=like_list&id=' . $_SESSION['account']['id'];
@@ -172,7 +172,7 @@
                                                     //     echo 'index.php?c=index&a=login';
                                                     // }
                                                      ?>">Sản phẩm đã thích</a></li>
-                                    <li><a href="index.php?c=product&a=showAll">Danh sách sản phẩm</a></li>
+                                    <li><a href="/site/product/list">Danh sách sản phẩm</a></li>
                                     <li><a href="<?php 
                                                     // if (isset($_SESSION['account']['id'])) {
                                                     //     echo "index.php?c=card&a=list";
@@ -180,7 +180,7 @@
                                                     //     echo "index.php?c=index&a=login";
                                                     // }
                                                      ?>">Giỏ hàng</a></li>
-                                    <li><a href="index.php">Đặt lịch</a></li>
+                                    <li><a href="/">Đặt lịch</a></li>
                                     <?php //if(isset($_SESSION['account']['id'])){ ?><li><a href="index.php?c=order&a=list">Lịch sử mua hàng</a></li><?php //} ?>
                                     <!-- <li><a href="error.html">404 page</a></li> -->
                                 </ul>
@@ -193,7 +193,7 @@
                                                 <li>
                                                     <h6>Tất cả</h6>
                                                 </li>
-                                                <li><a href="index.php?c=product&a=showAll">Tất cả sản phẩm hiện có</a></li>
+                                                <li><a href="/site/product/list">Tất cả sản phẩm hiện có</a></li>
                                             </ul>
                                         </div>
 

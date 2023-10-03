@@ -14,6 +14,7 @@ class AdminProductDetailController extends Controller
         $data['product'] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
                                         ->select("product.namePro", "product_detail.*")
                                         ->where("product_detail.isDeleted" , "!=", 0)
+                                        ->where("product_detail.product_id", "=", $id)
                                         ->get();
         $data['id'] = $id;
         return view("admin/Product_detail/product_detail-list", ['data' => $data]);
