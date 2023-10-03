@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\site\LikeController;
 use App\Http\Controllers\site\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,4 +11,9 @@ Route::prefix("/site/product")->group(function(){
 
 Route::prefix("/site/category")->group(function(){
     Route::get("/list/{id}", [ProductController::class, "selectCategory"]);
+});
+
+Route::prefix("/site/like")->group(function(){
+    Route::get("/product/{id}", [LikeController::class, "list"]);
+    Route::get("/add/{id}", [LikeController::class, "add"]);
 });

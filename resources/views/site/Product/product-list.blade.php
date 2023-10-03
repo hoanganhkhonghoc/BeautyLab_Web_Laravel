@@ -69,15 +69,11 @@
 
                              <div class="favouritCart">
                                  <ul>
-                                     <li><a href="<?php //if (isset($_SESSION['account']['id'])) {
-                                                    //     if ($_SESSION['account']['level'] < 3) {
-                                                    //         die();
-                                                    //     } else {
-                                                    //         echo 'index.php?c=product&a=like_list&id=' . $_SESSION['account']['id'];
-                                                    //     }
-                                                    // } else {
-                                                    //     echo 'index.php?c=index&a=login';
-                                                    //} ?>"><i class="fa fa-heart-o"></i></a></li>
+                                     <li><a href="@if(Auth::guard("client")->check())
+                                        /site/like/product/{{Auth::guard("client")->user()->id}}
+                                    @else
+                                        /login/showView
+                                    @endif"><i class="fa fa-heart-o"></i></a></li>
                                      <li class="pos-relative"><a href="<?php //if (isset($_SESSION['account']['id'])) {
                                                                         //     echo 'index.php?c=card&a=list';
                                                                         // } else {
@@ -106,15 +102,13 @@
                                                                 //     echo 'index.php?c=index&a=login';
                                                                 //} ?>" title="Add to Cart"><i class="fa fa-cart-plus"></i></a></li>
                                                  <li><a href="/site/product/show/{{$pro['id']}}" class="color-ff text-capitalize roboto" data-gall="gallery1" title="Xem chi tiết">Xem chi tiết</a></li>
-                                                 <li><a href="<?php //if (isset($_SESSION['account']['id'])) {
-                                                                //     if ($_SESSION['account']['level'] < 3) {
-                                                                //         die('Tài khoản của bạn k được phép vào đây !!');
-                                                                //     } else {
-                                                                //         echo 'index.php?c=product&a=add_like&id=' . $pro['id'];
-                                                                //     }
-                                                                // } else {
-                                                                //     echo 'index.php?c=index&a=login';
-                                                                //} ?>" title="Yêu thích sản phẩm"><i class="fa fa-heart<?php //if (isset($_SESSION['account']['id'])) {
+                                                 <li><a href="
+                                                        @if(Auth::guard("client")->check())
+                                                            /site/like/add/{{$pro['id']}}
+                                                        @else
+                                                            /login/showView
+                                                        @endif
+                                                 " title="Yêu thích sản phẩm"><i class="fa fa-heart<?php //if (isset($_SESSION['account']['id'])) {
                                                                                                                         //     $i = 0;
                                                                                                                         //     foreach ($data['likePro'] as $lp) {
                                                                                                                         //         if ($pro['id'] == $lp['product_detail_id']) {
@@ -136,7 +130,7 @@
                                      </div>
                                      <div class="product-price">
                                          <a href="/site/product/show/{{$pro['id']}}" class="readmore fw-500 color-51 roboto" title="Xem chi tiết">Xem chi tiết</a>
-                                         <h6 class="color-72 fw-500">{{$pro['price'] . "VNĐ"}}</h6>
+                                         <h6 class="color-72 fw-500">{{number_format($pro['price']) . "VNĐ"}}</h6>
                                          <p class="short-discription"></p>
                                          <div class="product-divider"></div>
                                          <a href="/site/product/show/{{$pro['id']}}" class="roboto fw-500">{{$pro["namePro"]}}</a>

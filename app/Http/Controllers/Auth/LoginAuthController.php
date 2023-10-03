@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Session;
 class LoginAuthController extends Controller
 {
     public function showViewLogin(){
+        notyf()->position('x', 'center')
+                ->position('y', 'top')
+                ->addWarning("Hãy đăng nhập tài khoản !!");
         return view("/site/Login/login");
     }
 

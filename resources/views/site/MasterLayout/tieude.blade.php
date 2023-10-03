@@ -165,13 +165,13 @@
                             <li><a href="#" title="Pages">Tuỳ chọn</a>
                                 <ul class="dropdown triangle">
                                     <li><a href="/">Giới thiệu</a></li>
-                                    <li><a href="<?php 
-                                                    // if (isset($_SESSION['account']['id'])) {
-                                                    //     echo 'index.php?c=product&a=like_list&id=' . $_SESSION['account']['id'];
-                                                    // } else {
-                                                    //     echo 'index.php?c=index&a=login';
-                                                    // }
-                                                     ?>">Sản phẩm đã thích</a></li>
+                                    <li><a href="
+                                                @if(Auth::guard("client")->check())
+                                                    /site/like/product/{{Auth::guard("client")->user()->id}}
+                                                @else
+                                                    /login/showView
+                                                @endif
+                                                ">Sản phẩm đã thích</a></li>
                                     <li><a href="/site/product/list">Danh sách sản phẩm</a></li>
                                     <li><a href="<?php 
                                                     // if (isset($_SESSION['account']['id'])) {
@@ -181,7 +181,9 @@
                                                     // }
                                                      ?>">Giỏ hàng</a></li>
                                     <li><a href="/">Đặt lịch</a></li>
-                                    <?php //if(isset($_SESSION['account']['id'])){ ?><li><a href="index.php?c=order&a=list">Lịch sử mua hàng</a></li><?php //} ?>
+                                    @if(Auth::guard("client")->check())
+                                        <li><a href="#">Lịch sử mua hàng</a></li>
+                                    @endif
                                     <!-- <li><a href="error.html">404 page</a></li> -->
                                 </ul>
                             </li>
