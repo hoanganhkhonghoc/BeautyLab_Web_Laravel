@@ -1,4 +1,5 @@
-    <!-- ======================================= 
+@include('site/MasterLayout/tieude')
+<!-- ======================================= 
         ==start cart section==  
     =======================================-->
     <section class="beauty-cart">
@@ -24,49 +25,45 @@
                                             <th class="product-subtotal">Tổng tiền</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <?php $giatong = 0;
-                                        foreach ($data['product'] as $pro) { ?>
+                                    <tbody> 
+                                        @foreach($data['cart'] as $cart)
                                             <tr class="woocommerce-cart-form__cart-item cart_item">
                                                 <td class="product-remove">
-                                                    <a href="index.php?c=card&a=delete&id=<?php echo $pro['id']; ?>&cart=<?php echo $pro['idCard']; ?>" class="remove" aria-label="Remove this item" data-product_id="26" data-product_sku="woo-single">×</a>
+                                                    <a href="index.php?c=card&a=delete&id=<?php //echo $pro['id']; ?>&cart=<?php //echo $pro['idCard']; ?>" class="remove" aria-label="Remove this item" data-product_id="26" data-product_sku="woo-single">×</a>
                                                 </td>
-                                                <?php $_SESSION['cart'] = $pro['idCard']; ?>
                                                 <td class="product-thumbnail">
                                                     <a href="#">
-                                                        <img width="300" height="300" src="public/uploads/<?php echo $pro['img']; ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" loading="lazy" srcset="">
+                                                        <img width="300" height="300" src="{{asset("img/" . $cart['img'])}}" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" loading="lazy" srcset="">
                                                     </a>
                                                 </td>
 
                                                 <td class="product-name" data-title="Product">
-                                                    <a href="index.php?c=product&a=detail&id=<?php echo $pro['id']; ?>"><?php echo $pro['namePro']; ?></a>
+                                                    <a href="index.php?c=product&a=detail&id=<?php //echo $pro['id']; ?>">{{$cart['namePro']}}</a>
                                                 </td>
 
                                                 <td class="product-price" data-title="Price">
                                                     <span class="woocommerce-Price-amount amount">
                                                         <bdi>
-                                                            <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php echo number_format($pro['price']) . ' VNĐ'; ?>
+                                                            <span class="woocommerce-Price-currencySymbol">&nbsp;</span>{{number_format($cart['price'])}}
                                                         </bdi>
                                                     </span>
                                                 </td>
 
                                                 <td class="product-quantity" data-title="Quantity">
                                                     <div class="quantity">
-                                                        <input type="number" id="" class="input-text qty text" step="1" min="1" max="<?php echo $pro['maxQuanity']; ?>" name="quanity['<?php echo $pro['id']; ?>']" value="<?php echo $pro['quanity']; ?>" title="Số lượng" size="4" placeholder="" />
+                                                        <input type="number" id="" class="input-text qty text" step="1" min="1" max="{{$cart['quanity']}}" name="quanity['<?php //echo $pro['id']; ?>']" value="{{$cart['quanity']}}" title="Số lượng" size="4" placeholder="" />
                                                     </div>
                                                 </td>
 
                                                 <td class="product-subtotal" data-title="Subtotal">
                                                     <span class="woocommerce-Price-amount amount">
                                                         <bdi>
-                                                            <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php $tt = $pro['price'] * $pro['quanity'];
-                                                                                                                        echo number_format($tt) . ' VNĐ';  ?>
+                                                            <span class="woocommerce-Price-currencySymbol">&nbsp;</span>{{number_format($cart['quanity'] * $cart['price']) . ' VNĐ'}}
                                                         </bdi>
                                                     </span>
                                                 </td>
                                             </tr>
-                                        <?php $giatong = $giatong + $tt;
-                                        } ?>
+                                        @endforeach
 
                                         <tr>
                                             <td colspan="6" class="actions">
@@ -74,14 +71,14 @@
                             </form>
                             <form action="index.php?c=discount&a=index" method="post">
                                 <div class="coupon">
-                                    <?php if (!isset($_SESSION['magiamgia'])) { ?>
+                                    <?php //if (!isset($_SESSION['magiamgia'])) { ?>
                                         <label for="coupon_code">Mã giảm giá:</label>
                                         <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Mã giảm giá">
                                         <button type="submit" class="button" name="apply_coupon" value="Apply coupon">Áp dụng mã</button>
-                                    <?php }else{ ?>
-                                        <p for="coupon_code">Mã giảm giá đã áp dụng: <?php echo $_SESSION['checkcodediscount']; ?> &emsp; </p>
+                                    <?php //}else{ ?>
+                                        <p for="coupon_code">Mã giảm giá đã áp dụng: <?php //echo $_SESSION['checkcodediscount']; ?> &emsp; </p>
                                         <button type="submit" name="unset" class="button" name="apply_coupon">Huỷ mã</button>
-                                    <?php } ?>
+                                    <?php //} ?>
                                 </div>
                             </form>
 
@@ -104,7 +101,7 @@
                                                 <td data-title="Subtotal">
                                                     <span class="woocommerce-Price-amount amount">
                                                         <bdi>
-                                                            <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php echo number_format($giatong) . ' VNĐ'; ?>
+                                                            <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php //echo number_format($giatong) . ' VNĐ'; ?>
                                                         </bdi>
                                                     </span>
                                                 </td>
@@ -114,14 +111,14 @@
                                                 <td data-title="Subtotal">
                                                     <span class="woocommerce-Price-amount amount">
                                                         <bdi>
-                                                            <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php $giamgia = 0;
-                                                                                                                        if (isset($_SESSION['money'])) {
-                                                                                                                            $giamgia = $_SESSION['money'];
-                                                                                                                        }
-                                                                                                                        if (isset($_SESSION['percent'])) {
-                                                                                                                            $giamgia = ($_SESSION['percent'] * $giatong) / 100;
-                                                                                                                        }
-                                                                                                                        echo number_format($giamgia) . ' VNĐ'; ?>
+                                                            <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php //$giamgia = 0;
+                                                                                                                        // if (isset($_SESSION['money'])) {
+                                                                                                                        //     $giamgia = $_SESSION['money'];
+                                                                                                                        // }
+                                                                                                                        // if (isset($_SESSION['percent'])) {
+                                                                                                                        //     $giamgia = ($_SESSION['percent'] * $giatong) / 100;
+                                                                                                                        // }
+                                                                                                                        //echo number_format($giamgia) . ' VNĐ'; ?>
                                                         </bdi>
                                                     </span>
                                                 </td>
@@ -132,7 +129,7 @@
                                                     <strong>
                                                         <span class="woocommerce-Price-amount amount">
                                                             <bdi>
-                                                                <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php echo number_format($giatong - $giamgia) . ' VNĐ'; ?>
+                                                                <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php //echo number_format($giatong - $giamgia) . ' VNĐ'; ?>
                                                             </bdi>
                                                         </span>
                                                     </strong>
@@ -164,3 +161,4 @@
     <!-- ======================================= 
         ==End cart section==  
     =======================================-->
+    @include("site/MasterLayout/thongtin")

@@ -101,18 +101,11 @@
                             </li>
                             </form>
                             <li>
-                                <a href="<?php //if (isset($_SESSION['account']['id'])) {
-                                            //     if ($_SESSION['account']['level'] < 3) {
-                                            //         die('Tài khoản của bạn k được phép vào đây !!');
-                                            //     } else {
-                                            //         echo 'index.php?c=product&a=add_likeIndetail&id=' . $data['product'][0]['id'];
-                                            //     }
-                                            // } else {
-                                            //     echo 'index.php?c=index&a=login';
-                                            // } ?>" class="favourit"><i class="fa fa-heart<?php // if ($data['like'] == 1) {
-                                            //                                             } else {
-                                            //                                                 echo '-o';
-                                                                                        //} ?>"></i></a>
+                                <a href="@if(Auth::guard("client")->check())
+                                            /site/like/add/{{$data['product']->id}}
+                                        @else
+                                            /login/showView
+                                        @endif" class="favourit"><i class="fa fa-heart"></i></a>
                             </li>
                         </ul>
 

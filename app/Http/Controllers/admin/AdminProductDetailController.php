@@ -15,6 +15,7 @@ class AdminProductDetailController extends Controller
                                         ->select("product.namePro", "product_detail.*")
                                         ->where("product_detail.isDeleted" , "!=", 0)
                                         ->where("product_detail.product_id", "=", $id)
+                                        ->where("product_detail.isSoid", "!=", 0)
                                         ->get();
         $data['id'] = $id;
         return view("admin/Product_detail/product_detail-list", ['data' => $data]);
@@ -38,7 +39,7 @@ class AdminProductDetailController extends Controller
         $product_detail->price = $request->price;
         $product_detail->quanity = $request->quanity;
         $product_detail->detail = $request->detail;
-        $product_detail->isSoid = $request->isSoid;
+        $product_detail->isSoid = $this->isSoid($request->quanity);
         $product_detail->isDeleted = 1;
         $product_detail->color = $request->color;
 
@@ -71,7 +72,6 @@ class AdminProductDetailController extends Controller
 
     public function xl_edit(Request $request, $id){
         $product = ProductDetail::find($id);
-        dd($request);
         if($request->imgPro == null){
             $img = $request->img;
         }else{
@@ -84,7 +84,7 @@ class AdminProductDetailController extends Controller
             "price" => $request->price,
             "quanity" => $request->quanity,
             "color" => $request->color,
-            "isSoid" => $request->isSoid,
+            "isSoid" => $this->isSoid($request->quanity),
         ]);
 
         $product->save();
@@ -100,5 +100,15 @@ class AdminProductDetailController extends Controller
                                         ->first();
                                         // dd($data);
         return view("admin/Product_detail/product_detail-show", ["data" => $data]);
+    }
+
+    public function isSoid($quanity){
+        if($quanity == 0){
+            return 0;
+        }else if($quanity <= 10 && $quanity > 0){
+            return 1;
+        }else{
+            return 2;
+        }
     }
 }

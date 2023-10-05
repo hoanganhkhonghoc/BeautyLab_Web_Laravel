@@ -173,13 +173,13 @@
                                                 @endif
                                                 ">Sản phẩm đã thích</a></li>
                                     <li><a href="/site/product/list">Danh sách sản phẩm</a></li>
-                                    <li><a href="<?php 
-                                                    // if (isset($_SESSION['account']['id'])) {
-                                                    //     echo "index.php?c=card&a=list";
-                                                    // } else {
-                                                    //     echo "index.php?c=index&a=login";
-                                                    // }
-                                                     ?>">Giỏ hàng</a></li>
+                                    <li><a href="
+                                                @if(Auth::guard("client")->check())
+                                                    /site/card/show
+                                                @else
+                                                    /login/showView
+                                                @endif
+                                                ">Giỏ hàng</a></li>
                                     <li><a href="/">Đặt lịch</a></li>
                                     @if(Auth::guard("client")->check())
                                         <li><a href="#">Lịch sử mua hàng</a></li>

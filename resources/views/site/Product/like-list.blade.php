@@ -61,7 +61,7 @@
                      <div class="favouritCart">
                          <ul>
                              <li><a href="/site/like/product/{{Auth::guard("client")->user()->id}}"><i class="fa fa-heart-o"></i></a></li>
-                             <li class="pos-relative"><a href="/site/like/product/{{Auth::guard("client")->user()->id}}"><i class="fa fa-cart-plus"></i><span><?php //echo number_format($data['slCard']); ?></span></a></li>
+                             <li class="pos-relative"><a href="/site/card/show"><i class="fa fa-cart-plus"></i><span><?php //echo number_format($data['slCard']); ?></span></a></li>
                          </ul>
                      </div>
                  </div>

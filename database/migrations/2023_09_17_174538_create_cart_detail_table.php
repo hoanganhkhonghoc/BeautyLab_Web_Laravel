@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger("cart_id");
             $table->unsignedBigInteger("product_detail_id");
             $table->integer("isDeleted")->default(1);
+            $table->integer("quanity");
             // thêm 2 cột thành khoá chính
             $table->primary(['cart_id', 'product_detail_id']);
 

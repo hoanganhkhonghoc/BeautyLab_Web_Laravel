@@ -15,7 +15,9 @@ class ProductController extends Controller
         $data['soluong'] = ProductDetail::where("isDeleted", "!=", 0)->where("isSoid","!=",0)->count();
         $data['product'] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
                                         ->select("product_detail.*", "product.namePro")
-                                        ->where("product_detail.isDeleted", "!=", 0)->paginate(12);
+                                        ->where("product_detail.isDeleted", "!=", 0)
+                                        ->where("product_detail.isSoid","!=",0)
+                                        ->paginate(12);
         // san pham yeu thich
         return view("site/Product/product-list", ['data' => $data]);
     }

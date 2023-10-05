@@ -74,11 +74,13 @@
                                     @else
                                         /login/showView
                                     @endif"><i class="fa fa-heart-o"></i></a></li>
-                                     <li class="pos-relative"><a href="<?php //if (isset($_SESSION['account']['id'])) {
-                                                                        //     echo 'index.php?c=card&a=list';
-                                                                        // } else {
-                                                                        //     echo 'index.php?c=index&a=login';
-                                                                        //} ?>"><i class="fa fa-cart-plus"></i><span><?php //echo number_format($data['slCard']); ?></span></a></li>
+                                     <li class="pos-relative"><a href="
+                                                                        @if(Auth::guard("client")->check())
+                                                                            /site/card/show
+                                                                        @else
+                                                                            /login/showView
+                                                                        @endif
+                                                                    "><i class="fa fa-cart-plus"></i><span><?php //echo number_format($data['slCard']); ?></span></a></li>
                                  </ul>
                              </div>
                          </div>
@@ -108,23 +110,7 @@
                                                         @else
                                                             /login/showView
                                                         @endif
-                                                 " title="Yêu thích sản phẩm"><i class="fa fa-heart<?php //if (isset($_SESSION['account']['id'])) {
-                                                                                                                        //     $i = 0;
-                                                                                                                        //     foreach ($data['likePro'] as $lp) {
-                                                                                                                        //         if ($pro['id'] == $lp['product_detail_id']) {
-                                                                                                                        //             $i = 1;
-                                                                                                                        //         }
-                                                                                                                        //     }
-                                                                                                                        //     switch ($i) {
-                                                                                                                        //         case 1:
-                                                                                                                        //             break;
-                                                                                                                        //         case 0:
-                                                                                                                        //             echo '-o';
-                                                                                                                        //             break;
-                                                                                                                        //     }
-                                                                                                                        // } else {
-                                                                                                                        //     echo '-o';
-                                                                                                                        //} ?>"></i></a></li>
+                                                 " title="Yêu thích sản phẩm"><i class="fa fa-heart"></i></a></li>
                                              </ul>
                                          </div>
                                      </div>
