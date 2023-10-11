@@ -80,7 +80,7 @@
                                                                         @else
                                                                             /login/showView
                                                                         @endif
-                                                                    "><i class="fa fa-cart-plus"></i><span><?php //echo number_format($data['slCard']); ?></span></a></li>
+                                                                    "><i class="fa fa-cart-plus"></i><span>{{$data["countCart"]}}</span></a></li>
                                  </ul>
                              </div>
                          </div>
@@ -98,11 +98,13 @@
                                          <img src="{{asset("img/" . $pro['img'])}}" alt="product" class="img-fluid">
                                          <div class="product-hover">
                                              <ul>
-                                                 <li><a href="<?php // if (isset($_SESSION['account']['id'])) {
-                                                                //     echo 'index.php?c=card&a=add&id=' . $pro['id'];
-                                                                // } else {
-                                                                //     echo 'index.php?c=index&a=login';
-                                                                //} ?>" title="Add to Cart"><i class="fa fa-cart-plus"></i></a></li>
+                                                 <li><a href="
+                                                    @if(Auth::guard("client")->check())
+                                                        /site/card/addList/{{$pro['id']}}/1
+                                                    @else
+                                                        /login/showView
+                                                    @endif
+                                                    " title="Add to Cart"><i class="fa fa-cart-plus"></i></a></li>
                                                  <li><a href="/site/product/show/{{$pro['id']}}" class="color-ff text-capitalize roboto" data-gall="gallery1" title="Xem chi tiết">Xem chi tiết</a></li>
                                                  <li><a href="
                                                         @if(Auth::guard("client")->check())

@@ -19,7 +19,7 @@
                 <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
                     <div class="cta-content">
                         <p>Đặt trước tại đây để được giảm tới <span class="color-d5">25%</span> !</p>
-                        <a href="index.php">Đặt lịch hẹn</a>
+                        <a href="/">Đặt lịch hẹn</a>
                     </div>
                 </div>
             </div>

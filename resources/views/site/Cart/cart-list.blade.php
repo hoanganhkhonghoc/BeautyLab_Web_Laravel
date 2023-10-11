@@ -13,7 +13,8 @@
                     <div class="entry-content">
                         <div class="woocommerce">
                             <div class="woocommerce-notices-wrapper"></div>
-                            <form class="woocommerce-cart-form" action="index.php?c=card&a=update" method="post">
+                            <form class="woocommerce-cart-form" action="/site/card/updateCart/{{$data["Idcart"]->id}}" method="post">
+                                @csrf
                                 <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -26,10 +27,11 @@
                                         </tr>
                                     </thead>
                                     <tbody> 
+                                        <?php $sumAllProductInCart = 0; ?>
                                         @foreach($data['cart'] as $cart)
                                             <tr class="woocommerce-cart-form__cart-item cart_item">
                                                 <td class="product-remove">
-                                                    <a href="index.php?c=card&a=delete&id=<?php //echo $pro['id']; ?>&cart=<?php //echo $pro['idCard']; ?>" class="remove" aria-label="Remove this item" data-product_id="26" data-product_sku="woo-single">×</a>
+                                                    <a href="/site/card/deleted/{{$cart['product_id']}}/{{$cart["cart_id"]}}" class="remove" aria-label="Remove this item" data-product_id="26" data-product_sku="woo-single">×</a>
                                                 </td>
                                                 <td class="product-thumbnail">
                                                     <a href="#">
@@ -38,7 +40,7 @@
                                                 </td>
 
                                                 <td class="product-name" data-title="Product">
-                                                    <a href="index.php?c=product&a=detail&id=<?php //echo $pro['id']; ?>">{{$cart['namePro']}}</a>
+                                                    <a href="/site/product/show/{{$cart["product_id"]}}">{{$cart['namePro'] . " (" . $cart['color'] . ")"}}</a>
                                                 </td>
 
                                                 <td class="product-price" data-title="Price">
@@ -51,7 +53,7 @@
 
                                                 <td class="product-quantity" data-title="Quantity">
                                                     <div class="quantity">
-                                                        <input type="number" id="" class="input-text qty text" step="1" min="1" max="{{$cart['quanity']}}" name="quanity['<?php //echo $pro['id']; ?>']" value="{{$cart['quanity']}}" title="Số lượng" size="4" placeholder="" />
+                                                        <input type="number" class="input-text qty text" step="1" min="1" max="{{$cart['quanity']}}" name="quanity[{{$cart['product_id']}}]" value="{{$cart['quanity']}}" title="Số lượng" size="4" placeholder="" />
                                                     </div>
                                                 </td>
 
@@ -59,6 +61,7 @@
                                                     <span class="woocommerce-Price-amount amount">
                                                         <bdi>
                                                             <span class="woocommerce-Price-currencySymbol">&nbsp;</span>{{number_format($cart['quanity'] * $cart['price']) . ' VNĐ'}}
+                                                                                                                        <?php $sumAllProductInCart += ($cart['quanity'] * $cart['price']); ?>
                                                         </bdi>
                                                     </span>
                                                 </td>
@@ -70,7 +73,7 @@
                                                 <button type="submit" class="button" name="update_cart" value="Update cart" aria-disabled="true">Cập nhật</button>
                             </form>
                             <form action="index.php?c=discount&a=index" method="post">
-                                <div class="coupon">
+                                {{-- <div class="coupon">
                                     <?php //if (!isset($_SESSION['magiamgia'])) { ?>
                                         <label for="coupon_code">Mã giảm giá:</label>
                                         <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Mã giảm giá">
@@ -79,7 +82,7 @@
                                         <p for="coupon_code">Mã giảm giá đã áp dụng: <?php //echo $_SESSION['checkcodediscount']; ?> &emsp; </p>
                                         <button type="submit" name="unset" class="button" name="apply_coupon">Huỷ mã</button>
                                     <?php //} ?>
-                                </div>
+                                </div> --}}
                             </form>
 
 
@@ -101,7 +104,7 @@
                                                 <td data-title="Subtotal">
                                                     <span class="woocommerce-Price-amount amount">
                                                         <bdi>
-                                                            <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php //echo number_format($giatong) . ' VNĐ'; ?>
+                                                            <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php echo number_format($sumAllProductInCart) . ' VNĐ'; ?>
                                                         </bdi>
                                                     </span>
                                                 </td>
@@ -111,14 +114,7 @@
                                                 <td data-title="Subtotal">
                                                     <span class="woocommerce-Price-amount amount">
                                                         <bdi>
-                                                            <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php //$giamgia = 0;
-                                                                                                                        // if (isset($_SESSION['money'])) {
-                                                                                                                        //     $giamgia = $_SESSION['money'];
-                                                                                                                        // }
-                                                                                                                        // if (isset($_SESSION['percent'])) {
-                                                                                                                        //     $giamgia = ($_SESSION['percent'] * $giatong) / 100;
-                                                                                                                        // }
-                                                                                                                        //echo number_format($giamgia) . ' VNĐ'; ?>
+                                                            <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php // 0; ?>
                                                         </bdi>
                                                     </span>
                                                 </td>
@@ -129,7 +125,7 @@
                                                     <strong>
                                                         <span class="woocommerce-Price-amount amount">
                                                             <bdi>
-                                                                <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php //echo number_format($giatong - $giamgia) . ' VNĐ'; ?>
+                                                                <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php echo number_format($sumAllProductInCart - 0) . ' VNĐ'; ?>
                                                             </bdi>
                                                         </span>
                                                     </strong>

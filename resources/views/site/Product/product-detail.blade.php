@@ -86,11 +86,12 @@
                         <p class="details-txt color-51">{{'Sản phẩm còn ' . number_format($data['product']->quanity) . ' sp'}}</p>
                         <ul class="add-cart-area pb-35">
                             <li class="qty">
-                                <form action="<?php //if (isset($_SESSION['account']['id'])) {
-                                                //     echo 'index.php?c=card&a=add&id=' . $data['product'][0]['id'];
-                                                // } else {
-                                                //     echo 'index.php?c=index&a=login';
-                                                //} ?>" method="post">
+                            <form action="@if(Auth::guard("client")->check())
+                                                /site/card/addDetail/{{$data['product']->id}}
+                                            @else
+                                                /login/showView
+                                            @endif" method="post">
+                                    @csrf
                                     <span class="text-uppercase color-51 fw-500 roboto mr-10">Số lượng :</span>
                                     <span class="decrese"><i class="fa fa-angle-left"></i></span>
                                     <input type="text" name="qty" id="number" value="1" min="1" readonly>
@@ -173,14 +174,14 @@
                                 <!--/single review-->
 
                                 <div class="review-form pt-20">
-                                    <!-- <h6 class="fw-600 color-d5 text-uppercase">leave a review</h6>
+                                    {{-- <h6 class="fw-600 color-d5 text-uppercase">leave a review</h6>
                                      <p class="rating-o pb-25">
                                          <i class="fa fa-star-o"></i>
                                          <i class="fa fa-star-o"></i>
                                          <i class="fa fa-star-o"></i>
                                          <i class="fa fa-star-o"></i>
                                          <i class="fa fa-star-o"></i>
-                                     </p> -->
+                                     </p> --}}
                                     @if(Auth::guard("client")->check())
                                         <form action="index.php?c=comment&a=index&id=<?php //echo $_GET['id']; ?>" method="post">
                                             <div class="form-group">
@@ -207,33 +208,21 @@
                                 <img src="{{asset('img/'.$pro3['img'])}}" alt="product" class="img-fluid">
                                 <div class="product-hover">
                                     <ul>
-                                        <li><a href="#" title="Add to Cart"><i class="fa fa-cart-plus"></i></a></li>
+                                        <li><a href="
+                                            @if(Auth::guard("client")->check())
+                                                /site/card/addList/{{$pro3['id']}}/1
+                                            @else
+                                                /login/showView
+                                            @endif
+                                            " title="Add to Cart"><i class="fa fa-cart-plus"></i></a></li>
                                         <li><a href="/site/product/show/{{$pro3['id']}}" class="color-ff text-capitalize roboto" data-gall="gallery1" title="Xem chi tiết">Xem chi tiết</a></li>
-                                        <li><a href="<?php //if (isset($_SESSION['account']['id'])) {
-                                                            // if ($_SESSION['account']['level'] < 3) {
-                                                            //     die('Tài khoản của bạn k được phép vào đây !!');
-                                                            // } else {
-                                                            //     echo 'index.php?c=product&a=add_like&id=' . $pro3['id'];
-                                                            // }
-                                                        // } else {
-                                                        //     echo 'index.php?c=index&a=login';
-                                                        //} ?>" title="Yêu thích sản phẩm"><i class="fa fa-heart<?php //if (isset($_SESSION['account']['id'])) {
-                                                                                                                //     $i = 0;
-                                                                                                                //     foreach ($data['likePro'] as $lp) {
-                                                                                                                //         if ($pro3['id'] == $lp['product_detail_id']) {
-                                                                                                                //             $i = 1;
-                                                                                                                //         }
-                                                                                                                //     }
-                                                                                                                //     switch ($i) {
-                                                                                                                //         case 1:
-                                                                                                                //             break;
-                                                                                                                //         case 0:
-                                                                                                                //             echo '-o';
-                                                                                                                //             break;
-                                                                                                                //     }
-                                                                                                                // } else {
-                                                                                                                //     echo '-o';
-                                                                                                                //} ?>"></i></a></li>
+                                        <li><a href="
+                                            @if(Auth::guard("client")->check())
+                                                /site/like/add/{{$pro3['id']}}
+                                            @else
+                                                /login/showView
+                                            @endif
+                                     " title="Yêu thích sản phẩm"><i class="fa fa-heart"></i></a></li>
                                     </ul>
                                 </div>
                             </div>

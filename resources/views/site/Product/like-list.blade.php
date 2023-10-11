@@ -79,11 +79,13 @@
                              <img src="{{asset('img/'.$pro['img'])}}" alt="product" class="img-fluid">
                              <div class="product-hover">
                                  <ul>
-                                     <li><a href="<?php //if (isset($_SESSION['account']['id'])) {
-                                                    //     echo 'index.php?c=card&a=add&id=' . $pro['id'];
-                                                    // } else {
-                                                    //     echo 'index.php?c=index&a=login';
-                                                    //} ?>" title="Thêm vào giỏ hàng"><i class="fa fa-cart-plus"></i></a></li>
+                                     <li><a href="
+                                        @if(Auth::guard("client")->check())
+                                            /site/card/addList/{{$pro['id']}}/1
+                                        @else
+                                            /login/showView
+                                        @endif
+                                        " title="Thêm vào giỏ hàng"><i class="fa fa-cart-plus"></i></a></li>
                                      <li><a href="/site/product/show/{{$pro['id']}}" class="color-ff text-capitalize roboto" data-gall="gallery1" title="Retexturing Activator">Xem chi tiết</a></li>
                                      <li><a href="/site/like/add/{{$pro['id']}}" title="Yêu thích sản phảm"><i class="fa fa-heart"></i></a></li>
                                  </ul>
