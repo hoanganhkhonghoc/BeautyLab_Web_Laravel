@@ -1,3 +1,4 @@
+@include('site/MasterLayout/tieude')
     <!-- ======================================= 
         ==start cart section==  
     =======================================-->
@@ -14,11 +15,11 @@
                             <div class="woocommerce-notices-wrapper"></div>
                             <div class="woocommerce-form-coupon-toggle">
                                 <div class="woocommerce-info">
-                                    <?php if(isset($_SESSION['magiamgia'])){ ?>
-                                    Mã giảm giá đã được áp dụng: <?php echo $_SESSION['checkcodediscount']; ?>
-                                    <?php }else { ?>
-                                    Bạn có mã giảm giá? <a href="#" class="showcoupon">Ấn vô đây để nhập</a>
-                                    <?php } ?>
+                                    <?php //if(isset($_SESSION['magiamgia'])){ ?>
+                                    {{-- Mã giảm giá đã được áp dụng: <?php //echo $_SESSION['checkcodediscount']; ?> --}}
+                                    <?php //}else { ?>
+                                    {{-- Bạn có mã giảm giá? <a href="#" class="showcoupon">Ấn vô đây để nhập</a> --}}
+                                    <?php //} ?>
                                 </div>
                             </div>
 
@@ -36,8 +37,8 @@
 
                             <div class="woocommerce-notices-wrapper"></div>
 
-                            <form name="checkout" method="post" class="checkout woocommerce-checkout" action="index.php?c=order&a=add">
-
+                            <form name="checkout" method="post" class="checkout woocommerce-checkout" action="/site/order/addOrder">
+                                @csrf
                                 <div class="col2-set" id="customer_details">
                                     <div class="col-1">
                                         <div class="woocommerce-billing-fields">
@@ -47,7 +48,7 @@
                                                     <label for="billing_company" class="">Họ và tên người nhận&nbsp;<span class="optional">(Bắt buộc)</span>
                                                     </label>
                                                     <span class="woocommerce-input-wrapper">
-                                                        <input type="text" class="input-text " name="billing_company" id="billing_company" placeholder="<?php echo $_SESSION['account']['name']; ?>" value="<?php echo $_SESSION['account']['name']; ?>" autocomplete="organization" required>
+                                                        <input type="text" class="input-text " name="billing_company" id="billing_company" placeholder="{{$data["client"]->name}}" value="{{$data["client"]->name}}" autocomplete="organization" required>
                                                     </span>
                                                 </p>
                                                 <p class="form-row address-field validate-required form-row-wide" id="billing_address_1_field" data-priority="50">
@@ -55,7 +56,7 @@
                                                         <abbr class="required" title="required">*</abbr>
                                                     </label>
                                                     <span class="woocommerce-input-wrapper">
-                                                        <input type="text" class="input-text" name="billing_address_1" id="billing_address_1" placeholder="<?php echo $_SESSION['account']['address']; ?>" value="<?php echo $_SESSION['account']['address']; ?>" autocomplete="address-line1" required data-placeholder="House number and street name">
+                                                        <input type="text" class="input-text" name="billing_address_1" id="billing_address_1" placeholder="{{$data["client"]->address}}" value="{{$data["client"]->address}}" autocomplete="address-line1" required data-placeholder="House number and street name">
                                                     </span>
                                                 </p>
                                                 <p class="form-row form-row-wide validate-required validate-phone" id="billing_phone_field" data-priority="100">
@@ -63,7 +64,7 @@
                                                         <abbr class="required" title="required">*</abbr>
                                                     </label>
                                                     <span class="woocommerce-input-wrapper">
-                                                        <input type="tel" class="input-text " name="billing_phone" id="billing_phone" placeholder="<?php echo '0'.$_SESSION['account']['phone']; ?>" value="0<?php echo $_SESSION['account']['phone']; ?>" autocomplete="tel" required>
+                                                        <input type="tel" class="input-text " name="billing_phone" id="billing_phone" placeholder="{{$data["client"]->phone}}" value="{{$data["client"]->phone}}" autocomplete="tel" required>
                                                     </span>
                                                 </p>
                                                 <p class="form-row form-row-wide validate-required validate-email" id="billing_email_field" data-priority="110">
@@ -71,7 +72,7 @@
                                                         <abbr class="required" title="required">*</abbr>
                                                     </label>
                                                     <span class="woocommerce-input-wrapper">
-                                                        <input type="email" class="input-text" name="billing_email" id="billing_email" placeholder="<?php echo $_SESSION['account']['email']; ?>" value="<?php echo $_SESSION['account']['email']; ?>" autocomplete="email here" required>
+                                                        <input type="email" class="input-text" name="billing_email" id="billing_email" placeholder="{{$data["client"]->email}}" value="{{$data["client"]->email}}" autocomplete="email here" required>
                                                     </span>
                                                 </p>
                                             </div>
@@ -125,10 +126,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <?php $giatong = 0;
-                                        foreach ($data['product'] as $pro) { ?>
+                                        <?php $giatong = 0; ?>
+                                        @foreach($data["cart"] as $pro)
                                             <tr class="cart_item">
-                                                <td class="product-name"><?php echo $pro['namePro']; ?>&nbsp; <strong class="product-quantity">×&nbsp;<?php echo $pro['quanity']; ?></strong></td>
+                                                <td class="product-name">{{$pro['namePro']}}&nbsp; <strong class="product-quantity">×&nbsp;{{$pro["quanity"]}}</strong></td>
                                                 <td class="product-total">
                                                     <span class="woocommerce-Price-amount amount">
                                                         <bdi>
@@ -138,8 +139,8 @@
                                                     </span>
                                                 </td>
                                             </tr>
-                                            <?php $giatong = $giatong + $tt;
-                                        } ?>
+                                            <?php $giatong += $tt; ?>
+                                        @endforeach
                                         </tbody>
 
                                         <tfoot>
@@ -149,13 +150,13 @@
                                                     <span class="woocommerce-Price-amount amount">
                                                         <bdi>
                                                             <span class="woocommerce-Price-currencySymbol"></span><?php $giamgia = 0;
-                                                                                                                        if (isset($_SESSION['money'])) {
-                                                                                                                            $giamgia = $_SESSION['money'];
-                                                                                                                        }
-                                                                                                                        if (isset($_SESSION['percent'])) {
-                                                                                                                            $giamgia = ($_SESSION['percent'] * $giatong) / 100;
-                                                                                                                        }
-                                                                                                                        echo number_format($giamgia) . ' VNĐ'; ?>
+                                                                                                                        // if (isset($_SESSION['money'])) {
+                                                                                                                        //     $giamgia = $_SESSION['money'];
+                                                                                                                        // }
+                                                                                                                        // if (isset($_SESSION['percent'])) {
+                                                                                                                        //     $giamgia = ($_SESSION['percent'] * $giatong) / 100;
+                                                                                                                        // }
+                                                                                                                        //echo number_format($giamgia) . ' VNĐ'; ?>
                                                         </bdi>
                                                     </span>
                                                 </td>
@@ -189,7 +190,7 @@
                                                     <strong>
                                                         <span class="woocommerce-Price-amount amount">
                                                             <bdi>
-                                                                <span class="woocommerce-Price-currencySymbol"></span><?php echo number_format($giatong + 30000 - $giamgia). ' VNĐ'; $_SESSION['giatongdon'] = ($giatong + 30000 - $giamgia); ?>
+                                                                <span class="woocommerce-Price-currencySymbol"></span><?php echo number_format($giatong + 30000 - $giamgia). ' VNĐ'; ?>
                                                             </bdi>
                                                         </span>
                                                     </strong>
@@ -197,19 +198,20 @@
                                             </tr>
                                         </tfoot>
                                     </table>
+                                    <input type="hidden" name="sumOrder" value="{{$giatong + 30000 - $giamgia}}">
                                     <!-- /.woocommerce-checkout-review-order-table -->
 
                                     <div id="payment" class="woocommerce-checkout-payment">
                                         <ul class="wc_payment_methods payment_methods methods">
-                                            <?php foreach($data['pay'] AS $pay){ ?>
+                                            @foreach($data['payment'] as $pay)
                                             <li class="wc_payment_method payment_method_bacs">
-                                                <input id="payment_method_bacs" type="radio" class="input-radio" name="payment_method" value="<?php echo $pay['id']; ?>" checked="checked" data-order_button_text="">
-                                                <label for="payment_method_bacs"> <?php echo $pay['namePay']; ?></label>
+                                                <input id="payment_method_bacs" type="radio" class="input-radio" name="payment_method" value="{{$pay['id']}}" checked="checked" data-order_button_text="">
+                                                <label for="payment_method_bacs"> {{$pay['namePay']}}</label>
                                                 <div class="payment_box payment_method_bacs">
                                                     <!-- <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p> -->
                                                 </div>
                                             </li>
-                                            <?php } ?>
+                                            @endforeach
                                         </ul>
                                         <div class="form-row place-order">
                                             <div class="woocommerce-terms-and-conditions-wrapper">
@@ -243,3 +245,4 @@
     <!-- ======================================= 
         ==End cart section==  
     =======================================-->
+    @include("site/MasterLayout/thongtin")

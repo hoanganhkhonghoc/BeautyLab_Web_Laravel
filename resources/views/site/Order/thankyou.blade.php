@@ -15,29 +15,29 @@
     <title>Thank you</title>
 
     <!--favicon icon-->
-    <link rel="icon" href="/trangsuc/public/site/HTML/images/favicon.png">
+    <link rel="icon" href="{{asset('site/HTML/images/favicon.png')}}">
 
     <!--bootstrap min css-->
-    <link rel="stylesheet" href="/trangsuc/public/site/HTML/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('site/HTML/css/bootstrap.min.css')}}">
 
     <!-- global style css -->
-    <link rel="stylesheet" href="/trangsuc/public/site/HTML/css/global-style.css">
+    <link rel="stylesheet" href="{{asset('site/HTML/css/global-style.css')}}">
 
     <!-- style css -->
-    <link rel="stylesheet" href="/trangsuc/public/site/HTML/style.css">
+    <link rel="stylesheet" href="{{asset('site/HTML/style.css')}}">
 
     <!-- color css -->
-    <link rel="stylesheet" href="/trangsuc/public/site/HTML/css/colors/color-1.css">
+    <link rel="stylesheet" href="{{asset('site/HTML/css/colors/color-1.css')}}">
 
     <!--responsive css-->
-    <link rel="stylesheet" href="/trangsuc/public/site/HTML/css/responsive.css">
+    <link rel="stylesheet" href="{{asset('site/HTML/css/responsive.css')}}">
 
 </head>
 
 <body>
 
     <div class="error-section">
-        <img class="body-img" src="/trangsuc/public/site/HTML/images/error-side.png" alt="img">
+        <img class="body-img" src="{{asset('site/HTML/images/error-side.png')}}" alt="img">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">

@@ -136,7 +136,7 @@
                                     </table>
 
                                     <div class="wc-proceed-to-checkout">
-                                        <a href="index.php?c=order&a=index" class="checkout-button button alt wc-forward">
+                                        <a href="/site/order/index/{{Auth::guard("client")->user()->id}}" class="checkout-button button alt wc-forward">
                                             Thanh toán
                                         </a>
                                     </div>

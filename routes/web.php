@@ -39,5 +39,6 @@ Nhóm Route bên phía Site
 Route::prefix("/")->group(__DIR__ . "/site/Home.php");
 Route::prefix("/")->group(__DIR__ . "/site/Product.php");
 Route::prefix("/")->group(__DIR__ . "/site/Cart.php");
+Route::prefix("/")->group(__DIR__ . "/site/Order.php");
 // phục vụ mục đích test
 Route::get('/test',[TestController::class, "test"]);

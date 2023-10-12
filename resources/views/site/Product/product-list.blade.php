@@ -80,7 +80,11 @@
                                                                         @else
                                                                             /login/showView
                                                                         @endif
-                                                                    "><i class="fa fa-cart-plus"></i><span>{{$data["countCart"]}}</span></a></li>
+                                                                    "><i class="fa fa-cart-plus"></i><span>
+                                                                                                        @if(Auth::guard("client")->check())
+                                                                                                            {{$data["countCart"]}}  
+                                                                                                        @endif      
+                                                                                                    </span></a></li>
                                  </ul>
                              </div>
                          </div>

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string("name")->nullable();
-            $table->string("phone")->nullable()->unique();
+            $table->string("phone")->nullable();
             $table->string("address")->nullable();
             $table->integer("sex");
             $table->integer("isDeleted")->default(1);

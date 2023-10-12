@@ -20,9 +20,11 @@ class ProductController extends Controller
                                         ->where("product_detail.isDeleted", "!=", 0)
                                         ->where("product_detail.isSoid","!=",0)
                                         ->paginate(12);
-        $data['countCart'] = CardDetail::join("cart", "cart.id", "=", "cart_detail.cart_id")
+        if(Auth::guard("client")->check()){
+            $data['countCart'] = CardDetail::join("cart", "cart.id", "=", "cart_detail.cart_id")
                                         ->where("cart.client_id", "=", Auth::guard("client")->user()->id)
                                         ->count();
+        }
         // san pham yeu thich
         return view("site/Product/product-list", ['data' => $data]);
     }
@@ -53,9 +55,11 @@ class ProductController extends Controller
                                         ->where("product_detail.isDeleted", "!=", 0)
                                         ->where("product.cat_id", "=", $id)
                                         ->paginate(12);
-        $data['countCart'] = CardDetail::join("cart", "cart.id", "=", "cart_detail.cart_id")
+        if(Auth::guard("client")->check()){
+            $data['countCart'] = CardDetail::join("cart", "cart.id", "=", "cart_detail.cart_id")
                                         ->where("cart.client_id", "=", Auth::guard("client")->user()->id)
                                         ->count();
+        }
         return view("site/Product/product-list", ["data" => $data]);
     }
 }
