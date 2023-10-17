@@ -1,3 +1,4 @@
+@include('site/MasterLayout/tieude')
 <!-- ======================================= 
         ==start cart section==  
     =======================================-->
@@ -16,25 +17,25 @@
 
                             <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
                                 <li class="woocommerce-order-overview__order order">
-                                    ID đơn hàng: <strong><?php echo $data['order']['id']; ?></strong>
+                                    ID đơn hàng: <strong>{{$data[0]->id}}</strong>
                                 </li>
                                 <li class="woocommerce-order-overview__date date" width="100px">
-                                    Ngày đặt hàng: <strong><?php echo $data['order']['date_order']; ?></strong>
+                                    Ngày đặt hàng: <strong>{{$data[0]->date_order}}</strong>
                                 </li>
                                 <li class="woocommerce-order-overview__total total">Tổng tiền:
                                     <strong>
                                         <span class="woocommerce-Price-amount amount">
                                             <bdi>
-                                                <span class="woocommerce-Price-currencySymbol"></span><?php echo number_format($data['order']['sum_total']) . 'VNĐ'; ?>
+                                                <span class="woocommerce-Price-currencySymbol"></span><?php echo number_format($data[0]->sum) . 'VNĐ'; ?>
                                             </bdi>
                                         </span>
                                     </strong>
                                 </li>
                                 <li class="woocommerce-order-overview__payment-method method">
-                                    Phương thức thanh toán: <strong><?php echo $data['pay']['namePay']; ?></strong>
+                                    Phương thức thanh toán: <strong>{{$data[0]['namePay']}}</strong>
                                 </li>
                                 <li class="woocommerce-order-overview__payment-method method">
-                                    Trạng thái đơn hàng: <strong><?php switch ($data['order']['status']) {
+                                    Trạng thái đơn hàng: <strong><?php switch ($data[0]->status) {
                                                                         case 0:
                                                                             echo 'Đơn hàng đã huỷ';
                                                                             break;
@@ -62,12 +63,12 @@
                                     </thead>
 
                                     <tbody>
-                                        <?php $tong = 0;
-                                        foreach ($data['product'] as $pro) { ?>
+                                        <?php $tong = 0; ?>
+                                        @foreach($data as $pro)
                                             <tr class="woocommerce-table__line-item order_item">
                                                 <td class="woocommerce-table__product-name product-name">
-                                                    <a href="index.php?c=product&a=detail&id=<?php echo $pro['id']; ?>"><?php echo $pro['namePro'] ?></a>
-                                                    <strong class="product-quantity">×&nbsp;<?php echo number_format($pro['quanity']); ?></strong>
+                                                    <a href="index.php?c=product&a=detail&id=<?php //echo $pro['id']; ?>">{{$pro["namePro"] . "(" . $pro["color"] . ")"}}</a>
+                                                    <strong class="product-quantity">×&nbsp;{{number_format($pro['price'])}}</strong>
                                                 </td>
 
                                                 <td class="woocommerce-table__product-total product-total">
@@ -79,7 +80,7 @@
                                                     </span>
                                                 </td>
                                             </tr>
-                                        <?php } ?>
+                                        @endforeach
                                     </tbody>
 
                                     <tfoot>
@@ -87,13 +88,13 @@
                                             <th scope="row">Tổng tiền sản phẩm:</th>
                                             <td>
                                                 <span class="woocommerce-Price-amount amount">
-                                                    <span class="woocommerce-Price-currencySymbol"></span><?php echo number_format($tong) . ' VNĐ'; ?>
+                                                    <span class="woocommerce-Price-currencySymbol"></span>{{number_format($tong) . ' VNĐ'}}
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Hình thức vận chuyển:</th>
-                                            <td><?php echo $data['pay']['namePay']; ?></td>
+                                            <td>{{$data[0]->namePay}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Giá tiền vận chuyển:</th>
@@ -101,13 +102,13 @@
                                         </tr>
                                         <tr>
                                             <th scope="row">Mã giảm giá:</th>
-                                            <td><?php echo number_format($data['order']['sum_total'] - $tong - 30000) . ' VNĐ'; ?></td>
+                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Tổng đơn:</th>
                                             <td>
-                                                <span class="woocommerce-Price-amount amount">
-                                                    <span class="woocommerce-Price-currencySymbol"></span><?php echo number_format($data['order']['sum_total']) . ' VNĐ'; ?>
+                                                <span class="woocommerce-Price-amount amount"><?php $tong += 30000; ?>
+                                                    <span class="woocommerce-Price-currencySymbol"></span>{{number_format($tong) . ' VNĐ'}}
                                                 </span>
                                             </td>
                                         </tr>
@@ -121,29 +122,29 @@
                                         <h2 class="woocommerce-column__title">Địa chỉ nhận hàng</h2>
 
                                         <address>
-                                            <?php echo 'Tên người nhận: ' . $data['receiver']['name']; ?><br>
+                                            {{'Tên người nhận: ' . $data[0]->name}}<br>
                                             <?php echo 'Giới tính: ';
-                                            if ($data['receiver']['sex'] == 1) {
+                                            if ($data[0]->sex == 1) {
                                                 echo 'Nam';
                                             } else {
                                                 echo 'Nữ';
                                             } ?><br>
-                                            <?php echo 'Địa chỉ giao hàng: ' . $data['receiver']['address']; ?><br>
-                                            <ion-icon name="call-outline"></ion-icon><?php echo 'SĐT: 0' . $data['receiver']['phone']; ?><br>
-                                            <ion-icon name="mail-outline"></ion-icon><?php echo 'Email: ' . $data['client']['email']; ?>
+                                            {{'Địa chỉ giao hàng: ' . $data[0]->address}}<br>
+                                            <ion-icon name="call-outline"></ion-icon>{{'SĐT: ' . $data[0]->phone}}<br>
+                                            <ion-icon name="mail-outline"></ion-icon>{{'Email: ' . Auth::guard("client")->user()->email}}
                                         </address>
                                     </div><!-- /.col-1 -->
 
                                     <div class="woocommerce-column woocommerce-column--2 woocommerce-column--shipping-address col-2">
                                         <h2 class="woocommerce-column__title">Thông tin người đặt hàng</h2>
                                         <address>
-                                            <?php echo 'Tên khách hàng: ' . $data['client']['name']; ?><br>
-                                            <?php echo 'ID khách hàng: ' . $data['client']['id']; ?><br>
-                                            <ion-icon name="mail-outline"></ion-icon><?php echo 'SĐT: 0' . $data['client']['phone']; ?><br>
-                                            <ion-icon name="call-outline"></ion-icon><?php echo 'Email: ' . $data['client']['email']; ?><br>
-                                            <?php if ($data['order']['status'] < 2 && $data['order']['status'] > 0) { ?>
-                                                <div style="width:100%; text-align:center;"><button id="huydonhang" onclick="location.href='index.php?c=order&a=delete&id=<?php echo $data['order']['id']; ?>'">Huỷ đơn</button></div>
-                                            <?php } ?>
+                                            {{'Tên khách hàng: '. Auth::guard("client")->user()->name}}<br>
+                                            {{'ID khách hàng: '. Auth::guard("client")->user()->id}}<br>
+                                            <ion-icon name="mail-outline"></ion-icon>{{'SĐT: ' . Auth::guard("client")->user()->phone}}<br>
+                                            <ion-icon name="call-outline"></ion-icon>{{'Email: ' . Auth::guard("client")->user()->email}}<br>
+                                            @if($data[0]->status == 1)
+                                                <div style="width:100%; text-align:center;"><button id="huydonhang" onclick="location.href='/site/order/deleted/{{$data[0]->id}}'">Huỷ đơn</button></div>
+                                            @endif
                                         </address>
                                     </div><!-- /.col-2 -->
                                 </section><!-- /.col2-set -->
@@ -162,3 +163,4 @@
 <!-- ======================================= 
         ==End cart section==  
     =======================================-->
+    @include("site/MasterLayout/thongtin")

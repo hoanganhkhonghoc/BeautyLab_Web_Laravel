@@ -35,3 +35,12 @@
 
 // Xoá Cart detail
 // Sau khi sử dụng thanh toán sản phẩm thì clear giỏ hàng
+
+
+// Khi người dùng đặt hàng thì bên admin sẽ phải có popup thông báo
+// Đồng nghĩa khi huỷ hàng cũng vậy
+
+// Huỷ đơn 
+// việc đầu tiên + lại số lượng sản phẩm trong kho
+
+// huỷ đơn không được khôi phục

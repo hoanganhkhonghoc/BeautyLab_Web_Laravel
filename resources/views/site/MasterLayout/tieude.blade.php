@@ -182,7 +182,7 @@
                                                 ">Giỏ hàng</a></li>
                                     <li><a href="/">Đặt lịch</a></li>
                                     @if(Auth::guard("client")->check())
-                                        <li><a href="#">Lịch sử mua hàng</a></li>
+                                        <li><a href="/site/order/list">Lịch sử mua hàng</a></li>
                                     @endif
                                     <!-- <li><a href="error.html">404 page</a></li> -->
                                 </ul>

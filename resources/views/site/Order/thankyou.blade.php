@@ -45,7 +45,7 @@
                     <div class="error-content">
                         <div class="error-txt">
                             <h1 class="fw-700 color-d5">Cảm ơn bạnn đã đặt hàng</h1>
-                            <a href="index.php?c=order&a=list" class="backto">Hoàn thành</a>
+                            <a href="/site/order/list" class="backto">Hoàn thành</a>
                         </div>
                     </div>
                 </div>

@@ -34,7 +34,6 @@ class OrderController extends Controller
         return view("site/Order/checkout", ["data" => $data]);
     }
 
-
     public function add(Request $request){
         // thêm dữ liệu vào bảng receiver
         $recever = new Receiver();
@@ -137,5 +136,62 @@ class OrderController extends Controller
             // dd($qrCode);
             return view('site/Order/QR', compact('qrCode'));
         }
+    }
+
+    public function list(){
+        $data['order'] = OrderModel::where("isDeleted", "!=", 0)
+                                    ->where("client_id", "=", Auth::guard("client")->user()->id)
+                                    ->get();
+        return view("site/Order/list", ["data" => $data]);
+    }
+
+    public function show($id){
+        $data = OrderModel::join("order_detail", "order_detail.order_id", "=", "order.id")
+                            ->join("receiver", "receiver.id", "=", "order.receiver_id")
+                            ->join("payment_methods", "payment_methods.id", "=", "order.pay_id")
+                            ->join("product_detail", "product_detail.id", "=", "order_detail.product_id")
+                            ->join("product", "product_detail.product_id", "=", "product.id")
+                            ->select("order.*", "order_detail.price", "product.namePro", "product_detail.color",
+                                    "receiver.name", "receiver.phone", "receiver.address", "receiver.sex",
+                                    "payment_methods.namePay", "order_detail.quanity")
+                            ->where("order.isDeleted", "!=", 0)
+                            ->where("order.id", "=", $id)
+                            ->get();
+        return view("site/Order/detail", ["data" => $data]);
+    }
+
+    public function deleted($id){
+        // Cập nhật trạng thái huỷ đơn
+        $order = OrderModel::find($id);
+        $order->update([
+            "updated_at" => Carbon::now(),
+            "status" => 0,
+        ]);
+        $order->save();
+        // Trả số lượng về
+        $product = ProductDetail::join("order_detail", "order_detail.product_id", "=", "product_detail.id")
+                                ->join("order", "order_detail.order_id", "=", "order.id")
+                                ->select("order_detail.quanity", "product_detail.id")
+                                ->where("product_detail.isDeleted", "!=", 0)
+                                ->where("order.isDeleted", "!=", 0)
+                                ->where("order.id", "=", $id)
+                                ->get();
+        // dd($product);
+        foreach($product as $pro){
+            // Lấy sản phẩm cần cập nhật
+            $productDetail = ProductDetail::where("isDeleted", "!=", 0)
+                            ->find($pro['id']);
+            // Cập nhật số lượng sản phẩm 
+            $quanityCurrent = $productDetail->quanity;
+            $quanityBonus = $pro["quanity"];
+            $sumQuanity = $quanityCurrent + $quanityBonus;
+            $productDetail->update([
+                "updated_at" => Carbon::now(),
+                "quanity" => $sumQuanity,
+            ]);
+            $productDetail->save();
+        }
+        notyf()->addSuccess("Huỷ đơn thành công");
+        return redirect("/site/order/show/". $id);
     }
 }

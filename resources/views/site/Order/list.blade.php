@@ -1,3 +1,4 @@
+@include('site/MasterLayout/tieude')
 <!-- ======================================= 
         ==start cart section==  
     =======================================-->
@@ -23,17 +24,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($data['order'] as $order) { ?>
+                                @foreach ($data['order'] as $order)
                                     <tr class="woocommerce-cart-form__cart-item cart_item">
 
                                         <td class="product-name" data-title="Product" style="text-align:center">
-                                            <a href="#"><?Php echo $order['id']; ?></a>
+                                            <a href="#">{{$order['id']}}</a>
                                         </td>
 
                                         <td class="product-price" data-title="Price">
                                             <span class="woocommerce-Price-amount amount">
                                                 <bdi>
-                                                    <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php echo number_format($order['sum_total']) . ' VNĐ'; ?>
+                                                    <span class="woocommerce-Price-currencySymbol">&nbsp;</span>{{ number_format($order['sum']) . ' VNĐ' }}
                                                 </bdi>
                                             </span>
                                         </td>
@@ -41,7 +42,7 @@
                                         <td class="product-subtotal" data-title="Subtotal">
                                             <span class="woocommerce-Price-amount amount">
                                                 <bdi>
-                                                    <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php $newDate = date("d-m-Y", strtotime($order['date_order'])); echo $newDate; ?>
+                                                    <span class="woocommerce-Price-currencySymbol">&nbsp;</span><?php $newDate = date("d/m/Y", strtotime($order['date_order'])); echo $newDate; ?>
                                                 </bdi>
                                             </span>
                                         </td>
@@ -69,10 +70,10 @@
 
                                         <td class="product-remove">
                                             <button style="background: rgba(213, 39, 90, 0.8); width: 80px;height: 40px;color: #fff!important;font-size: 22px;border-radius: 10px;padding: 2px 7px;display: block; margin: 0 auto;font-weight: 400;"
-                                            onclick="location.href='index.php?c=order&a=detail&id=<?php echo $order['id']; ?>'">Xem</button>
+                                            onclick="location.href='/site/order/show/{{$order['id']}}'">Xem</button>
                                         </td>
                                     </tr>
-                                <?php } ?>
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -90,3 +91,4 @@
 <!-- ======================================= 
         ==End cart section==  
     =======================================-->
+    @include("site/MasterLayout/thongtin")
