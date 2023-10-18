@@ -1,3 +1,5 @@
+@include('admin/Master/tieude')
+@include('admin/Master/danhmuc')
 <div class="page-wrapper">
     <div class="content">
         <div class="page-header">
@@ -24,37 +26,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($data AS $order){ ?>
+                            @foreach ($data['order'] as $order)
                                 <tr>
-                                    <td><?php echo $order['id']; ?></td>
-                                    <td style="text-align:center"><?php echo $order['date_order']; ?></td>
+                                    <td>{{$order['id']}}</td>
+                                    <td style="text-align:center">{{$order['date_order']}}</td>
                                     <td style="text-align:center">
-                                        <?php if($order['status'] == 3){ ?> 
+                                        @if($order['status'] == 3)
                                             <span class="badges bg-lightgreen">Đã thanh toán</span>
-                                        <?php } ?>
-                                        <?php if($order['status'] == 0){ ?> 
+                                        @endif
+                                        @if($order['status'] == 0) 
                                             <span class="badges bg-lightred">Đã huỷ</span>
-                                        <?php } ?>
-                                        <?php if($order['status'] == 1){ ?> 
+                                        @endif
+                                        @if($order['status'] == 1)
                                             <span class="badges bg-lightyellow">Chờ xử lý</span>
-                                        <?php } ?>
-                                        <?php if($order['status'] == 2){ ?> 
+                                        @endif
+                                        @if($order['status'] == 2)
                                             <span class="badges bg-lightyellow">Đang giao hàng</span>
-                                        <?php } ?>
+                                        @endif
                                     </td>
-                                    <td><?php echo number_format($order['sum_total']) . 'VNĐ'; ?></td>
+                                    <td>{{number_format($order['sum']) . 'VNĐ'}}</td>
                                     <td>
-                                        <a class="me-3" href="index.php?c=order&a=show&id=<?php echo $order['id']; ?>">
-                                            <img src="public/admin/icon/edit.svg" alt="img">
+                                        <a class="me-3" href="/admin/order/show/{{$order['id']}}">
+                                            <img src="{{asset('admin/icon/edit.svg')}}" alt="img">
                                         </a>
-                                        <?php if($order['status'] == 1 ){ ?>
-                                            <a class="me-3 confirm-text" href="index.php?c=order&a=delete&id=<?php echo $order['id']; ?>">
-                                                <img src="public/admin/icon/delete.svg" alt="img">
+                                        @if($order['status'] == 1)
+                                            <a class="me-3 confirm-text" href="/admin/order/deletedOrder/{{$order['id']}}">
+                                                <img src="{{asset('admin/icon/delete.svg')}}" alt="img">
                                             </a>
-                                        <?php } ?>
+                                        @endif
                                     </td>
                                 </tr>
-                            <?php } ?>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -62,3 +64,4 @@
         </div>
     </div>
 </div>
+@include('admin/Master/thongtin')

@@ -33,6 +33,7 @@ Route::prefix("/")->group(__DIR__ . "/admin/Category.php");
 Route::prefix("/")->group(__DIR__ . "/admin/Facilities.php");
 Route::prefix("/")->group(__DIR__ . "/admin/Staff.php");
 Route::prefix("/")->group(__DIR__ . "/admin/Client.php");
+Route::prefix("/")->group(__DIR__ . "/admin/Order.php");
 /*
 Nhóm Route bên phía Site
 */
@@ -40,5 +41,7 @@ Route::prefix("/")->group(__DIR__ . "/site/Home.php");
 Route::prefix("/")->group(__DIR__ . "/site/Product.php");
 Route::prefix("/")->group(__DIR__ . "/site/Cart.php");
 Route::prefix("/")->group(__DIR__ . "/site/Order.php");
+
 // phục vụ mục đích test
 Route::get('/test',[TestController::class, "test"]);
+Route::get('/increment-value',[TestController::class, "testA"]);

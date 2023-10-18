@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 class TestController extends Controller
 {
     public function test(){
-        return view("site/Login/login");
+        return view("Test/viewA");
+    }
+    public function testA(){
+        return view("Test/viewB");
     }
 }

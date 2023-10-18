@@ -163,35 +163,39 @@ class OrderController extends Controller
     public function deleted($id){
         // Cập nhật trạng thái huỷ đơn
         $order = OrderModel::find($id);
-        $order->update([
-            "updated_at" => Carbon::now(),
-            "status" => 0,
-        ]);
-        $order->save();
-        // Trả số lượng về
-        $product = ProductDetail::join("order_detail", "order_detail.product_id", "=", "product_detail.id")
-                                ->join("order", "order_detail.order_id", "=", "order.id")
-                                ->select("order_detail.quanity", "product_detail.id")
-                                ->where("product_detail.isDeleted", "!=", 0)
-                                ->where("order.isDeleted", "!=", 0)
-                                ->where("order.id", "=", $id)
-                                ->get();
-        // dd($product);
-        foreach($product as $pro){
-            // Lấy sản phẩm cần cập nhật
-            $productDetail = ProductDetail::where("isDeleted", "!=", 0)
-                            ->find($pro['id']);
-            // Cập nhật số lượng sản phẩm 
-            $quanityCurrent = $productDetail->quanity;
-            $quanityBonus = $pro["quanity"];
-            $sumQuanity = $quanityCurrent + $quanityBonus;
-            $productDetail->update([
+        if($order->status == 1){
+            $order->update([
                 "updated_at" => Carbon::now(),
-                "quanity" => $sumQuanity,
+                "status" => 0,
             ]);
-            $productDetail->save();
+            $order->save();
+            // Trả số lượng về
+            $product = ProductDetail::join("order_detail", "order_detail.product_id", "=", "product_detail.id")
+                                    ->join("order", "order_detail.order_id", "=", "order.id")
+                                    ->select("order_detail.quanity", "product_detail.id")
+                                    ->where("product_detail.isDeleted", "!=", 0)
+                                    ->where("order.isDeleted", "!=", 0)
+                                    ->where("order.id", "=", $id)
+                                    ->get();
+            // dd($product);
+            foreach($product as $pro){
+                // Lấy sản phẩm cần cập nhật
+                $productDetail = ProductDetail::where("isDeleted", "!=", 0)
+                                ->find($pro['id']);
+                // Cập nhật số lượng sản phẩm 
+                $quanityCurrent = $productDetail->quanity;
+                $quanityBonus = $pro["quanity"];
+                $sumQuanity = $quanityCurrent + $quanityBonus;
+                $productDetail->update([
+                    "updated_at" => Carbon::now(),
+                    "quanity" => $sumQuanity,
+                ]);
+                $productDetail->save();
+            }
+            notyf()->addSuccess("Huỷ đơn thành công");
+        }else{
+            notyf()->addError("Huỷ đơn không thành công");
         }
-        notyf()->addSuccess("Huỷ đơn thành công");
         return redirect("/site/order/show/". $id);
     }
 }

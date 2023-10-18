@@ -44,3 +44,13 @@
 // việc đầu tiên + lại số lượng sản phẩm trong kho
 
 // huỷ đơn không được khôi phục
+
+// sửa trạng thái đơn hàng
+// 1. chờ xử lý thì được chọn tất cả trạng thái
+// 2. đang vận chuyển thì chỉ được chuyển sang đã giao thành công
+// 3. và 0. đã huỷ hay đã giao thì không cập nhật thay đổi
+
+// Fake data
+// 1 -> được sửa sang 2 hoặc 3 hoặc 0
+// 2 -> được sửa sang 3
+// 3 và 0 -> không được sửa

@@ -132,12 +132,12 @@
                                 <h6 class="submenu-hdr">Quản lý đơn hàng</h6>
                                 <ul>
                                     <li class="submenu">
-                                        <a href="#"><i data-feather="file-text"></i><span>Đơn hàng</span><span class="menu-arrow"></span></a>
+                                        <a href="/admin/order/list"><i data-feather="file-text"></i><span>Đơn hàng</span><span class="menu-arrow"></span></a>
                                         <ul>
-                                            <li><a href="index.php?c=order&a=index">Tất cả đơn hàng</a></li>
-                                            <li><a href="index.php?c=order&a=hum">Đơn hàng chờ xử lý</a></li>
-                                            <li><a href="index.php?c=order&a=humgiao">Đơn hàng đang giao</a></li>
-                                            <li><a href="index.php?c=order&a=humdele">Đơn hàng đã huỷ</a></li>
+                                            <li><a href="/admin/order/list">Tất cả đơn hàng</a></li>
+                                            <li><a href="/admin/order/selectedOrder/1">Đơn hàng chờ xử lý</a></li>
+                                            <li><a href="/admin/order/selectedOrder/2">Đơn hàng đang giao</a></li>
+                                            <li><a href="/admin/order/selectedOrder/0">Đơn hàng đã huỷ</a></li>
                                         </ul>
                                     </li>
                                 </ul>
