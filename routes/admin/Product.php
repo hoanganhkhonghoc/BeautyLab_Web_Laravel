@@ -20,4 +20,6 @@ Route::prefix("/admin/product_detail")->middleware("checkQuyenSanPham")->group(f
     Route::post ("/xl_edit/{id}",   [AdminProductDetailController::class, "xl_edit"]);
     Route::get  ("/show/{id}",      [AdminProductDetailController::class, "show"]);
 });
+
+Route::get("/admin/count/{count}",[AdminProductController::class, "selectProductMax"]);
 ?>

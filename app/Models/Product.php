@@ -17,4 +17,8 @@ class Product extends Model
         "isDeleted",
         "cat_id",
     ];
+    public function productDetails()
+    {
+        return $this->hasMany(ProductDetail::class);
+    }
 }

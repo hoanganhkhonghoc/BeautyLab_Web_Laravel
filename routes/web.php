@@ -44,4 +44,4 @@ Route::prefix("/")->group(__DIR__ . "/site/Order.php");
 
 // phục vụ mục đích test
 Route::get('/test',[TestController::class, "test"]);
-Route::get('/increment-value',[TestController::class, "testA"]);
+Route::get('/testA',[TestController::class, "testA"]);

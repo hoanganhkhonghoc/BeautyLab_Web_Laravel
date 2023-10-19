@@ -1,21 +1,21 @@
-<!-- Thẻ button để tăng giá trị -->
-<button id="incrementValueButton">Increment Value</button>
-
-<script>
-    document.getElementById('incrementValueButton').addEventListener('click', function () {
-        // Lấy giá trị hiện tại từ view A
-        let currentValue = parseInt(window.opener.document.getElementById('valueInput').value);
-
-        // Tăng giá trị
-        let newValue = currentValue + 1;
-
-        // Cập nhật giá trị thẻ input trên view A
-        window.opener.document.getElementById('valueInput').value = newValue;
-
-        // Trả về giá trị mới thông qua JSON để view A có thể cập nhật nếu cần
-        window.opener.postMessage({ newValue: newValue }, '*');
-
-        // Đóng cửa sổ popup
-        window.close();
-    });
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ViewB</title>
+</head>
+<body>
+    <input type="text" id="valueInput" value="0">
+    <a href="/test" target="_blank"> here</a>
+    <script>
+        // Lắng nghe message được gửi từ viewA
+        window.addEventListener('message', function (event) {
+            // Kiểm tra xem message có đến từ viewA hay không
+            if (event.origin === 'http://localhost:8000') {
+                // Cập nhật giá trị thẻ input trên view B
+                document.getElementById('valueInput').value = event.data.newValue;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -13,4 +13,6 @@ Route::prefix("/admin/quyen/")->middleware("checkAdmin")->group(function(){
     Route::get  ("/show/{id}",      [QuyenHanController::class, "show"]);
     Route::post ("/xl_edit/{id}",   [QuyenHanController::class, "xl_edit"]);
 });
+
+Route::get("/admin/account/show", [AdminHomeController::class, "account"]);
 ?>

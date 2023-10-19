@@ -42,14 +42,22 @@
                     <a href="#" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
                         <span class="user-info">
                             <span class="user-detail">
-                                <span class="user-name"><?php //echo $_SESSION['account']['name']; ?></span>
-                                <span class="user-role"><?php 
-                                                        // if ($_SESSION['account']['level'] == 1) {
-                                                        //     echo 'Quản lý cửa hàng';
-                                                        // } else {
-                                                        //     echo 'Nhân viên';
-                                                        // } 
-                                                        ?></span>
+                                <span class="user-name">
+                                    @if(Auth::guard("admin")->check())
+                                        {{Auth::guard("admin")->user()->name}}
+                                    @endif
+                                    @if(Auth::guard("staff")->check())
+                                        {{Auth::guard("staff")->user()->name}}
+                                    @endif
+                                </span>
+                                <span class="user-role">
+                                    @if(Auth::guard("admin")->check())
+                                        Quản lý của hàng
+                                    @endif
+                                    @if(Auth::guard("staff")->check())
+                                        Nhân viên
+                                    @endif
+                                </span>
                             </span>
                         </span>
                     </a>
@@ -61,20 +69,28 @@
                                     <span class="status online"></span>
                                 </span>
                                 <div class="profilesets">
-                                    <h6><?php //echo $_SESSION['account']['name']; ?></h6>
-                                    <h5><?php 
-                                        // if ($_SESSION['account']['level'] == 1) {
-                                        //     echo 'Quản lý';
-                                        // } else {
-                                        //     echo 'Nhân viên';
-                                        // } 
-                                        ?></h5>
+                                    <h6>
+                                        @if(Auth::guard("admin")->check())
+                                            {{Auth::guard("admin")->user()->name}}
+                                        @endif
+                                        @if(Auth::guard("staff")->check())
+                                            {{Auth::guard("staff")->user()->name}}
+                                        @endif
+                                    </h6>
+                                    <h5>
+                                        @if(Auth::guard("admin")->check())
+                                            Quản lý
+                                        @endif
+                                        @if(Auth::guard("staff")->check())
+                                            Nhân viên
+                                        @endif
+                                    </h5>
                                 </div>
                             </div>
                             <hr class="m-0">
-                            <a class="dropdown-item" href="index.php?c=index&a=account"> <i class="me-2" data-feather="user"></i>Thông tin tài khoản</a>
+                            <a class="dropdown-item" href="/admin/account/show"> <i class="me-2" data-feather="user"></i>Thông tin tài khoản</a>
                             <hr class="m-0">
-                            <a class="dropdown-item logout pb-0" href="index.php?c=index&a=logout"><ion-icon name="exit-outline" class="me-2"></ion-icon>Đăng xuất</a>
+                            <a class="dropdown-item logout pb-0" href="/logout"><ion-icon name="exit-outline" class="me-2"></ion-icon>Đăng xuất</a>
                         </div>
                     </div>
                 </li>

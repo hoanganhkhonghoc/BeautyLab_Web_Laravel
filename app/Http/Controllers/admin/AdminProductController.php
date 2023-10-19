@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -109,5 +110,39 @@ class AdminProductController extends Controller
         $product->save();
         notyf()->addSuccess("Sửa sản phẩm thành công");
         return redirect()->route("listProduct");
+    }
+
+    // Hàm tính tổng số lượng và tìm kiếm sản phẩm theo điều kiện
+    public function selectProductMax($count){
+        // biến count sẽ là điều kiện lọc <10 hay =0
+        $productCount = Product::where('isDeleted', '!=', 0)
+        ->whereHas('productDetails', function ($query) use ($count) {
+            $query->where('isDeleted', '!=', 0)
+                ->groupBy('product_id')
+                ->havingRaw('SUM(quanity) < ?', [$count]);
+        })
+        ->pluck('id');
+        if(Auth::guard("admin")->check()){
+            $data["product"] = Product::join("category","category.id","=","product.cat_id")
+                                      ->join("staff","product.staff_id","=","staff.id")
+                                      ->join("facilities","facilities.id", "=", "facilities_id")
+                                      ->select("product.*","staff.email","facilities.name","category.nameCate")
+                                      ->where("product.isDeleted","!=",0)
+                                      ->whereIn("product.id", $productCount)
+                                      ->get();
+        }
+        if(Auth::guard("staff")->check()){
+            $idCoSo = Auth::guard("staff")->user()->facilities_id;
+            
+            $data["product"] = Product::join("category","category.id","=","product.cat_id")
+            ->join("staff","product.staff_id","=","staff.id")
+            ->join("facilities","facilities.id", "=", "facilities_id")
+            ->select("product.*","category.nameCate")
+            ->where("product.isDeleted","!=",0)
+            ->where("staff.facilities_id", "=", $idCoSo)
+            ->whereIn("product.id", $productCount)
+            ->get();
+        }
+        return view("admin/Product/product-list", ["data" => $data["product"]]);
     }
 }
