@@ -5,7 +5,6 @@
     <title>ViewA</title>
 </head>
 <body>
-    <?php dump(window()->opener()); ?>
     <button id="incrementValueButton" target="_blank">Increment Value</button>
     
     <script>

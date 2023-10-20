@@ -1,3 +1,18 @@
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+@if(session('order_notification'))
+    <script>
+        // Sử dụng NotyJS để hiển thị thông báo
+        new Noty({
+            text: "{{ session('order_notification') }}",
+            type: 'success'
+        }).show();
+    </script>
+    @if(Session::has('order_notification'))
+        <?php Session::forget('order_notification');   ?>
+    @endif
+@endif
+
 
 <script src="{{asset('admin/js/jquery-3.6.0.min.js')}}"></script>
 
