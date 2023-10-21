@@ -96,16 +96,9 @@
                     <div class="col-lg-7 col-sm-12 col-12 d-flex">
                         <div class="card flex-fill">
                             <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0">Bán chạy & Bán chậm</h5>
+                                <h5 class="card-title mb-0">Đơn hàng và doanh thu</h5>
                                 <div class="graph-sets">
-                                    <ul>
-                                        <li>
-                                            <span>Bán chạy</span>
-                                        </li>
-                                        <li>
-                                            <span>Bán chậm</span>
-                                        </li>
-                                    </ul>
+                                    
                                     <div class="dropdown">
                                         <button class="btn btn-white btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                             2023 <img src="{{asset('admin/icon/dropdown.svg')}}" alt="img" class="ms-2">
@@ -125,10 +118,11 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div id="sales_charts"></div>
+                                <canvas id="myChart"></canvas>
                             </div>
                         </div>
                     </div>
+                    
                     <!-- Ngăn chặn người dùng không có quyền quản lý sản phẩm -->
                     <div class="col-lg-5 col-sm-12 col-12 d-flex">
                         <div class="card flex-fill">
@@ -167,4 +161,28 @@
                 </div>
             </div>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+          const ctx = document.getElementById('myChart');
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: ['Tháng trước', 'Tháng trước', 'Tháng trước', 'Tháng trước', 'Tháng trước', 'Tháng hiện tại'],
+              datasets: [{
+                label: 'Đơn hàng',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        </script>
 @include('admin/Master/thongtin')
