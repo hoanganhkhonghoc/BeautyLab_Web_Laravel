@@ -25,7 +25,7 @@ return new class extends Migration
             // 2 đang giao hàng
             // 3 đã giao hàng
             $table->integer("status");
-
+            $table->string("detail");
             $table->unsignedBigInteger("client_id")->unsigned();
             $table->unsignedBigInteger("receiver_id")->unsigned();
             $table->unsignedBigInteger("pay_id")->unsigned();

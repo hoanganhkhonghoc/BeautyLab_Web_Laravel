@@ -15,13 +15,16 @@
                 </div>
 
                 <div class="table-responsive">
+                    <a href="/admin/order/selectedOrder/1"><span class="badges bg-lightyellow">Chờ xử lý</span></a>
+                    <a href="/admin/order/selectedOrder/2"><span class="badges bg-lightyellow">Đang giao hàng</span></a>
+                    <a href="/admin/order/selectedOrder/0"><span class="badges bg-lightred">Đã huỷ</span></a>
                     <table class="table  datanew">
                         <thead>
                             <tr style="text-align:center">
                                 <th>ID</th>
                                 <th>Ngày đặt đơn</th>
                                 <th>Trạng thái sản phẩm</th>
-                                <th>Tổng tiền</th>
+                                <th>Hình thức</th>
                                 <th>Hành động</th>
                             </tr>
                         </thead>
@@ -44,7 +47,7 @@
                                             <span class="badges bg-lightyellow">Đang giao hàng</span>
                                         @endif
                                     </td>
-                                    <td>{{number_format($order['sum']) . 'VNĐ'}}</td>
+                                    <td>@if($order['detail'] == "2") Chuyển khoản (CKO${{$order['id']. "_" . $order['sum']}}) @else Trực tiếp @endif</td>
                                     <td>
                                         <a class="me-3" href="/admin/order/show/{{$order['id']}}">
                                             <img src="{{asset('admin/icon/edit.svg')}}" alt="img">

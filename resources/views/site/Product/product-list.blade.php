@@ -53,7 +53,8 @@
                              </div>
 
                              <div class="search-product">
-                                 <form action="index.php?c=sreach&a=index" method="post" class="form-inline">
+                                 <form action="/site/search" method="post" class="form-inline">
+                                    @csrf
                                      <select class="form-control wide" name="beauty-service" required>
                                          <option value="0" selected>Danh mục</option>
                                          @foreach($data["category"] as $cate)

@@ -18,6 +18,7 @@ class OrderModel extends Model
         "date_order", // ngay tao don
         "status", // trang thai don hang
         "receiver_id",
-        "pay_id"
+        "pay_id",
+        "detail",
     ];
 }

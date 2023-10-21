@@ -91,7 +91,8 @@
             <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <img src="{{asset('site/HTML/images/search-popup-logo.png')}}" alt="search-popup-logo">
-                <form action="index.php?c=sreach&a=index" class="form-inline" method="post">
+                <form action="/site/search" class="form-inline" method="post">
+                    @csrf
                     <input type="text" name="key" placeholder="Tại đây...">
                     <button type="submit" name="submit"><i class="fa fa-search"></i></button>
                 </form>

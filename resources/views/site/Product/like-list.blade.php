@@ -44,7 +44,8 @@
              <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
                  <div class="filtering-area">
                      <div class="search-product">
-                         <form action="#" class="form-inline">
+                         <form action="/site/search" class="form-inline">
+                            @csrf
                              <select class="form-control wide" name="beauty-service" required>
                                  <option selected>Danh mục</option>
                                  @foreach($data['category'] as $cate)

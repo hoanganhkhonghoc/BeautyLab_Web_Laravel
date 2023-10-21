@@ -9,6 +9,7 @@ Route::prefix("/site/order")->middleware("checkClient")->group(function(){
     Route::get("/list",[OrderController::class, "list"]);
     Route::get("/show/{id}", [OrderController::class, "show"]);
     Route::get("/deleted/{id}", [OrderController::class, "deleted"]);
+    Route::get("/thankyou", [OrderController::class, "thankyou"]);
 });
 
 ?>

@@ -60,6 +60,7 @@ class OrderController extends Controller
         $order->status = 1;
         $order->sum = $request->sumOrder;
         $order->date_order = Carbon::now();
+        $order->detail = $request->payment_method;
         $order->save();
         // lấy id đơn hàng bản ghi mới nhất (dựa vào id tài khoản tránh trường hợp 2 tài khoản khác nhau đặt hàng cùng lúc)
         $idOrder = OrderModel::where("client_id", "=", Auth::guard("client")->user()->id)
@@ -129,16 +130,11 @@ class OrderController extends Controller
         }
         // nếu là chuyển khoản -> quét QR
         if($request->payment_method == 1){
-            $accountNumber = 'YOUR_ACCOUNT_NUMBER';
-            $amount = '1000000'; // Số tiền theo đơn vị của bạn
 
-            // Tạo nội dung cho mã QR
-            $qrContent = "bank://transfer?to=$accountNumber&amount=$amount";
-
-            // Tạo mã QR
-            $qrCode = new QrCode($qrContent);
-            // dd($qrCode);
-            return view('site/Order/QR', compact('qrCode'));
+            return view('site/Order/QR', [
+                "price" => $request->sumOrder,
+                "idOrder" => $idOrder
+            ]);
         }
     }
 
@@ -214,5 +210,9 @@ class OrderController extends Controller
             notyf()->addError("Huỷ đơn không thành công");
         }
         return redirect("/site/order/show/". $id);
+    }
+
+    public function thankyou(){
+        return view("site/Order/thankyou");
     }
 }

@@ -44,6 +44,7 @@ Route::prefix("/")->group(__DIR__ . "/site/Product.php");
 Route::prefix("/")->group(__DIR__ . "/site/Cart.php");
 Route::prefix("/")->group(__DIR__ . "/site/Order.php");
 Route::prefix("/")->group(__DIR__ . "/site/Comment.php");
+Route::prefix("/")->group(__DIR__ . "/site/Search.php");
 
 // phục vụ mục đích test
 Route::get('/test',[TestController::class, "test"]);
