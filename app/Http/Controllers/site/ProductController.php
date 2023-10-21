@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CardDetail;
 use App\Models\Category;
 use App\Models\CommentModel;
+use App\Models\Like;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,7 @@ class ProductController extends Controller
                                         ->select("product_detail.*", "product.namePro")
                                         ->where("product_detail.isDeleted", "!=", 0)
                                         ->where("product_detail.isSoid","!=",0)
+                                        ->orderBy('product_detail.created_at', 'desc')
                                         ->paginate(12);
         if(Auth::guard("client")->check()){
             $data['countCart'] = CardDetail::join("cart", "cart.id", "=", "cart_detail.cart_id")

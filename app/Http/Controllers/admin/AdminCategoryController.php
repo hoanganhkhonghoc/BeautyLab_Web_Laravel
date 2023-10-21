@@ -20,6 +20,7 @@ class AdminCategoryController extends Controller
                             "category.*",
                         ])
                         ->where("category.isDeleted", "!=", 0)
+                        ->orderBy('category.created_at', 'desc')
                         ->get();
 
         return view("admin/Category/category-list", ["data" => $category]);

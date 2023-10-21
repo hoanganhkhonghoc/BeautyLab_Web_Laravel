@@ -145,6 +145,7 @@ class OrderController extends Controller
     public function list(){
         $data['order'] = OrderModel::where("isDeleted", "!=", 0)
                                     ->where("client_id", "=", Auth::guard("client")->user()->id)
+                                    ->orderBy('created_at', 'desc')
                                     ->get();
         return view("site/Order/list", ["data" => $data]);
     }

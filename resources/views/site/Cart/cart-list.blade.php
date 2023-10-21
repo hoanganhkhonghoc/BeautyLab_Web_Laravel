@@ -53,7 +53,7 @@
 
                                                 <td class="product-quantity" data-title="Quantity">
                                                     <div class="quantity">
-                                                        <input type="number" class="input-text qty text" step="1" min="1" max="{{$cart['quanity']}}" name="quanity[{{$cart['product_id']}}]" value="{{$cart['quanity']}}" title="Số lượng" size="4" placeholder="" />
+                                                        <input type="number" class="input-text qty text" step="1" min="1" name="quanity[{{$cart['product_id']}}]" value="{{$cart['quanity']}}" title="Số lượng" size="4" placeholder="" />
                                                     </div>
                                                 </td>
 

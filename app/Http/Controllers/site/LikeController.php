@@ -26,6 +26,7 @@ class LikeController extends Controller
                                         ->where("product_detail.isDeleted", "!=", 0)
                                         ->where("like.isDeleted", "!=", 0)
                                         ->where("client.id", "=", $id)
+                                        ->orderBy('like.created_at', 'desc')
                                         ->paginate(12);
                                         // dd($data);
         return view("site/Product/like-list", ['data' => $data]);

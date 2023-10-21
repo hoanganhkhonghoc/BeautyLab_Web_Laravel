@@ -22,6 +22,7 @@ class CommentController extends Controller
                                             "product_detail.id as Pro_id"
                                         ])
                                         ->where("product_detail.isDeleted", "!=", 0)
+                                        ->orderBy('comment.created_at', 'desc')
                                         ->get();
         return view("admin/Comment/comment_list", ["data" => $data]);
     }

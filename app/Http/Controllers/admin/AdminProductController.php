@@ -19,6 +19,7 @@ class AdminProductController extends Controller
                                       ->join("facilities","facilities.id", "=", "facilities_id")
                                       ->select("product.*","staff.email","facilities.name","category.nameCate")
                                       ->where("product.isDeleted","!=",0)
+                                      ->orderBy('product.created_at', 'desc')
                                       ->get();
         }
         if(Auth::guard("staff")->check()){
@@ -30,6 +31,7 @@ class AdminProductController extends Controller
             ->select("product.*","category.nameCate")
             ->where("product.isDeleted","!=",0)
             ->where("staff.facilities_id", "=", $idCoSo)
+            ->orderBy('product.created_at', 'desc')
             ->get();
         }
         return view("admin/Product/product-list", ["data" => $data["product"]]);

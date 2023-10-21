@@ -41,6 +41,7 @@ class CardController extends Controller
                                 ->where("cart_detail.isDeleted","!=",0)
                                 ->where("product_detail.isDeleted","!=",0)
                                 ->where("product_detail.isSoid","!=",0)
+                                ->orderBy('cart.updated_at', 'desc')
                                 ->paginate(12);
             $data['Idcart'] = Card::where("client_id", "=", Auth::guard("client")->user()->id)->first();
             return view("site/Cart/cart-list", ["data" => $data]);
@@ -182,12 +183,22 @@ class CardController extends Controller
 
         if (is_array($arrQuanity) || is_object($arrQuanity)) {
             foreach ($arrQuanity as $product_id => $quanityUpdate) {
+                $quanityCurrent = ProductDetail::where("id", $product_id)->first()->quanity;
+                $quanityFinis = 0;
+                if($quanityUpdate <= $quanityCurrent){
+                    $quanityFinis = $quanityUpdate;
+                }else{
+                    notyf()->position('x', 'center')
+                            ->position('y', 'top')
+                            ->addWarning("Hiện tại sản phẩm này chỉ còn " . $quanityCurrent);
+                    $quanityFinis = $quanityCurrent;
+                }
                 // update số lượng cho cart detail
                 DB::table("cart_detail")->where("cart_id", "=", $idCart)
                                         ->where("product_detail_id", "=", $product_id)
                                         ->update([
                                             "updated_at" => Carbon::now(),
-                                            "quanity"    => $quanityUpdate,
+                                            "quanity"    => $quanityFinis,
                                         ]);
             }
         }

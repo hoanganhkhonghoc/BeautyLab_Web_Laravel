@@ -12,7 +12,9 @@ class OrderController extends Controller
 {
     public function list(){
         // lấy toàn bộ đơn hàng
-        $data['order'] = OrderModel::where("isDeleted", "!=", 0)->get();
+        $data['order'] = OrderModel::where("isDeleted", "!=", 0)
+                                    ->orderBy('created_at', 'asc')
+                                    ->get();
         return view("admin/Order/order-list", ["data" => $data]);
     }
 

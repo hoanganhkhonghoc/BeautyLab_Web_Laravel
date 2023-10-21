@@ -19,6 +19,7 @@ class AdminProductDetailController extends Controller
                                         ->where("product_detail.isDeleted" , "!=", 0)
                                         ->where("product_detail.product_id", "=", $id)
                                         ->where("product_detail.isSoid", "!=", 0)
+                                        ->orderBy('product_detail.created_at', 'desc')
                                         ->get();
         $data['id'] = $id;
         return view("admin/Product_detail/product_detail-list", ['data' => $data]);
