@@ -42,7 +42,12 @@ class AdminHomeController extends Controller
             ->join('product', 'product_detail.product_id', '=', 'product.id')
             ->where('order.isDeleted', '!=', 0)
             ->whereBetween('order.created_at', [$startOfMonth, $endOfMonth])
-            ->groupBy('product_detail.id', 'product_detail.img', 'product.namePro', 'product_detail.color')
+            ->groupBy([
+                'product_detail.id', 
+                'product_detail.img', 
+                'product.namePro', 
+                'product_detail.color'
+            ])
             ->orderByDesc('total_sold')
             ->limit(5)
             ->get();

@@ -126,7 +126,12 @@ class AdminProductController extends Controller
             $data["product"] = Product::join("category","category.id","=","product.cat_id")
                                       ->join("staff","product.staff_id","=","staff.id")
                                       ->join("facilities","facilities.id", "=", "facilities_id")
-                                      ->select("product.*","staff.email","facilities.name","category.nameCate")
+                                      ->select([
+                                        "product.*",
+                                        "staff.email",
+                                        "facilities.name",
+                                        "category.nameCate",
+                                      ])
                                       ->where("product.isDeleted","!=",0)
                                       ->whereIn("product.id", $productCount)
                                       ->get();
@@ -137,7 +142,10 @@ class AdminProductController extends Controller
             $data["product"] = Product::join("category","category.id","=","product.cat_id")
             ->join("staff","product.staff_id","=","staff.id")
             ->join("facilities","facilities.id", "=", "facilities_id")
-            ->select("product.*","category.nameCate")
+            ->select([
+                "product.*",
+                "category.nameCate"
+            ])
             ->where("product.isDeleted","!=",0)
             ->where("staff.facilities_id", "=", $idCoSo)
             ->whereIn("product.id", $productCount)

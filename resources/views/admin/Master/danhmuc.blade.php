@@ -113,7 +113,7 @@
                                     <ul>
                                         
                                         @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_binhluan == 1)
-                                            <li><a href="index.php?c=comment&a=index">Bình luận</a></li>
+                                            <li><a href="/admin/comment/list">Bình luận</a></li>
                                         @endif
                                         
                                         @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_lichdattruoc == 1)

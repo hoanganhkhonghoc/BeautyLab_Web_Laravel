@@ -14,7 +14,10 @@ class AdminStaffController extends Controller
 {
     public function list(){
         $data["staff"] = Staff::join("facilities", "facilities.id", "=", "staff.facilities_id")
-                                ->select("staff.*", 'facilities.name AS fac_name')
+                                ->select([
+                                    "staff.*", 
+                                    'facilities.name AS fac_name',
+                                ])
                                 ->where("staff.isDeleted", "!=", 0)
                                 ->get();
         return view("admin/Staff/staff-list", ['data' => $data]);

@@ -20,14 +20,27 @@ class OrderController extends Controller
         // lấy thông tin của 1 đơn hàng bất kì
         $data["order"] = OrderModel::join("receiver", "order.receiver_id", "=", "receiver.id")
                                     ->join("payment_methods", "payment_methods.id", "=", "order.pay_id")
-                                    ->select("order.*", "payment_methods.namePay", "receiver.name", "receiver.phone", "receiver.address")
+                                    ->select([
+                                        "order.*", 
+                                        "payment_methods.namePay", 
+                                        "receiver.name", 
+                                        "receiver.phone", 
+                                        "receiver.address"
+                                    ])
                                     ->where("order.isDeleted", "!=", 0)
                                     ->where("order.id", "=", $id)
                                     ->first();
         $data['product'] = OrderModel::join("order_detail", "order_detail.order_id", "=", "order.id")
                                     ->join("product_detail", "product_detail.id", "=", "order_detail.product_id")
                                     ->join("product", "product.id", "=", "product_detail.product_id")
-                                    ->select("product_detail.img", "product.namePro", "order_detail.quanity", "order_detail.price", "product_detail.color", "product_detail.id")
+                                    ->select([
+                                        "product_detail.img", 
+                                        "product.namePro", 
+                                        "order_detail.quanity", 
+                                        "order_detail.price", 
+                                        "product_detail.color", 
+                                        "product_detail.id"
+                                    ])
                                     ->where("order.isDeleted", "!=", 0)
                                     ->where("order.id", "=", $id)
                                     ->get();
@@ -73,7 +86,10 @@ class OrderController extends Controller
             // Trả số lượng về
             $product = ProductDetail::join("order_detail", "order_detail.product_id", "=", "product_detail.id")
                                     ->join("order", "order_detail.order_id", "=", "order.id")
-                                    ->select("order_detail.quanity", "product_detail.id")
+                                    ->select([
+                                        "order_detail.quanity", 
+                                        "product_detail.id",
+                                    ])
                                     ->where("product_detail.isDeleted", "!=", 0)
                                     ->where("order.isDeleted", "!=", 0)
                                     ->where("order.id", "=", $id)

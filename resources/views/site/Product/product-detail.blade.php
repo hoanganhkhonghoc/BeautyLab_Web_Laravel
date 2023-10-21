@@ -161,16 +161,16 @@
 
                         <div class="tab-pane fade" id="review" role="tabpanel">
                             <div class="review">
-                                <?php //foreach ($data['comment'] as $comment) { ?>
+                                @foreach($data['comment'] as $comment)
                                     <div class="single-review pos-relative">
-                                        <img src="public/uploads/no-img.png" alt="reviewar img" class="author-img">
+                                        <img src="{{asset('img/avatar.png')}}" alt="reviewar img" class="author-img">
                                         <ul class="author-name display-inline ptb-5">
-                                            <li class="name"><?php //echo $comment['name']; ?></li>
-                                            <li class="date"><?php //echo $comment['date']; ?></li>
+                                            <li class="name">{{$comment['name']}}</li>
+                                            <li class="date">{{$comment['date']}}</li>
                                         </ul>
-                                        <p class="comment"><?php //echo $comment['content']; ?></p>
+                                        <p class="comment">{{$comment["content"]}}</p>
                                     </div>
-                                <?php //} ?>
+                                @endforeach
                                 <!--/single review-->
 
                                 <div class="review-form pt-20">
@@ -183,7 +183,8 @@
                                          <i class="fa fa-star-o"></i>
                                      </p> --}}
                                     @if(Auth::guard("client")->check())
-                                        <form action="index.php?c=comment&a=index&id=<?php //echo $_GET['id']; ?>" method="post">
+                                        <form action="/site/comment/add/{{$data['product']->id}}" method="post">
+                                            @csrf
                                             <div class="form-group">
                                                 <textarea name="msg"></textarea>
                                             </div>

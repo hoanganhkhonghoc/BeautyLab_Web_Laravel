@@ -5,6 +5,7 @@ namespace App\Http\Controllers\site;
 use App\Http\Controllers\Controller;
 use App\Models\CardDetail;
 use App\Models\Category;
+use App\Models\CommentModel;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use Illuminate\Support\Facades\Auth;
@@ -33,12 +34,28 @@ class ProductController extends Controller
         $data['category'] = Category::where("isDeleted", "!=", 0)->get();
         $data['product'] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
                                         ->join("category", "category.id", "=", "product.cat_id")
-                                        ->select("product_detail.*", "product.namePro", "category.nameCate", "category.id AS cateID")
+                                        ->select([
+                                            "product_detail.*", 
+                                            "product.namePro", 
+                                            "category.nameCate", 
+                                            "category.id AS cateID"
+                                        ])
                                         ->where("product_detail.id", "=", $id)->first();
         $data['product3'] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
-                                        ->select("product_detail.*", "product.namePro")
+                                        ->select([
+                                            "product_detail.*", 
+                                            "product.namePro"
+                                        ])
                                         ->where("product.cat_id","=", $data['product']->cateID)
                                         ->limit(3)->get();
+        $data['comment'] = CommentModel::join("client", "client.id","=","comment.client_id")
+                                        ->select([
+                                            "comment.*",
+                                            "client.name"
+                                        ])
+                                        ->where("comment.isDeleted", "!=", 0)
+                                        ->where("comment.product_detail_id", "=", $id)
+                                        ->get();
         return view("site/Product/product-detail" , ["data" => $data]);
     }
 
@@ -51,7 +68,10 @@ class ProductController extends Controller
                                         ->count();
         $data['product'] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
                                         ->join("category","category.id","=","product.cat_id")
-                                        ->select("product_detail.*", "product.namePro")
+                                        ->select([
+                                            "product_detail.*", 
+                                            "product.namePro"
+                                        ])
                                         ->where("product_detail.isDeleted", "!=", 0)
                                         ->where("product.cat_id", "=", $id)
                                         ->paginate(12);

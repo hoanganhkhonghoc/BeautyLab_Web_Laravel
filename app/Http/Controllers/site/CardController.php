@@ -29,7 +29,14 @@ class CardController extends Controller
             $data['cart'] = Card::join("cart_detail", "cart_detail.cart_id", "=", "cart.id")
                                 ->join("product_detail", "product_detail.id", "=", "cart_detail.product_detail_id")
                                 ->join("product", "product.id", "=", "product_detail.product_id")
-                                ->select("cart_detail.*", "product_detail.img","product_detail.price","product_detail.color","product_detail.id as product_id", "product.namePro")
+                                ->select([
+                                    "cart_detail.*", 
+                                    "product_detail.img",
+                                    "product_detail.price",
+                                    "product_detail.color",
+                                    "product_detail.id as product_id", 
+                                    "product.namePro"
+                                ])
                                 ->where("cart.client_id", "=", Auth::guard("client")->user()->id)
                                 ->where("cart_detail.isDeleted","!=",0)
                                 ->where("product_detail.isDeleted","!=",0)

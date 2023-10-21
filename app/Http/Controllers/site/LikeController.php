@@ -19,7 +19,10 @@ class LikeController extends Controller
                                         ->join("category","category.id","=","product.cat_id")
                                         ->join("like", "like.product_detail_id", "=", "product_detail.id")
                                         ->join("client", "client.id", "=", "like.client_id")
-                                        ->select("product_detail.*", "product.namePro")
+                                        ->select([
+                                            "product_detail.*", 
+                                            "product.namePro"
+                                        ])
                                         ->where("product_detail.isDeleted", "!=", 0)
                                         ->where("like.isDeleted", "!=", 0)
                                         ->where("client.id", "=", $id)

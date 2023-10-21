@@ -1,3 +1,5 @@
+@include('admin/Master/tieude')
+@include('admin/Master/danhmuc')
 <div class="page-wrapper">
     <div class="content">
         <div class="page-header">
@@ -12,7 +14,7 @@
                 <div class="table-top">
                     <div class="search-set">
                         <div class="search-input">
-                            <a class="btn btn-searchset"><img src="public/admin/icon/search-white.svg" alt="img"></a>
+                            <a class="btn btn-searchset"><img src="{{asset('admin/icon/search-white.svg')}}" alt="img"></a>
                         </div>
                     </div>
                 </div>
@@ -31,22 +33,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($data as $total) { ?>
+                            @foreach ($data["comment"] as $comment)
                                 <tr>
-                                    <td><?php echo $total['id']; ?></td>
+                                    <td>{{$comment['id']}}</td>
                                     <td class="productimgname">
                                         <a href="#" class="product-img">
-                                            <img src="public/uploads/<?php echo $total['img']; ?>" alt="product">
+                                            <img src="{{asset("img/" . $comment['img'])}}" alt="product">
                                         </a>
-                                        <a href="index.php?c=product_detail&a=show&id=<?php echo $total['product_detail_id']; ?>"><?php echo $total['namePro'] ; ?></a>
+                                        <a href="/admin/product_detail/show/{{$comment['Pro_id']}}">{{$comment['namePro']}}</a>
                                     </td>
 
-                                    <td><?php echo $total['content']; ?></td>
-                                    <td><?php echo $total['name']; ?></td>
-                                    <td><?php echo '0'. $total['phone']; ?></td>
-                                    <td><?php echo $total['email']; ?></td>
+                                    <td>{{$comment['content']}}</td>
+                                    <td>{{$comment["name"]}}</td>
+                                    <td>{{$comment["phone"]}}</td>
+                                    <td>{{$comment["email"]}}</td>
                                 </tr>
-                            <?php } ?>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -54,3 +56,4 @@
         </div>
     </div>
 </div>
+@include('admin/Master/thongtin')

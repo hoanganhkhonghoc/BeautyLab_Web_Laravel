@@ -12,7 +12,10 @@ class AdminProductDetailController extends Controller
 {
     public function list($id){
         $data['product'] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
-                                        ->select("product.namePro", "product_detail.*")
+                                        ->select([
+                                            "product.namePro", 
+                                            "product_detail.*",
+                                        ])
                                         ->where("product_detail.isDeleted" , "!=", 0)
                                         ->where("product_detail.product_id", "=", $id)
                                         ->where("product_detail.isSoid", "!=", 0)
@@ -62,7 +65,10 @@ class AdminProductDetailController extends Controller
 
     public function editView($id){
         $data["product"] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
-        ->select("product.namePro", "product_detail.*")
+                        ->select([
+                            "product.namePro", 
+                            "product_detail.*",
+                        ])
                         ->where("product_detail.id", $id)
                         ->where("product_detail.isDeleted", "!=", 0)
                         ->first();
@@ -95,7 +101,11 @@ class AdminProductDetailController extends Controller
     public function show($id){
         $data["product"] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
                                         ->join("category", "category.id", "=", "product.cat_id")
-                                        ->select("product.namePro", "product_detail.*", "category.nameCate")
+                                        ->select([
+                                            "product.namePro", 
+                                            "product_detail.*", 
+                                            "category.nameCate"
+                                        ])
                                         ->where("product_detail.id", $id)
                                         ->first();
                                         // dd($data);

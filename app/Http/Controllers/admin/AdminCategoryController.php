@@ -15,7 +15,10 @@ class AdminCategoryController extends Controller
     public function list(){
         // kết hợp 2 bảng staff và category vào với nhau
         $category = Category::join("staff", "category.staff_id", "=", "staff.id")
-                        ->select("staff.name", "category.*")
+                        ->select([
+                            "staff.name", 
+                            "category.*",
+                        ])
                         ->where("category.isDeleted", "!=", 0)
                         ->get();
 

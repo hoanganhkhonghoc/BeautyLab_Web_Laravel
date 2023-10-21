@@ -13,7 +13,10 @@ class QuyenHanController extends Controller
 {
     public function list(){
         $data = Staff::join("facilities", "facilities.id", "=", "staff.facilities_id")
-                                ->select("staff.*", 'facilities.name AS fac_name')
+                                ->select([
+                                    "staff.*", 
+                                    'facilities.name AS fac_name'
+                                ])
                                 ->where("staff.isDeleted", "!=", 0)
                                 ->get();
         return view("admin/Quyen_han/quyen-list", ["data" => $data]);
