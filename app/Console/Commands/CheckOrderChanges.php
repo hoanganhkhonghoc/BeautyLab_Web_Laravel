@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Events\OrderChanged;
 use App\Models\OrderModel;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class CheckOrderChanges extends Command
 {
@@ -23,6 +24,7 @@ class CheckOrderChanges extends Command
             event(new OrderChanged($currentCount));
         }
 
+        Log::info('Listener NotifyOrderChanged is activated.');
         cache(['order_count' => $currentCount], now()->addSeconds(5));
     }
 }
