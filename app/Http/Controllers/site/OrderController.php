@@ -60,7 +60,11 @@ class OrderController extends Controller
         $order->status = 1;
         $order->sum = $request->sumOrder;
         $order->date_order = Carbon::now();
-        $order->detail = $request->payment_method;
+        if($request->payment_method == 1){
+            $order->detail = 2;
+        }else{
+            $order->detail = 1;
+        }
         $order->save();
         // lấy id đơn hàng bản ghi mới nhất (dựa vào id tài khoản tránh trường hợp 2 tài khoản khác nhau đặt hàng cùng lúc)
         $idOrder = OrderModel::where("client_id", "=", Auth::guard("client")->user()->id)
