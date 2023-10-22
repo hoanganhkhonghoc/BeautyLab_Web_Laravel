@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-lg-12">
                             <button type="submit" name="submit" class="btn btn-submit me-2">Sửa</button>
-                            <a href="index.php?c=category&a=index" class="btn btn-cancel">Hủy</a>
+                            <a href="/admin/category/editView/{{$data->id}}" class="btn btn-cancel">Hủy</a>
                         </div>
                     </form>
                 </div>

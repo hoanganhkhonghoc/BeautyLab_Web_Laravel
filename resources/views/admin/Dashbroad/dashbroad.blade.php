@@ -96,7 +96,7 @@
                     <div class="col-lg-7 col-sm-12 col-12 d-flex">
                         <div class="card flex-fill">
                             <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0">Đơn hàng và doanh thu</h5>
+                                <h5 class="card-title mb-0">Đơn hàng và doanh thu năm {{$year}}</h5>
                                 <div class="graph-sets">
                                     
                                     <div class="dropdown">
@@ -105,13 +105,13 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <li>
-                                                <a href="javascript:void(0);" class="dropdown-item">2023</a>
+                                                <a href="/admin/home/index/{{Session::get("year")}}" class="dropdown-item">{{Session::get("year")}}</a>
                                             </li>
                                             <li>
-                                                <a href="javascript:void(0);" class="dropdown-item">2022</a>
+                                                <a href="/admin/home/index/{{Session::get("year") - 1}}" class="dropdown-item">{{Session::get("year") - 1}}</a>
                                             </li>
                                             <li>
-                                                <a href="javascript:void(0);" class="dropdown-item">2021</a>
+                                                <a href="/admin/home/index/{{Session::get("year") - 2}}" class="dropdown-item">{{Session::get("year") - 2}}</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -169,10 +169,22 @@
           new Chart(ctx, {
             type: 'bar',
             data: {
-              labels: ['Tháng trước', 'Tháng trước', 'Tháng trước', 'Tháng trước', 'Tháng trước', 'Tháng hiện tại'],
+              labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
               datasets: [{
-                label: 'Đơn hàng',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Doanh Thu',
+                data: [ {{$data["priceOfmothByYear"][1]}},
+                        {{$data["priceOfmothByYear"][2]}}, 
+                        {{$data["priceOfmothByYear"][3]}}, 
+                        {{$data["priceOfmothByYear"][4]}}, 
+                        {{$data["priceOfmothByYear"][5]}}, 
+                        {{$data["priceOfmothByYear"][6]}}, 
+                        {{$data["priceOfmothByYear"][7]}}, 
+                        {{$data["priceOfmothByYear"][8]}}, 
+                        {{$data["priceOfmothByYear"][9]}}, 
+                        {{$data["priceOfmothByYear"][10]}}, 
+                        {{$data["priceOfmothByYear"][11]}}, 
+                        {{$data["priceOfmothByYear"][12]}},
+                    ],
                 borderWidth: 1
               }]
             },

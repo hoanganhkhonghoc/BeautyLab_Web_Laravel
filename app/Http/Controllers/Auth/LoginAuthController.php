@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quyen_Han;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 
 class LoginAuthController extends Controller
@@ -29,12 +30,15 @@ class LoginAuthController extends Controller
         // validate dữ liệu
         $email = $request->email;
         $password = $request->password;
+        // Lấy số năm hiện tại lưu vào ss
+        $yearCurrent = Carbon::now()->year;
+        Session::put("year", $yearCurrent);
         // check quyền
         if(Auth::guard("admin")->attempt(["email" => $email, "password" => $password])){
             // đăng nhập thành công trong bảng admin thì return view home bên admin
             notyf()->addSuccess("Đăng nhập thành công! Chào bạn " . Auth::guard("admin")->user()->name . "!!");
             // flash()->addSuccess("Đăng nhập thành công! Chào bạn " . Auth::guard("admin")->user()->name . "!!");
-            return redirect()->route("homeAdmin");
+            return redirect("/admin/home/index/" . $yearCurrent);
         }
         if(Auth::guard("staff")->attempt(["email" => $email, "password" => $password])){
             // đăng nhập thành công trong bảng staff thì return view home bên admin và kiểm tra quyền
@@ -48,7 +52,7 @@ class LoginAuthController extends Controller
                 Session::put("QuyenHan", $quyenhan);
             }
             notyf()->addSuccess("Đăng nhập thành công! Chào bạn " . Auth::guard("staff")->user()->name . "!!");
-            return redirect()->route("homeAdmin");
+            return redirect("/admin/home/index/". $yearCurrent);
         }
         if(Auth::guard("client")->attempt(["email" => $email, "password" => $password])){
             // đăng nhập thành công trong bảng site thì return view home bên site

@@ -117,13 +117,24 @@ class AdminProductController extends Controller
     // Hàm tính tổng số lượng và tìm kiếm sản phẩm theo điều kiện
     public function selectProductMax($count){
         // biến count sẽ là điều kiện lọc <10 hay =0
-        $productCount = Product::where('isDeleted', '!=', 0)
-        ->whereHas('productDetails', function ($query) use ($count) {
-            $query->where('isDeleted', '!=', 0)
-                ->groupBy('product_id')
-                ->havingRaw('SUM(quanity) < ?', [$count]);
-        })
-        ->pluck('id');
+        if($count == 10){
+            $productCount = Product::where('isDeleted', '!=', 0)
+            ->whereHas('productDetails', function ($query) use ($count) {
+                $query->where('isDeleted', '!=', 0)
+                    ->groupBy('product_id')
+                    ->havingRaw('SUM(quanity) <= ?', [$count])
+                    ->havingRaw('SUM(quanity) > 0');
+            })
+            ->pluck('id');
+        }else{
+            $productCount = Product::where('isDeleted', '!=', 0)
+            ->whereHas('productDetails', function ($query) use ($count) {
+                $query->where('isDeleted', '!=', 0)
+                    ->groupBy('product_id')
+                    ->havingRaw('SUM(quanity) = 0');
+            })
+            ->pluck('id');
+        }
         if(Auth::guard("admin")->check()){
             $data["product"] = Product::join("category","category.id","=","product.cat_id")
                                       ->join("staff","product.staff_id","=","staff.id")

@@ -23,13 +23,13 @@
         <div class="header">
 
             <div class="header-left active">
-                <a href="/admin/home/index" class="logo logo-normal">
+                <a href="/admin/home/index/{{Session::get("year")}}" class="logo logo-normal">
                     <img src="{{asset('site/HTML/images/widget-logo.png')}}" alt>
                 </a>
-                <a href="/admin/home/index" class="logo logo-white">
+                <a href="/admin/home/index/{{Session::get("year")}}" class="logo logo-white">
                     <img src="{{asset('site/HTML/images/widget-logo.png')}}" alt>
                 </a>
-                <a href="/admin/home/index" class="logo-small">
+                <a href="/admin/home/index/{{Session::get("year")}}" class="logo-small">
                     <img src="{{asset('site/images/fabicon.png')}}" alt>
                 </a>
                 <a id="toggle_btn" href="javascript:void(0);">
@@ -106,7 +106,7 @@
                             <h6 class="submenu-hdr">Trang chủ</h6>
                             <ul>
                                 <li class="active">
-                                    <a href="/admin/home/index"><i data-feather="grid"></i><span>Dashboard</span></a>
+                                    <a href="/admin/home/index/{{Session::get("year")}}"><i data-feather="grid"></i><span>Dashboard</span></a>
                                 </li>
                                 <li class="submenu">
                                     <a href="javascript:void(0);"><i data-feather="smartphone"></i><span>Quản lý</span><span class="menu-arrow"></span></a>

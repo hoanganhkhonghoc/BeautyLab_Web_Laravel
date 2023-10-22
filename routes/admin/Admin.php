@@ -5,7 +5,7 @@ use App\Http\Controllers\admin\QuyenHanController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("/admin/home")->middleware("checkQuyen")->group(function(){
-    Route::get  ("/index",          [AdminHomeController::class, "index"])      ->name("homeAdmin");
+    Route::get  ("/index/{year}",          [AdminHomeController::class, "index"])      ->name("homeAdmin");
 });
 
 Route::prefix("/admin/quyen/")->middleware("checkAdmin")->group(function(){
