@@ -10,10 +10,15 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class CardController extends Controller
 {
     public function show(){
+        // Kiểm tra trước đó có áp dụng mã giảm giá nào chưa
+        if(Session::has("maGiamGia")){
+            Session::forget("maGiamGia");
+        }
         if(Auth::guard("client")->check()){
             $count = Card::where("isDeleted", "!=", 0)->where("client_id", Auth::guard("client")->user()->id)->count();
             // trường hợp 1; tài khoản chưa có giỏ hàng

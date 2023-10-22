@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\site\DiscountCodeController;
 use App\Http\Controllers\site\OrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,5 +12,7 @@ Route::prefix("/site/order")->middleware("checkClient")->group(function(){
     Route::get("/deleted/{id}", [OrderController::class, "deleted"]);
     Route::get("/thankyou", [OrderController::class, "thankyou"]);
 });
-
+Route::prefix("/site/disCode")->middleware("checkClient")->group(function(){
+    Route::post("/useCode/{cartId}", [DiscountCodeController::class, "useCode"]);
+});
 ?>

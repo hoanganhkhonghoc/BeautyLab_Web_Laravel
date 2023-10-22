@@ -4,7 +4,7 @@ namespace App\Http\Controllers\site;
 
 use App\Http\Controllers\Controller;
 use App\Models\Card;
-
+use App\Models\discount_code;
 use Endroid\QrCode\QrCode;
 use Illuminate\Support\Facades\File;
 
@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
@@ -31,6 +32,7 @@ class OrderController extends Controller
                             ->where("product_detail.isSoid", "!=", 0)
                             ->get();
         $data["payment"] = Paymentmethods::all();
+        $data["cardID"] = $id;
         return view("site/Order/checkout", ["data" => $data]);
     }
 
@@ -126,6 +128,21 @@ class OrderController extends Controller
         $stringJson = rtrim($stringJson, ',') . "]";
         $stringArray = json_decode($stringJson, true);
         DB::table('order_detail')->insert($stringArray);
+
+        // Trừ số lượng mã giảm giá
+        if(Session::has("maGiamGia")){
+            $idDisCode = Session::get("maGiamGia")->id;
+            $disCode = discount_code::where("isDeleted", "!=", 0)->where("id", $idDisCode)->first();
+            if($disCode->quanity > 0){
+                $disCode->update([
+                    "updated_at" => Carbon::now(),
+                    "quanity" => $disCode->quanity - 1, 
+                ]);
+                $disCode->save();
+            }else{
+                notyf()->addError("Hết lượt áp dụng mã giảm giá!!");
+            }
+        }
 
         // xem phương thức thanh toán là loại nào
         // nếu là thanh toán sau 

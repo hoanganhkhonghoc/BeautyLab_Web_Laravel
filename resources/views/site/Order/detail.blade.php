@@ -102,13 +102,19 @@
                                         </tr>
                                         <tr>
                                             <th scope="row">Mã giảm giá:</th>
-                                            <td></td>
+                                            <td><?php 
+                                                    $giamgia = 0;
+                                                    if(Session::has("maGiamGia")){
+                                                       $giamgia = $tong + 30000 - $data[0]->sum;
+                                                    }
+                                                    echo "-" . number_format($giamgia) . " VNĐ";
+                                                ?></td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Tổng đơn:</th>
                                             <td>
                                                 <span class="woocommerce-Price-amount amount"><?php $tong += 30000; ?>
-                                                    <span class="woocommerce-Price-currencySymbol"></span>{{number_format($tong) . ' VNĐ'}}
+                                                    <span class="woocommerce-Price-currencySymbol"></span>{{number_format($data[0]->sum) . ' VNĐ'}}
                                                 </span>
                                             </td>
                                         </tr>

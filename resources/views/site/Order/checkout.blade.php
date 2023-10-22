@@ -15,15 +15,16 @@
                             <div class="woocommerce-notices-wrapper"></div>
                             <div class="woocommerce-form-coupon-toggle">
                                 <div class="woocommerce-info">
-                                    <?php //if(isset($_SESSION['magiamgia'])){ ?>
-                                    {{-- Mã giảm giá đã được áp dụng: <?php //echo $_SESSION['checkcodediscount']; ?> --}}
-                                    <?php //}else { ?>
-                                    {{-- Bạn có mã giảm giá? <a href="#" class="showcoupon">Ấn vô đây để nhập</a> --}}
-                                    <?php //} ?>
+                                    @if(Session::has("maGiamGia"))
+                                        Mã giảm giá đã được áp dụng: {{Session::get("maGiamGia")->code}}
+                                    @else 
+                                        Bạn chưa nhập mã giảm giá? <a href="#" class="showcoupon">Ấn vô đây để nhập</a>
+                                    @endif
                                 </div>
                             </div>
 
-                            <form class="checkout_coupon woocommerce-form-coupon" action="index.php?c=discount&a=index" method="post" style="display:none">
+                            <form class="checkout_coupon woocommerce-form-coupon" action="/site/disCode/useCode/{{$data["cardID"]}}" method="post" style="display:none">
+                                @csrf
                                 <p>Nếu bạn có mã giảm giá hãy nhập đúng mã của mình</p>
                                 <p class="form-row form-row-first">
                                     <input type="text" name="coupon_code" class="input-text" placeholder="Nhập ở đây" id="coupon_code" value="">
@@ -150,13 +151,10 @@
                                                     <span class="woocommerce-Price-amount amount">
                                                         <bdi>
                                                             <span class="woocommerce-Price-currencySymbol"></span><?php $giamgia = 0;
-                                                                                                                        // if (isset($_SESSION['money'])) {
-                                                                                                                        //     $giamgia = $_SESSION['money'];
-                                                                                                                        // }
-                                                                                                                        // if (isset($_SESSION['percent'])) {
-                                                                                                                        //     $giamgia = ($_SESSION['percent'] * $giatong) / 100;
-                                                                                                                        // }
-                                                                                                                        //echo number_format($giamgia) . ' VNĐ'; ?>
+                                                                                                                        if(Session::has("maGiamGia")){
+                                                                                                                            $giamgia = Session::get("maGiamGia")->money + (Session::get("maGiamGia")->percent * $giatong / 100);
+                                                                                                                        }
+                                                                                                                        echo number_format($giamgia) . ' VNĐ'; ?>
                                                         </bdi>
                                                     </span>
                                                 </td>

@@ -19,9 +19,6 @@ return new class extends Migration
             $table->string("code")->nullable();
             // số tiền giảm giá
             $table->integer("money")->nullable();
-            // mã còn áp dụng hay không
-            // 0 là hết tác dụng
-            // 1 là còn tác dụng
             $table->integer("percent")->nullable();
             // số lượng mã áp dụng
             $table->integer("quanity")->nullable();
