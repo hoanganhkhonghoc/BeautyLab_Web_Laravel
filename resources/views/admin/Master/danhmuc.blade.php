@@ -179,10 +179,10 @@
                                 <h6 class="submenu-hdr">Quản lý bài viết</h6>
                                 <ul>
                                     <li>
-                                        <a href="#"><i data-feather="file"></i><span>Bài viết</span> </a>
+                                        <a href="/admin/baiviet/list"><i data-feather="file"></i><span>Bài viết</span> </a>
                                     </li>
                                     <li>
-                                        <a href="#"><i data-feather="pen-tool"></i><span>Viết bài</span> </a>
+                                        <a href="/admin/baiviet/choose"><i data-feather="pen-tool"></i><span>Viết bài</span> </a>
                                     </li>
                                 </ul>
                             </li>

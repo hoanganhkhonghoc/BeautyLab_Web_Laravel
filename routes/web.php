@@ -35,6 +35,7 @@ Route::prefix("/")->group(__DIR__ . "/admin/Staff.php");
 Route::prefix("/")->group(__DIR__ . "/admin/Client.php");
 Route::prefix("/")->group(__DIR__ . "/admin/Order.php");
 Route::prefix("/")->group(__DIR__ . "/admin/Comment.php");
+Route::prefix("/")->group(__DIR__ . "/admin/BaiViet.php");
 
 /*
 Nhóm Route bên phía Site
@@ -45,6 +46,7 @@ Route::prefix("/")->group(__DIR__ . "/site/Cart.php");
 Route::prefix("/")->group(__DIR__ . "/site/Order.php");
 Route::prefix("/")->group(__DIR__ . "/site/Comment.php");
 Route::prefix("/")->group(__DIR__ . "/site/Search.php");
+Route::prefix("/")->group(__DIR__ . "/site/BaiViet.php");
 
 // phục vụ mục đích test
 Route::get('/test',[TestController::class, "test"]);

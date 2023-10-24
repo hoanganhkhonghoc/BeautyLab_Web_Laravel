@@ -15,10 +15,18 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->string("title");
-            $table->string("detail");
-            $table->date("date");
-            
+            $table->string("tieude1");
+            $table->string("tieude2");
+            $table->string("noidung1");
+            $table->string("noidung2");
+            $table->string("img1");
+            $table->string("img2");
+            $table->string("img3");
+            $table->string("img4");
+            $table->string("img5");
+            $table->integer("postNumber");
+            $table->string("isDeleted")->default(1);
+
             $table->unsignedBigInteger("staff_id")->unsigned();
             $table->foreign("staff_id")->references("id")->on("staff");
         });

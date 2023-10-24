@@ -209,6 +209,11 @@
                                     </div>
                                 </div>
                             </li>
+                            <li><a href="#" title="Blog">Blog</a>
+                                <ul class="dropdown triangle">
+                                    <li><a href="/site/baiviet/list">Danh sách Blog</a></li>
+                                </ul>
+                            </li>
                         </ul>
                         <button type="button" id="search-button" data-toggle="modal" data-target="#search-modal"><i class="fa fa-search"></i></button>
                     </div>

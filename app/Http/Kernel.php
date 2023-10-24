@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
         'checkQuyenTaiKhoan' => \App\Http\Middleware\admin\CheckQuyenTaiKhoan::class,
         'checkQuyenOrder' => \App\Http\Middleware\admin\CheckQuyenOrder::class,
         'checkQuyenBinhluan' => \App\Http\Middleware\admin\CheckQuyenBinhLuan::class,
+        'checkQuyenBaiViet' => \App\Http\Middleware\admin\QuanLyBaiViet::class,
         'checkClient' => \App\Http\Middleware\site\CheckClient::class,
     ];
 }
