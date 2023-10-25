@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,7 +46,3 @@ Route::prefix("/")->group(__DIR__ . "/site/Order.php");
 Route::prefix("/")->group(__DIR__ . "/site/Comment.php");
 Route::prefix("/")->group(__DIR__ . "/site/Search.php");
 Route::prefix("/")->group(__DIR__ . "/site/BaiViet.php");
-
-// phục vụ mục đích test
-Route::get('/test',[TestController::class, "test"]);
-Route::get('/testA',[TestController::class, "testA"]);

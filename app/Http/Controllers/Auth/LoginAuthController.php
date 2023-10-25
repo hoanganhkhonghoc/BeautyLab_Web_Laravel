@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Quyen_Han;
 use Carbon\Carbon;
+use App\Models\Quyen_Han;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 class LoginAuthController extends Controller
 {
+    /*
+    function: showViewLogin
+    @redirect: /login/showView
+    @methods: get
+    @return: view("/site/Login/login")
+    */
     public function showViewLogin(){
         notyf()->position('x', 'center')
                 ->position('y', 'top')
@@ -18,6 +24,19 @@ class LoginAuthController extends Controller
         return view("/site/Login/login");
     }
 
+    /*
+    function: login
+    @redirect: /login/xl_login
+    @methods: post
+    @parma: Request (value to form)
+    @return: redirect by Auth
+    @switch(return)
+        Auth::guard("admin"): redirect("/admin/home/index")
+        Auth::guard("staff"): redirect("/admin/home/index")
+            Put Session("QuyenHan)
+        Auth::guard("client"): redirect("/site/home")
+        Default: redirect("/login/showViewLogin")
+    */
     public function login(Request $request){
         // khi đăng nhập tài khoản cũng có nghĩa là tài khoản chưa đăng nhập 
         // nếu đang từ home hay 1 trang bất kì nào khác mà quay về login có nghĩa tài khoản đã bị đăng xuất
@@ -65,6 +84,12 @@ class LoginAuthController extends Controller
         return redirect()->route("showViewLogin");
     }
 
+    /*
+    function: Login
+    @redirect: /logout
+    @methods: get
+    @return: redirect("/site/home")
+    */
     public function logout(){
         Auth::guard("admin")->logout();
         Auth::guard("staff")->logout();

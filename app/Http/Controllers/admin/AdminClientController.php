@@ -1,24 +1,45 @@
 <?php
 
 namespace App\Http\Controllers\admin;
+
+use Carbon\Carbon;
 use App\Models\Admin;
-use App\Http\Controllers\Controller;
+use App\Models\Staff;
 use App\Models\Client;
 use Illuminate\Http\Request;
-use App\Models\Staff;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redis;
+use App\Http\Controllers\Controller;
 
 class AdminClientController extends Controller
 {
+    /*
+    function: list (show view list manager Client)
+    @redirect: /admin/client/list
+    @methods: get
+    @return: view("admin/Client/client-list")
+    @data: all value in table Client where isDeleted != 0
+    */
     public function list(){
         $data = Client::where("isDeleted", "!=", 0)->get();
         return view("admin/Client/client-list", ['data' => $data]);
     }
+
+    /*
+    function: addView (show view add client)
+    @redirect: /admin/client/addView
+    @methods: get
+    @return: view("admin/Client/client-add")
+    */
     public function addView(){
         return view("admin/Client/client-add");
     }
+
+    /*
+    function: xl_add (logic and add value form view to database)
+    @redirect: /admin/client/xl_add
+    @methods: post
+    @param: Request (value to form)
+    @return: redirect("/admin/client/list")
+    */
     public function xl_add(Request $request){
         if($request->pass != $request->pass1){
             notyf()->addError("Mật khẩu không trùng khớp!! Yêu cầu nhập lại!! =)))");
@@ -57,11 +78,27 @@ class AdminClientController extends Controller
         return redirect()->route("clientList");
     }
 
+    /*
+    function: show (show view show detail poperties client)
+    @redirect: /admin/client/show
+    @methods: get
+    @param: $id (id table client)
+    @return: view("admin/Client/client-show")
+    @data: get value client orderby id 
+    */
     public function show($id){
         $data = Client::where("id", $id)->where("isDeleted", "!=", 0)->first();
         return view("admin/Client/client-show" , ["data" => $data]);
     }
 
+    /*
+    function: xl_edit (logic and edit value form view to database)
+    @redirect: /admin/client/xl_edit
+    @methods: post
+    @param: Request (value to form)
+    @param: $id (id table client)
+    @return: redirect("/admin/client/show" . $id)
+    */
     public function xl_edit(Request $request, $id){
         $client = Client::find($id);
         if($client->password != $request->pass){
@@ -81,6 +118,13 @@ class AdminClientController extends Controller
         return redirect("/admin/client/show/". $id);
     }
 
+    /*
+    function: xl_deleted (logic and deleted value form view to database)
+    @redirect: /admin/client/xl_deleted
+    @methods: get
+    @param: $id (id table client)
+    @return: redirect("/admin/client/list")
+    */
     public function xl_deleted($id){
         $client = Client::find($id);
         $client->update([

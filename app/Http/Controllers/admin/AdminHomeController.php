@@ -1,17 +1,33 @@
 <?php
 namespace App\Http\Controllers\admin;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+
+use Carbon\Carbon;
 use App\Models\OrderModel;
 use App\Models\ProductDetail;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 class AdminHomeController extends Controller
 {
-    // trang chủ khi phân quyền xong
+    /*
+    function: index (show view dashbroad admin)
+    @redirect: /admin/home/index
+    @methods: get
+    @param: $year (year param)
+    @return: view("admin/Dashbroad/dashbroad")
+    @data: $data[
+                ["countOrderInMonth"]: count order in month
+                ["sumPriceOrderInMonth"]: sum price order in month
+                ["countOrderLastMonth"]: count order last month
+                ["tanglen"]: The number of orders is more than last month
+                ["giamdi"]: The number of orders decreased compared to the previous month
+                ["priceOfmothByYear"]: Revenue every month of the year
+                ['product5limit']: Top 5 best selling products of the month
+            ]
+    @data: $year: year param
+    */
     public function index($year){
         $startOfMonth = Carbon::now()->startOfMonth();
         $endOfMonth = Carbon::now()->endOfMonth();
@@ -83,6 +99,13 @@ class AdminHomeController extends Controller
                                                     ]);
     }
 
+    /*
+    function: account (show view account show admin)
+    @redirect: /admin/account/show
+    @methods: get
+    @return: view("admin/Account/account-show")
+    @data: $data: data Auth
+    */
     public function account(){
         $data = [];
         if(Auth::guard("admin")->check()){

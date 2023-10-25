@@ -2,18 +2,31 @@
 
 namespace App\Http\Controllers\site;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Card;
 use App\Models\CardDetail;
 use App\Models\ProductDetail;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 class CardController extends Controller
 {
+    /*
+    function: show (show view cart list)
+    @redirect: /site/card/show
+    @methods: get
+    @return: view by Auth::guard("client")->check()
+    @switch(Auth::guard("client")->check())
+            Auth::guard("client")->check() = true: return view("site/Cart/cart-list")
+            Auth::guard("client")->check() = false: redirect("/login/showView")
+    @data: $data[
+                ['cart']: get all in cart order by client_id
+                ['Idcart']: get id cart
+            ]
+    */
     public function show(){
         // Kiểm tra trước đó có áp dụng mã giảm giá nào chưa
         if(Session::has("maGiamGia")){
@@ -54,8 +67,16 @@ class CardController extends Controller
         return redirect("/login/showView");
     }
 
-    // thêm sản phẩm vào giỏ hàng trong view product detail
+    /*
+    function: addCartDetail (logic and add cart to cart detail table)
+    @redirect: /site/card/addDetail
+    @methods: post
+    @param: Request (value to form)
+    @param: $id (id cart table)
+    @return: return redirect()->back()
+    */
     public function addCartDetail(Request $request, $id){
+        // thêm sản phẩm vào giỏ hàng trong view product detail
         if(Auth::guard("client")->check()){
             if($this->checkProductInCart($id)){
                 // đã có sản phẩm trong giỏ hàng
@@ -93,6 +114,14 @@ class CardController extends Controller
         }
     }
 
+    /*
+    function: checkProductInCart (check count product detail in cart)
+    @param: $idProduct (id product detail table)
+    @return: bool 
+    @switch(bool)
+            count > 0: return true
+            connt <= 0: return false
+    */
     private function checkProductInCart($idProduct){
         // hàm này sẽ trả true hoặc false
         // trua khi sản phẩm đã có trong giỏ hàng
@@ -108,6 +137,11 @@ class CardController extends Controller
         }
     }
 
+    /*
+    function: getCountProductInCart (get count product detail in cart)
+    @param: $idProduct (id product detail table)
+    @return: quanity product detail in cart
+    */
     private function getCountProductInCart($idProduct){
         $cart = CardDetail::join("cart", "cart_detail.cart_id", "=", "cart.id")
                                 ->where("cart.client_id", "=", Auth::guard("client")->user()->id)
@@ -116,11 +150,21 @@ class CardController extends Controller
         return $cart->quanity;
     }
 
+    /*
+    function: getCoutProductInProduct (get count product detail in cart)
+    @param: $idProduct (id product detail table)
+    @return: quanity product detail in product
+    */
     private function getCoutProductInProduct($idProduct){
         $product = ProductDetail::where("id", "=", $idProduct)->where("isDeleted", "!=", 0)->first();
         return $product->quanity;
     }
 
+    /*
+    function: addNewProductInCart (add new product detail in cart detail)
+    @param: $idProduct (id product detail table)
+    @param: $quanityAdd (quanity product add to cart detail)
+    */
     private function addNewProductInCart($idProduct, $quanityAdd){
         $cart = Card::where("client_id", "=", Auth::guard("client")->user()->id)->first();
         $cart_detail = new CardDetail();
@@ -133,6 +177,14 @@ class CardController extends Controller
         $cart_detail->save();
     }
 
+    /*
+    function: addCartList (add cart and quanity product)
+    @redirect: /site/card/addList
+    @methods: get
+    @param: $id (id cart table)
+    @param: $quanity (quanity product in cart detail table)
+    @return: return redirect()->back()
+    */
     public function addCartList($id, $quanity){
         $idProduct = $id;
         $quanityAdd = $quanity;
@@ -173,6 +225,14 @@ class CardController extends Controller
         }
     }
 
+    /*
+    function: xl_deleted (deleted cart and quanity product)
+    @redirect: /site/card/deleted
+    @methods: get
+    @param: $id (id cart table)
+    @param: $quanity (quanity product in cart detail table)
+    @return: return redirect()->back()
+    */
     public function xl_deleted($idPro, $idCart){
         DB::table("cart_detail")->where("cart_id", "=", $idCart)
                                 ->where("product_detail_id", "=", $idPro)
@@ -181,8 +241,14 @@ class CardController extends Controller
         return redirect()->back();                       
     }
 
-    /* xem kĩ phần này 2h -> 3h trong rec */ 
-    /* xem kĩ phút 2h38-2h44 */
+    /*
+    function: updateCart (logic and update cart to cart detail table)
+    @redirect: /site/card/updateCart
+    @methods: post
+    @param: Request (value to form)
+    @param: $idCart (id cart table)
+    @return: return redirect()->back()
+    */
     public function updateCart(Request $request, $idCart){
         $arrQuanity = $request->input('quanity');
 

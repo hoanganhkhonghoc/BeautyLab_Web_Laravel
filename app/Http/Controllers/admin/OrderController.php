@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\OrderModel;
 use App\Models\ProductDetail;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
+    /*
+    function: list (show view list order)
+    @redirect: /admin/order/list
+    @methods: get
+    @return: view("admin/Order/order-list")
+    @data: get all data in order table where isDeleted != 0
+    */
     public function list(){
         // lấy toàn bộ đơn hàng
         $data['order'] = OrderModel::where("isDeleted", "!=", 0)
@@ -18,6 +25,17 @@ class OrderController extends Controller
         return view("admin/Order/order-list", ["data" => $data]);
     }
 
+    /*
+    function: show (show view detail poperties order)
+    @redirect: /admin/order/show
+    @methods: get
+    @param: $id (id order)
+    @return: view("admin/Order/order-detail")
+    @data: $data[
+                ["order"]: get value order table order by id
+                ['product']: get all product detail table order by id order_detail.product_id
+            ]
+    */
     public function show($id){
         // lấy thông tin của 1 đơn hàng bất kì
         $data["order"] = OrderModel::join("receiver", "order.receiver_id", "=", "receiver.id")
@@ -49,6 +67,14 @@ class OrderController extends Controller
         return view("admin/Order/order-detail", ["data" => $data]);
     }
 
+    /*
+    function: update (logic and update value in order table)
+    @redirect: /admin/order/updateOrder
+    @methods: post
+    @param: Request (value to form)
+    @param: $id (id order)
+    @return: back()->redirect()
+    */
     public function update(Request $request,$id){
         $order = OrderModel::where("id", "=", $id)->where("isDeleted", "!=", 0)->first();
         $statusCurrent = $order->status;
@@ -76,6 +102,12 @@ class OrderController extends Controller
         }
     }
 
+    /*
+    function: deleteOrder (logic and update value in order table)
+    @redirect: /admin/order/deleteOrder
+    @methods: get
+    @param: $id (id order)
+    */
     public function deleteOrder($id){
         // Cập nhật trạng thái huỷ đơn
         $order = OrderModel::find($id);
@@ -119,10 +151,16 @@ class OrderController extends Controller
         }
     }
 
-    // Hàm lọc đơn hàng
-    // $count -> 1 chờ xử lý (chưa xử lý), 2 đang giao hàng, 3 đã giao thành công, 0 là đã huỷ
-
+    /*
+    function: SelectedOrder (selected status current in order table)
+    @redirect: /admin/order/SelectedOrder
+    @methods: get
+    @param: $status (status current order)
+    @return: view("admin/Order/order-list")
+    @data: get all data order table order by status
+    */
     public function SelectedOrder($status){
+        // $count -> 1 chờ xử lý (chưa xử lý), 2 đang giao hàng, 3 đã giao thành công, 0 là đã huỷ
         $data['order'] = OrderModel::where("isDeleted", "!=", 0)->where("status", "=", $status)->get();
         return view("admin/Order/order-list", ["data" => $data]);
     }

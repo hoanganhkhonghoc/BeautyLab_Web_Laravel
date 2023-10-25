@@ -2,14 +2,25 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Product;
 use App\Models\ProductDetail;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AdminProductDetailController extends Controller
 {
+    /*
+    function: list (show view list product detail by id product)
+    @redirect: /admin/product_detail/list
+    @methods: get
+    @param: $id (id product table)
+    @return: view("admin/Product_detail/product_detail-list")
+    @data: $data[
+                ['product']: all value product detail table order by id product
+                ['id']: id product prama
+            ]
+    */
     public function list($id){
         $data['product'] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
                                         ->select([
@@ -25,12 +36,31 @@ class AdminProductDetailController extends Controller
         return view("admin/Product_detail/product_detail-list", ['data' => $data]);
     }
 
+    /*
+    function: addView (show view add product detail)
+    @redirect: /admin/product_detail/addView
+    @methods: get
+    @param: $id (id product table)
+    @return: view("admin/Product_detail/product_detail-add")
+    @data: $data[
+                ['product']: get data product order by id
+                ['id']: id product prama
+            ]
+    */
     public function addView($id){
         $data["namePro"] = Product::where("id",$id)->first();
         $data['id'] = $id;
         return view("admin/Product_detail/product_detail-add", ["data" => $data]);
     }
 
+    /*
+    function: xl_add (show view add product detail)
+    @redirect: /admin/product_detail/xl_add
+    @methods: post
+    @param: Request (value to form)
+    @param: $id (id product table)
+    @return: redirect("/admin/product_detail/list/". $id)
+    */
     public function xl_add(Request $request ,$id){
         $product_detail = new  ProductDetail();
         $product_detail->created_at = Carbon::now();
@@ -54,6 +84,13 @@ class AdminProductDetailController extends Controller
         return redirect("/admin/product_detail/list/". $id);
     }
 
+    /*
+    function: xl_delete (logic and deleted value product detail by id)
+    @redirect: /admin/product_detail/xl_delete
+    @methods: get
+    @param: $id (id product detail table)
+    @return: redirect("/admin/product_detail/list/". $id)
+    */
     public function xl_delete($id){
         $product = ProductDetail::find($id);
         $product->update([
@@ -64,6 +101,17 @@ class AdminProductDetailController extends Controller
         return redirect("/admin/product_detail/list/". $id);
     }
 
+    /*
+    function: editView (show view product detail poperties by id product detail)
+    @redirect: /admin/product_detail/editView
+    @methods: get
+    @param: $id (id product detail table)
+    @return: view("admin/Product_detail/product_detail-edit"")
+    @data: $data[
+                ['product']: get value product detail table order by id product detail
+                ['id']: id product detail prama
+            ]
+    */
     public function editView($id){
         $data["product"] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
                         ->select([
@@ -77,6 +125,14 @@ class AdminProductDetailController extends Controller
         return view("admin/Product_detail/product_detail-edit", ["data" => $data]);
     }
 
+    /*
+    function: xl_edit (logic and edit data in product detail order by id product detail)
+    @redirect: /admin/product_detail/xl_edit
+    @methods: post
+    @param: Request (value to form)
+    @param: $id (id product detail table)
+    @return: redirect("/admin/product_detail/editView/". $id)
+    */
     public function xl_edit(Request $request, $id){
         $product = ProductDetail::find($id);
         if($request->imgPro == null){
@@ -99,6 +155,14 @@ class AdminProductDetailController extends Controller
         return redirect("/admin/product_detail/editView/". $id);
     }
 
+    /*
+    function: show (show view product detail properties by id)
+    @redirect: /admin/product_detail/show
+    @methods: get
+    @param: $id (id product detail table)
+    @return: view("admin/Product_detail/product_detail-show")
+    @data: $data['product']: get data product order by id
+    */
     public function show($id){
         $data["product"] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
                                         ->join("category", "category.id", "=", "product.cat_id")
@@ -113,6 +177,15 @@ class AdminProductDetailController extends Controller
         return view("admin/Product_detail/product_detail-show", ["data" => $data]);
     }
 
+    /*
+    function: isSoid (get isSoid update)
+    @param: $quanity (quanity product detail current)
+    @return: number
+    @switch(number)
+            $quanity = 0: return 0
+            $quanity <= 10 && $quanity > 0: return 1;
+            default: return 2
+    */
     public function isSoid($quanity){
         if($quanity == 0){
             return 0;

@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Facilities;
-use App\Models\Quyen_Han;
-use App\Models\Staff;
 use Carbon\Carbon;
+use App\Models\Staff;
+use App\Models\Quyen_Han;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class QuyenHanController extends Controller
 {
+    /*
+    function: list (show view list manager Quyen_Han staff)
+    @redirect: /admin/quyen/list
+    @methods: get
+    @return: view("admin/Quyen_han/quyen-list")
+    @data: all value in table staff where isDeleted != 0
+    */
     public function list(){
         $data = Staff::join("facilities", "facilities.id", "=", "staff.facilities_id")
                                 ->select([
@@ -21,6 +27,15 @@ class QuyenHanController extends Controller
                                 ->get();
         return view("admin/Quyen_han/quyen-list", ["data" => $data]);
     }
+
+    /*
+    function: show (show view show manager Quyen_Han staff)
+    @redirect: /admin/quyen/show
+    @methods: get
+    @param: $id (id staff table)
+    @return: view("admin/Quyen_han/show")
+    @data: get value in table Quyen_Han order by id staff
+    */
     public function show($id){
         // check xem đã tạo cột quyền chưa có rồi thì trả true còn không trả false
         $check = Quyen_Han::where("staff_id", $id)->exists();
@@ -43,6 +58,15 @@ class QuyenHanController extends Controller
         $data = Quyen_Han::where("staff_id", $id)->where("isDeleted","!=",0)->first();
         return view("admin/Quyen_han/show", ["data" => $data]);
     }
+
+    /*
+    function: xl_edit (logic and update Quyen_Han staff)
+    @redirect: /admin/quyen/xl_edit
+    @methods: post
+    @param: Request (value to form)
+    @param: $id (id staff table)
+    @return: redirect("admin/quyen/show/". $id)
+    */
     public function xl_edit(Request $request, $id){
         if($request->binh_luan == "on"){
             $binhluan = 1;

@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\site;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class SiteHomeController extends Controller
 {
+    /*
+    function: index (show view home site)
+    @redirect: /site/home
+    @methods: get
+    @return: view("site/Home/home")
+    */
     public function index(){
-        return view ("site/Home/home");
+        return view("site/Home/home");
     }
 }

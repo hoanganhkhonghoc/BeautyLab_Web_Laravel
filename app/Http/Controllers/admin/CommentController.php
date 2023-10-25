@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\CommentModel;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CommentController extends Controller
 {
+    /*
+    function: list (show view list manager Comment)
+    @redirect: /admin/comment/list
+    @methods: get
+    @return: view("admin/Comment/comment_list")
+    @data: get all comment in comment table and isDeleted != 0
+    */
     public function list(){
         $data["comment"] = CommentModel::join("product_detail", "comment.product_detail_id", "=", "product_detail.id")
                                         ->join("product", "product.id", "=", "product_detail.product_id")

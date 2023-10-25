@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Product;
-use App\Models\ProductDetail;
 use Carbon\Carbon;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AdminProductController extends Controller
 {
+    /*
+    function: list (show view list manager product)
+    @redirect: /admin/product/list
+    @methods: get
+    @return: view("admin/Product/product-list")
+    @data: $data["product"]: get all data in table product where (product.isDelted != 0)
+    */
     public function list(){
         if(Auth::guard("admin")->check()){
             $data["product"] = Product::join("category","category.id","=","product.cat_id")
@@ -36,11 +42,26 @@ class AdminProductController extends Controller
         }
         return view("admin/Product/product-list", ["data" => $data["product"]]);
     }
+
+    /*
+    function: addView (show view add manager product)
+    @redirect: /admin/product/addView
+    @methods: get
+    @return: view("admin/Product/product-add")
+    @data: get all data in table category where (isDelted != 0)
+    */
     public function addView(){
         $category = Category::all()->where("isDeleted", "!=", 0);
         return view("admin/Product/product-add", ['data' => $category]);
     }
 
+    /*
+    function: xl_add (logic and add value form view to database)
+    @redirect: /admin/product/xl_add
+    @methods: post
+    @param: Request (value to form)
+    @return: redirect("/admin/product/list")
+    */
     public function xl_add(Request $request){
         $validate = $request->validate([
             "namePro" => "required|string|max:255",
@@ -75,12 +96,31 @@ class AdminProductController extends Controller
         return redirect()->route("listProduct");
     }
 
+    /*
+    function: edit (show view edit product)
+    @redirect: /admin/product/editView
+    @methods: get
+    @param: $id (id table product)
+    @return: view("admin/Product/product-edit")
+    @data: $data[
+                ["product"]: get data order by id table product
+                ["category"]: get all data in table category
+            ]
+    */
     public function edit($id){
         $data["product"] = Product::where("id",$id)->where("isDeleted","!=",0)->first();
         $data["category"] = Category::all()->where("isDeleted","!=",0);
         return view("admin/Product/product-edit", ["data" => $data]);
     }
 
+    /*
+    function: xl_edit (logic and edit data where id in table product)
+    @redirect: /admin/product/xl_edit
+    @methods: post
+    @param: Request (value to form)
+    @param: $id (id table product)
+    @return: redirect("/admin/product/list")
+    */
     public function xl_edit(Request $request, $id){
         if(Auth::guard("admin")->check()){
             $staff_id = 1;
@@ -114,7 +154,15 @@ class AdminProductController extends Controller
         return redirect()->route("listProduct");
     }
 
-    // Hàm tính tổng số lượng và tìm kiếm sản phẩm theo điều kiện
+
+    /*
+    function: selectProductMax (logic and edit data where id in table product)
+    @redirect: /admin/count/
+    @methods: get
+    @param: $count (0 or 10)
+    @return: view("admin/Product/product-list")
+    @data: $data['product']: get all data product if quanity <= 10 or quanity = 0
+    */
     public function selectProductMax($count){
         // biến count sẽ là điều kiện lọc <10 hay =0
         if($count == 10){

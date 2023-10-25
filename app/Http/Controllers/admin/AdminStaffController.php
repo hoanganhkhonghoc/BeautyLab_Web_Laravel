@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Admin;
+use App\Models\Staff;
 use App\Models\Client;
 use App\Models\Facilities;
 use Illuminate\Http\Request;
-use App\Models\Staff;
-use Carbon\Carbon;
+use App\Http\Controllers\Controller;
 
 class AdminStaffController extends Controller
 {
+    /*
+    function: list (show view list manager Staff)
+    @redirect: /admin/staff/list
+    @methods: get
+    @return: view("admin/Staff/staff-list")
+    @data: all value in table Staff where isDeleted != 0
+    */
     public function list(){
         $data["staff"] = Staff::join("facilities", "facilities.id", "=", "staff.facilities_id")
                                 ->select([
@@ -23,11 +30,25 @@ class AdminStaffController extends Controller
         return view("admin/Staff/staff-list", ['data' => $data]);
     }
 
+    /*
+    function: addView (show view add Staff)
+    @redirect: /admin/staff/addView
+    @methods: get
+    @return: view("admin/Staff/staff-add")
+    @data: all value in table Facilities where isDeleted != 0
+    */
     public function addView(){
         $data = Facilities::where("isDeleted", "!=", 0)->get();
         return view("admin/Staff/staff-add", ["data" => $data]);
     }
 
+    /*
+    function: xl_add (logic and add value form view to database)
+    @redirect: /admin/staff/xl_add
+    @methods: post
+    @param: Request (value to form)
+    @return: redirect("/admin/staff/list")
+    */
     public function xl_add(Request $request){
         if($request->pass != $request->pass1){
             notyf()->addError("Mật khẩu không trùng khớp!! Yêu cầu nhập lại!! =)))");
@@ -66,12 +87,31 @@ class AdminStaffController extends Controller
         return redirect()->route("staffList");
     }
 
+    /*
+    function: showView (show view Staff detail poperties)
+    @redirect: /admin/staff/show
+    @methods: get
+    @param: $id (id staff table)
+    @return: view("admin/Staff/staff-show")
+    @data: $data[
+                ['staff']: get data staff order by id staff table
+                $data['fac']: get all data in facilities table
+            ]
+    */
     public function showView($id){
         $data['staff'] = Staff::where("id",$id)->where("isDeleted","!=",0)->first();
         $data['fac'] = Facilities::where("isDeleted", "!=", 0)->get();
         return view("admin/Staff/staff-show", ['data' => $data]);
     }
 
+    /*
+    function: xl_edit (logic and update data in Staff table order by id)
+    @redirect: /admin/staff/xl_edit
+    @methods: post
+    @param: Request (value to form)
+    @param: $id (id staff table)
+    @return: redirect("/admin/staff/show/". $id)
+    */
     public function xl_edit(Request $request, $id){
         $staff = Staff::find($id);
         if($staff->password != $request->pass){
@@ -93,6 +133,13 @@ class AdminStaffController extends Controller
         return redirect("/admin/staff/show/". $id);
     }
 
+    /*
+    function: xl_deleted (logic and deleted data in Staff table order by id)
+    @redirect: /admin/staff/xl_deleted
+    @methods: get
+    @param: $id (id staff table)
+    @return: redirect("/admin/staff/list")
+    */
     public function xl_deleted($id){
         $staff = Staff::find($id);
         $staff->update([

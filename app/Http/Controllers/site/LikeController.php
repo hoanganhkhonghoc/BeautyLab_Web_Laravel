@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers\site;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Like;
-use App\Models\ProductDetail;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use App\Models\Like;
+use App\Models\Category;
+use App\Models\ProductDetail;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class LikeController extends Controller
 {
+    /*
+    function: list (show view list wishlist product)
+    @redirect: /site/like/product
+    @methods: get
+    @param: $id (id Auth::guard('client')->user()->id)
+    @return: view("site/Product/like-list")
+    @data: $data[
+                ['category']: all data in category table where isDeleted != 0
+                ['product']: get all data product detail in like table order by client.id
+            ]
+    */
     public function list($id){
         $data['category'] = Category::where("isDeleted", "!=", 0)->get();
         $data['product'] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
@@ -28,12 +37,21 @@ class LikeController extends Controller
                                         ->where("client.id", "=", $id)
                                         ->orderBy('like.created_at', 'desc')
                                         ->paginate(12);
-                                        // dd($data);
         return view("site/Product/like-list", ['data' => $data]);
     }
 
-    // id la id cua Product_detail
+    /*
+    function: add (add product to wishlist product)
+    @redirect: /site/like/add
+    @methods: get
+    @param: $id (id Auth::guard('client')->user()->id)
+    @return: view by Auth::guard("client")->check()
+    @switch(Auth::guard("client")->check())
+            Auth::guard("client")->check() = true: return back()
+            Auth::guard("client")->check() = false: redirect("/login/showView")
+    */
     public function add($id){
+        // id la id cua Product_detail
         if(Auth::guard("client")->check()){
             $dk = Like::where("isDeleted", "!=", 0)
                         ->where("product_detail_id", "=", $id)

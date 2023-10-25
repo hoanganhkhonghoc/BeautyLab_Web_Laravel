@@ -2,18 +2,27 @@
 
 namespace App\Http\Controllers\site;
 
-use App\Http\Controllers\Controller;
 use App\Models\CardDetail;
 use App\Models\Category;
 use App\Models\CommentModel;
-use App\Models\Like;
-use App\Models\Product;
 use App\Models\ProductDetail;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
+    /*
+    function: list (get list product site view)
+    @redirect: /site/product/list
+    @methods: get
+    @return: view("site/Product/product-list")
+    @data: $data[
+                ['category']: get all data in category table
+                ['soluong']: get count product sreach
+                ['product']: get all product sreach
+                ['countCart'] : get count cart order by Auth::guard("client")->user()->id
+            ]
+    */
     public function list(){
         $data['category'] = Category::where("isDeleted","!=",0)->get();
         $data['soluong'] = ProductDetail::where("isDeleted", "!=", 0)->where("isSoid","!=",0)->count();
@@ -32,6 +41,19 @@ class ProductController extends Controller
         return view("site/Product/product-list", ['data' => $data]);
     }
 
+    /*
+    function: show (show view product detail poperties site view)
+    @redirect: /site/product/show
+    @methods: get
+    @param: $id (id product detail)
+    @return: view("site/Product/product-detail")
+    @data: $data[
+                ['category']: get all data in category table
+                ['product']: get all product sreach
+                ['product3']: get 3 product
+                ['comment']: get comment in product detail
+            ]
+    */
     public function show($id){
         $data['category'] = Category::where("isDeleted", "!=", 0)->get();
         $data['product'] = ProductDetail::join("product", "product.id", "=", "product_detail.product_id")
@@ -61,6 +83,19 @@ class ProductController extends Controller
         return view("site/Product/product-detail" , ["data" => $data]);
     }
 
+    /*
+    function: selectCategory (show view product detail poperties site view)
+    @redirect: /site/category/list
+    @methods: get
+    @param: $id (id category table)
+    @return: view("site/Product/product-list")
+    @data: $data[
+                ['category']: get all data in category table
+                ['soluong']: get count product sreach
+                ['product']: get all product sreach
+                ['countCart'] : get count cart order by Auth::guard("client")->user()->id
+            ]
+    */
     public function selectCategory($id){
         $data['category'] = Category::where("isDeleted","!=",0)->get();
         $data['soluong'] = ProductDetail::join("product","product_detail.product_id","=","product.id")

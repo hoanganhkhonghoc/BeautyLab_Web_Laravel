@@ -2,25 +2,34 @@
 
 namespace App\Http\Controllers\site;
 
-use App\Http\Controllers\Controller;
-use App\Models\Card;
-use App\Models\discount_code;
-use Endroid\QrCode\QrCode;
-use Illuminate\Support\Facades\File;
-
-
-use App\Models\OrderModel;
-use App\Models\Paymentmethods;
-use App\Models\ProductDetail;
-use App\Models\Receiver;
 use Carbon\Carbon;
+use App\Models\Card;
+use App\Models\Receiver;
+use App\Models\OrderModel;
+use App\Models\ProductDetail;
+use App\Models\discount_code;
+use App\Models\Paymentmethods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
+    /*
+    function: index (show view checkout)
+    @redirect: /site/order/index
+    @methods: get
+    @param: $id (id cart table)
+    @return: view("site/Order/checkout")
+    @data: $data[
+                ["client"]: get data in Auth::guard("client")
+                ["cart"]: get all product in cart detail order by cart.id
+                ["payment"]: get all data in payment_methods table
+                ["cardID"] : cart id
+            ]
+    */
     public function index($id){
         $data["client"] = Auth::guard("client")->user();
         $data["cart"] = Card::join("cart_detail", "cart_detail.cart_id", "=", "cart.id")
@@ -36,6 +45,21 @@ class OrderController extends Controller
         return view("site/Order/checkout", ["data" => $data]);
     }
 
+    /*
+    function: add (add to order, order detail, receiver table and deleted product in cart detail)
+    @redirect: /site/order/addOrder
+    @methods: post
+    @param: Request (value to form)
+    @param: $id (id cart table)
+    @return: view by payment_method
+    @switch(payment_method)
+            payment_method == 2: view("site/Order/thankyou")
+            payment_method == 1: view('site/Order/QR')
+    @data: [
+            $price: price sum total order
+            $idOrder: id order
+        ]
+    */
     public function add(Request $request){
         // thêm dữ liệu vào bảng receiver
         $recever = new Receiver();
@@ -159,6 +183,13 @@ class OrderController extends Controller
         }
     }
 
+    /*
+    function: list (show view list order)
+    @redirect: /site/order/list
+    @methods: get
+    @return: view("site/Order/list")
+    @data: get all data in order table order by Auth::guard("client")->user()->id
+    */
     public function list(){
         $data['order'] = OrderModel::where("isDeleted", "!=", 0)
                                     ->where("client_id", "=", Auth::guard("client")->user()->id)
@@ -167,6 +198,14 @@ class OrderController extends Controller
         return view("site/Order/list", ["data" => $data]);
     }
 
+    /*
+    function: show (show view order detail poperties order)
+    @redirect: /site/order/show
+    @methods: get
+    @param: $id (id order)
+    @return: view("site/Order/detail")
+    @data: get data in order table order by id
+    */
     public function show($id){
         $data = OrderModel::join("order_detail", "order_detail.order_id", "=", "order.id")
                             ->join("receiver", "receiver.id", "=", "order.receiver_id")
@@ -191,6 +230,13 @@ class OrderController extends Controller
         return view("site/Order/detail", ["data" => $data]);
     }
 
+    /*
+    function: deleted (logic and deleted order by id)
+    @redirect: /site/order/deleted
+    @methods: get
+    @param: $id (id order)
+    @return: redirect("/site/order/show/". $id)
+    */
     public function deleted($id){
         // Cập nhật trạng thái huỷ đơn
         $order = OrderModel::find($id);
@@ -233,6 +279,12 @@ class OrderController extends Controller
         return redirect("/site/order/show/". $id);
     }
 
+    /*
+    function: thankyou (logic and deleted order by id)
+    @redirect: /site/order/thankyou
+    @methods: get
+    @return: view("site/Order/thankyou")
+    */
     public function thankyou(){
         return view("site/Order/thankyou");
     }
