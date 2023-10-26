@@ -50,7 +50,7 @@
                     <div class="col-lg-3 col-sm-6 col-12 d-flex">
                         <div class="dash-count">
                             <div class="dash-counts">
-                                <h5><a href="/admin/count/10">Sản phẩm sắp hết</a></h5>
+                                <h5><a href="/admin/count/10">Sản phẩm sắp hết {{'(' . $data['countProduct'][10] . ')'}}</a></h5>
                             </div>
                             <div class="dash-imgs">
                                 <i data-feather="user"></i>
@@ -60,7 +60,7 @@
                     <div class="col-lg-3 col-sm-6 col-12 d-flex">
                         <div class="dash-count das1">
                             <div class="dash-counts">
-                                <h5><a href="/admin/count/0">Sản phẩm đã hết</a></h5>
+                                <h5><a href="/admin/count/0">Sản phẩm đã hết {{'(' . $data['countProduct'][0] . ')'}}</a></h5>
                             </div>
                             <div class="dash-imgs">
                                 <i data-feather="user-check"></i>

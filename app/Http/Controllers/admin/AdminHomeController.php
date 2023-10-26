@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 
 class AdminHomeController extends Controller
 {
@@ -93,6 +94,25 @@ class AdminHomeController extends Controller
             ->orderByDesc('total_sold')
             ->limit(5)
             ->get();
+
+        // Sản phẩm sắp hết và sản phẩm đã hết (số lượng)
+        $count10 = 10;
+        $data['countProduct'][10] = Product::where('isDeleted', '!=', 0)
+            ->whereHas('productDetails', function ($query) use ($count10) {
+                $query->where('isDeleted', '!=', 0)
+                    ->groupBy('product_id')
+                    ->havingRaw('SUM(quanity) <= ?', [$count10])
+                    ->havingRaw('SUM(quanity) > 0');
+            })
+            ->count();
+        $count0 = 0;
+        $data['countProduct'][0] = Product::where('isDeleted', '!=', 0)
+            ->whereHas('productDetails', function ($query) use ($count0) {
+                $query->where('isDeleted', '!=', 0)
+                    ->groupBy('product_id')
+                    ->havingRaw('SUM(quanity) = 0');
+            })
+            ->count();
         return view("admin/Dashbroad/dashbroad",    [
                                                         "data" => $data,
                                                         "year" => $year,

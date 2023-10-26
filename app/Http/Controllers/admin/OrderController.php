@@ -164,4 +164,19 @@ class OrderController extends Controller
         $data['order'] = OrderModel::where("isDeleted", "!=", 0)->where("status", "=", $status)->get();
         return view("admin/Order/order-list", ["data" => $data]);
     }
+
+    /*
+    function: selectedOrderByMethods (selected order by methods)
+    @redirect: /admin/order/selectedOrderByMethods
+    @methods: get
+    @param: $methods (methods current order)
+    @return: view("admin/Order/order-list")
+    @data: get all data order table order by status
+    */
+    public function selectedOrderByMethods($methods){
+        $data['order'] = OrderModel::where("isDeleted", "!=", 0)
+                                    ->where("pay_id", "=", $methods)
+                                    ->get();
+        return view("admin/Order/order-list", ["data" => $data]);                           
+    }
 }

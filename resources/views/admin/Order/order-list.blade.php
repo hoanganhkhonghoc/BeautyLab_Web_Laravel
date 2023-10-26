@@ -16,8 +16,11 @@
 
                 <div class="table-responsive">
                     <a href="/admin/order/selectedOrder/1"><span class="badges bg-lightyellow">Chờ xử lý</span></a>
-                    <a href="/admin/order/selectedOrder/2"><span class="badges bg-lightyellow">Đang giao hàng</span></a>
                     <a href="/admin/order/selectedOrder/0"><span class="badges bg-lightred">Đã huỷ</span></a>
+                    <a href="/admin/order/selectedOrder/2"><span class="badges bg-lightgreen">Đang giao hàng</span></a>
+                    <br>
+                    <a href="/admin/order/selectedOrderByMethods/1"><span class="badges bg-lightyellow">Chờ xử lý (Chuyển khoản)</span></a>
+                    <a href="/admin/order/selectedOrderByMethods/2"><span class="badges bg-lightyellow">Chờ xử lý (Trực tiếp)</span></a>
                     <table class="table  datanew">
                         <thead>
                             <tr style="text-align:center">
