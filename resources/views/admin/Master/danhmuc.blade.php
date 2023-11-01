@@ -117,10 +117,7 @@
                                         @endif
                                         
                                         @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_lichdattruoc == 1)
-                                            <li><a href="index.php?c=appointment&a=index&month=<?php 
-                                                                                            // $date = getdate();
-                                                                                            // echo $date['mon']; 
-                                                                                            ?>">Lịch đặt trước</a></li>
+                                            <li><a href="#">Lịch đặt trước</a></li>
                                         @endif
 
                                         @if(Auth::guard("admin")->check() || Session::get("QuyenHan")->ql_tuyendung == 1)
